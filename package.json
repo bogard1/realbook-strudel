@@ -8,8 +8,10 @@
     "dev": "vite --config apps/web/vite.config.ts",
     "build": "tsc --noEmit && vite build --config apps/web/vite.config.ts",
     "preview": "vite preview --config apps/web/vite.config.ts",
-    "tui": "vite-node --config vite.tui.config.ts tools/tui.tsx",
-    "tui:check": "vite-node --config vite.tui.config.ts tools/tui.tsx --check",
+    "tui": "python3 tools/tui.py",
+    "tui:check": "python3 tools/tui.py --check",
+    "tui:legacy": "vite-node --config vite.tui.config.ts tools/tui.tsx",
+    "tui:legacy:check": "vite-node --config vite.tui.config.ts tools/tui.tsx --check",
     "validate:songs": "tsx tools/validate-songs.ts"
   },
   "keywords": [

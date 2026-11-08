@@ -3,7 +3,7 @@
 An individual-file song library for performing and editing material with [Strudel](https://strudel.cc/). It includes:
 
 - a static web interface with full-text search, composer/key/feel filters, random practice selection, playback, local editing, import, and export;
-- a Node.js TUI for searching—including chords and feel—random practice selection, creating, and editing catalog files;
+- a mouse-enabled [Textual](https://textual.textualize.io/) TUI for searching—including chords and feel—random practice selection, creating, and editing catalog files;
 - automatic GitHub Pages deployment when `main` changes;
 - an English/Spanish language selector in the web interface (English is the default).
 
@@ -36,24 +36,28 @@ Every selected song has a direct hash link, for example `#/song/autumn-leaves`. 
 ### TUI
 
 ```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r tools/requirements-tui.txt
 npm run tui
 ```
 
-The TUI is a full terminal application and does not require the web interface. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth. Its live playback panel shows the current song and event notes while it plays; the selected result remains visible while navigating the catalog.
+The TUI is a full terminal application and does not require the web interface. It uses Textual, the same Python TUI framework as the maintainer's other TUI projects, so the catalog table, action buttons, dialogs, and scrolling all support the mouse. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth. Its live playback panel shows the current song and event notes while it plays.
 
 | Key | Action |
 | --- | --- |
+| Mouse | Click a song to select it; click an action button; scroll the song list or code |
 | `↑` / `↓`, `j` / `k` | Select a song |
 | `/` | Search |
 | `p`, `Enter` | Play selected song |
 | `Space` / `s` | Stop playback |
 | `g` | Choose a random song from the current search results |
-| `e` / `n` | Edit selected song / create a song in `$EDITOR` |
+| `e` / `n` | Edit selected song / create a song in the built-in JSON dialog |
 | `i` / `x` | Import / export a JSON song file |
 | `l` | Toggle English and Spanish |
 | `r` / `q` | Reload catalog / quit |
 
-The editor defaults to `vi` when `$VISUAL` and `$EDITOR` are not set. On Linux, install and configure PipeWire-JACK or JACK if the local Node Web Audio backend cannot find an audio device.
+Press `Esc` to leave search mode and return to catalog navigation. On Linux, install and configure PipeWire-JACK or JACK if the local Node Web Audio backend cannot find an audio device. The original Ink implementation remains available as `npm run tui:legacy`.
 
 ## Song format
 

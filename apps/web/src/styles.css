@@ -23,3 +23,42 @@ input:focus, textarea:focus { outline: 2px solid #55c6b9; outline-offset: 1px; }
 .ide-code-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(18rem, .9fr); min-height: clamp(28rem, 62vh, 48rem); }.source-pane, .live-code { min-width: 0; }.source-pane { display: flex; flex-direction: column; border-right: 1px solid #2d4148; }.source-editor { display: grid; grid-template-columns: auto minmax(0, 1fr); flex: 1; min-height: 0; background: #0b1118; }.line-numbers { margin: 0; padding: 1rem .65rem; overflow: hidden; color: #53616d; background: #0e1720; border-right: 1px solid #263740; text-align: right; user-select: none; font: .84rem/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; }.code-textarea { min-width: 0; min-height: 100%; height: 100%; padding: 1rem; border: 0; border-radius: 0; outline: 0; resize: none; color: #d9e8eb; background: #0b1118; font: .92rem/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; tab-size: 2; }.code-textarea:focus { outline: 0; box-shadow: inset 0 0 0 1px #55c6b9; }.live-code { display: flex; flex-direction: column; border: 0; border-radius: 0; background: #0d1519; box-shadow: none; }.live-code .live-code-heading { min-height: 2.2rem; padding: .5rem .7rem; background: #14262a; }.live-code-heading strong { max-width: 58%; overflow: hidden; color: #a9bbc1; font-size: .68rem; letter-spacing: 0; text-align: right; text-overflow: ellipsis; white-space: nowrap; text-transform: none; }.live-code-heading i.idle { opacity: .28; box-shadow: none; animation: none; }.live-code pre { flex: 1; max-height: none; padding: 1rem; font-size: .84rem; line-height: 1.65; }.ide-code-grid:not(.is-playing) .live-code { opacity: .64; }.editor-card { padding: 0; background: #171d26; }.editor-card summary { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; cursor: pointer; color: #eff3f6; list-style: none; }.editor-card summary::-webkit-details-marker { display: none; }.editor-card summary::before { content: '›'; margin-right: .5rem; color: #78dfd4; font-size: 1.2rem; }.editor-card[open] summary::before { transform: rotate(90deg); }.editor-card summary small { margin-left: auto; color: #55c6b9; }.editor-card .fields, .editor-card .license-field, .editor-card .editor-actions { margin-right: clamp(1rem, 3vw, 2rem); margin-left: clamp(1rem, 3vw, 2rem); }.editor-card .fields { margin-top: .3rem; }.editor-card .editor-actions { margin-bottom: 1.25rem; }
 @media (max-width: 980px) { .ide-code-grid { grid-template-columns: 1fr; min-height: auto; }.source-pane { min-height: 30rem; border-right: 0; border-bottom: 1px solid #2d4148; }.live-code { min-height: 18rem; }.live-code pre { max-height: 24rem; } }
 @media (max-width: 720px) { .code-workbench { margin-right: -1rem; margin-left: -1rem; border-radius: 0; }.source-pane { min-height: 26rem; }.workbench-heading em { display: none; }.live-code-heading { align-items: flex-start; }.live-code-heading strong { max-width: 50%; white-space: normal; } }
+
+/* Light mode keeps the IDE surfaces distinct while preserving code contrast. */
+html[data-theme="light"] { color-scheme: light; color: #17232e; background: #f4f7fa; }
+html[data-theme="light"] body, html[data-theme="light"] .app-shell { background: #f4f7fa; }
+html[data-theme="light"] button { color: #17232e; background: #e3e9ef; }
+html[data-theme="light"] button:hover:not(:disabled) { background: #d3dee7; }
+html[data-theme="light"] input, html[data-theme="light"] textarea, html[data-theme="light"] select { color: #17232e; background: #ffffff; border-color: #aebfc9; }
+html[data-theme="light"] .library { background: #eaf0f5; border-color: #c7d3dc; }
+html[data-theme="light"] .brand span:not(.brand-mark), html[data-theme="light"] .search-label, html[data-theme="light"] .song-count, html[data-theme="light"] .language-picker, html[data-theme="light"] .filters legend, html[data-theme="light"] .song-row span { color: #526675; }
+html[data-theme="light"] .filters { border-color: #bdcad4; } html[data-theme="light"] .filters label { color: #344856; }
+html[data-theme="light"] .song-row.selected, html[data-theme="light"] .random-song { color: #123d40; background: #c8e6e2; }
+html[data-theme="light"] .random-song:hover:not(:disabled) { background: #b1dbd5; }
+html[data-theme="light"] .text-button, html[data-theme="light"] .source a, html[data-theme="light"] .arpeggio-list strong { color: #08766f; }
+html[data-theme="light"] .metadata, html[data-theme="light"] .source, html[data-theme="light"] .status, html[data-theme="light"] .workspace footer { color: #526675; }
+html[data-theme="light"] .eyebrow { color: #08766f; }
+html[data-theme="light"] .play { color: #062d2d; background: #58beb5; }
+html[data-theme="light"] .code-workbench { border-color: #5f9894; background: #ffffff; box-shadow: 0 1.2rem 3rem #31505d1f; }
+html[data-theme="light"] .workbench-heading { color: #104c4c; background: #d9eeec; border-color: #a9ceca; }
+html[data-theme="light"] .workbench-heading > span { color: #ffffff; background: #167e78; }
+html[data-theme="light"] .workbench-heading em { color: #47736f; }
+html[data-theme="light"] .pane-heading { color: #0c6964; background: #edf5f5; border-color: #c8dedc; }
+html[data-theme="light"] .pane-heading small { color: #5e717d; }
+html[data-theme="light"] .source-pane { border-color: #c8d8de; }
+html[data-theme="light"] .source-editor, html[data-theme="light"] .code-textarea { color: #17232e; background: #ffffff; }
+html[data-theme="light"] .line-numbers { color: #718391; background: #f2f5f7; border-color: #d5e0e6; }
+html[data-theme="light"] .code-textarea:focus { box-shadow: inset 0 0 0 2px #168a82; }
+html[data-theme="light"] .live-code { color: #1d2e39; background: #f8fbfc; }
+html[data-theme="light"] .live-code .live-code-heading { color: #13514e; background: #e2f1f0; }
+html[data-theme="light"] .live-code-heading strong { color: #526675; }
+html[data-theme="light"] .live-code pre { color: #263944; }
+html[data-theme="light"] .executing-token { color: #031f20; background: #75d6ce; box-shadow: 0 0 .8rem #58bcb488; }
+html[data-theme="light"] .arpeggio-card { border-color: #9bc4c0; background: #edf7f6; }
+html[data-theme="light"] .arpeggio-card h2 { color: #155b58; }
+html[data-theme="light"] .arpeggio-list article { background: #dfeeed; }
+html[data-theme="light"] .arpeggio-list small { color: #526675; }
+html[data-theme="light"] .editor-card { border-color: #c4d0d8; background: #ffffff; }
+html[data-theme="light"] .editor-card summary { color: #17232e; }
+html[data-theme="light"] .editor-card summary small { color: #08766f; }
+html[data-theme="light"] .fields label, html[data-theme="light"] .license-field, html[data-theme="light"] .code-label { color: #405563; }

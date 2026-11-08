@@ -67,6 +67,21 @@ export function slugify(value: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
+export function makeSong(id: string): Song {
+  return {
+    schemaVersion: 1,
+    id,
+    title: 'New song',
+    composer: 'Composer',
+    key: 'C major',
+    tempo: 120,
+    form: 'AABA',
+    tags: [],
+    license: 'State the license or permission to distribute',
+    strudel: 'setcps(120 / 60)\nnote("c4 e4 g4 b4").s("triangle").gain(.35)',
+  };
+}
+
 export async function saveSong(song: Song): Promise<void> {
   if (!isSong(song)) throw new Error('The song does not conform to the schema.');
   await writeFile(join(songsDirectory, `${basename(song.id)}.json`), `${JSON.stringify(song, null, 2)}\n`);

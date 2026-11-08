@@ -29,7 +29,20 @@ Open the URL shown by Vite. GitHub Pages edits are stored in `localStorage`; use
 npm run tui
 ```
 
-The TUI manages local JSON files and displays Strudel code. Audio playback is performed by the web interface because Strudel uses Web Audio, and browsers require a user interaction before playing sound.
+The TUI is a full terminal application and does not require the web interface. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth. It supports search, playback, pause, JSON import/export, English/Spanish switching, and catalog reload from the main screen.
+
+| Key | Action |
+| --- | --- |
+| `↑` / `↓`, `j` / `k` | Select a song |
+| `/` | Search |
+| `p`, `Enter` | Play selected song |
+| `Space` | Pause playback |
+| `e` / `n` | Edit selected song / create a song in `$EDITOR` |
+| `i` / `x` | Import / export a JSON song file |
+| `l` | Toggle English and Spanish |
+| `r` / `q` | Reload catalog / quit |
+
+The editor defaults to `vi` when `$VISUAL` and `$EDITOR` are not set. On Linux, install and configure PipeWire-JACK or JACK if the local Node Web Audio backend cannot find an audio device.
 
 ## Song format
 

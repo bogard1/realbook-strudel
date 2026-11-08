@@ -9,7 +9,8 @@
   "tags": [
     "real-book-volume-1",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
   "backing": {
@@ -30,7 +31,81 @@
       "D7",
       "Gm7"
     ],
-    "feel": "Medium swing comping"
+    "feel": "Medium swing arpeggio comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(126 / 240)\nstack(\n  note(\"<[c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [eb3,f#3,bb3,c#4] [a3,c4,eb4,g4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [g3,bb3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [eb3,f#3,bb3,c#4] [a3,c4,eb4,g4] [d3,f#3,a3,c4] [g3,bb3,d4,f4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<c2 ~ f2 ~ bb2 ~ eb2 ~ a2 ~ d2 ~ g2 ~ g2 ~ c2 ~ f2 ~ bb2 ~ eb2 ~ a2 ~ d2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only arpeggio backing for practice; no melody or lyrics.\nsetcps(126 / 240)\nstack(\n  note(\"<[c4 eb4 g4 bb4] [f4 a4 c5 eb5] [bb3 d4 f4 a4] [eb4 g4 bb4 d5] [a3 c4 eb4 g4] [d4 f#4 a4 c5] [g3 bb3 d4 f4] [g3 bb3 d4 f4] [c4 eb4 g4 bb4] [f4 a4 c5 eb5] [bb3 d4 f4 a4] [eb4 g4 bb4 d5] [a3 c4 eb4 g4] [d4 f#4 a4 c5] [g3 bb3 d4 f4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,d4,f4,a4] [eb3,g3,bb3,d4] [a2,c3,eb3,g3] [d3,f#3,a3,c4] [g2,bb2,d3,f3] [g2,bb2,d3,f3] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,d4,f4,a4] [eb3,g3,bb3,d4] [a2,c3,eb3,g3] [d3,f#3,a3,c4] [g2,bb2,d3,f3]>\").s(\"triangle\").gain(.09),\n  note(\"<c2 ~ f2 ~ bb2 ~ eb2 ~ a2 ~ d2 ~ g2 ~ g2 ~ c2 ~ f2 ~ bb2 ~ eb2 ~ a2 ~ d2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "Cm7",
+        "notes": [
+          "C",
+          "Eb",
+          "G",
+          "Bb"
+        ],
+        "tip": "Over the ii chord, target A (the 3rd of F7) in the next bar."
+      },
+      {
+        "chord": "F7",
+        "notes": [
+          "F",
+          "A",
+          "C",
+          "Eb"
+        ],
+        "tip": "Land on D (the 3rd of Bbmaj7) to make the ii–V–I resolution clear."
+      },
+      {
+        "chord": "Bbmaj7",
+        "notes": [
+          "Bb",
+          "D",
+          "F",
+          "A"
+        ],
+        "tip": "Use A or F to connect smoothly into the Ebmaj7 arpeggio."
+      },
+      {
+        "chord": "Ebmaj7",
+        "notes": [
+          "Eb",
+          "G",
+          "Bb",
+          "D"
+        ],
+        "tip": "D resolves down naturally to C, the 3rd of Am7b5."
+      },
+      {
+        "chord": "Am7b5",
+        "notes": [
+          "A",
+          "C",
+          "Eb",
+          "G"
+        ],
+        "tip": "Emphasize Eb (the b5), then resolve by semitone into D7 chord tones."
+      },
+      {
+        "chord": "D7",
+        "notes": [
+          "D",
+          "F#",
+          "A",
+          "C"
+        ],
+        "tip": "Optional tension: add Eb (b9) before resolving to Gm7."
+      },
+      {
+        "chord": "Gm7",
+        "notes": [
+          "G",
+          "Bb",
+          "D",
+          "F"
+        ],
+        "tip": "Resolve on G, Bb, or D; Gm6 (G Bb D E) is an optional minor-key color."
+      }
+    ]
+  }
 }

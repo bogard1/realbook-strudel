@@ -15,6 +15,13 @@ export type Song = {
     progression: string[];
     feel: string;
   };
+  improvisation?: {
+    arpeggios: Array<{
+      chord: string;
+      notes: string[];
+      tip?: string;
+    }>;
+  };
   source?: {
     title: string;
     url: string;
@@ -41,6 +48,14 @@ export function isSong(value: unknown): value is Song {
     !!song.backing &&
     Array.isArray(song.backing.progression) && song.backing.progression.every((chord) => typeof chord === 'string') &&
     typeof song.backing.feel === 'string' && song.backing.feel.length > 0 &&
+    (song.improvisation === undefined || (
+      Array.isArray(song.improvisation.arpeggios) &&
+      song.improvisation.arpeggios.every((arpeggio) =>
+        typeof arpeggio.chord === 'string' &&
+        Array.isArray(arpeggio.notes) && arpeggio.notes.every((note) => typeof note === 'string') &&
+        (arpeggio.tip === undefined || typeof arpeggio.tip === 'string')
+      )
+    )) &&
     (song.source === undefined || (
       typeof song.source.title === 'string' &&
       typeof song.source.url === 'string' &&

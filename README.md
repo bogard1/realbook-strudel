@@ -72,6 +72,11 @@ Each `songs/<id>.json` file contains metadata, a chord progression, and executab
     "progression": ["Cmaj7", "Am7", "Dm7", "G7"],
     "feel": "Medium swing comping"
   },
+  "improvisation": {
+    "arpeggios": [
+      { "chord": "Cmaj7", "notes": ["C", "E", "G", "B"], "tip": "Target the 3rd of the next chord." }
+    ]
+  },
   "source": {
     "title": "Source title",
     "url": "https://example.org/source",
@@ -80,6 +85,8 @@ Each `songs/<id>.json` file contains metadata, a chord progression, and executab
   "strudel": "setcps(120 / 240)\\nnote(\"<c3,e3,g3,b3>\").s(\"triangle\")"
 }
 ```
+
+`improvisation` is optional. When present, the web app and TUI show its chord-tone arpeggio guide alongside the backing track.
 
 Do not treat an unverified chord chart as permission to reproduce a copyrighted edition. Add works to the shared catalog only when their source is public domain, explicitly licensed, or otherwise authorized for distribution.
 

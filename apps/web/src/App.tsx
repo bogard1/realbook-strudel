@@ -376,6 +376,10 @@ export function App() {
         </header>
 
         <p className="status" role="status">{statusText}</p>
+        {isPlaying && <section className="live-code live-code-prominent" aria-label={t.liveCode} aria-live="polite">
+          <div className="live-code-heading"><span><i />{t.liveCode}</span><strong>{statusText}</strong></div>
+          <pre><code>{renderHighlightedCode(executingCode, activeLocations)}</code></pre>
+        </section>}
         {selected.improvisation && <section className="arpeggio-card" aria-label={t.arpeggios}>
           <h2>{t.arpeggios}</h2>
           <div className="arpeggio-list">
@@ -399,10 +403,7 @@ export function App() {
           </div>
           <label className="license-field">{t.chordProgression}<input value={selected.backing.progression.join(', ')} onChange={(event) => updateSelected({ backing: { ...selected.backing, progression: event.target.value.split(',').map((chord) => chord.trim()).filter(Boolean) } })} /></label>
           <label className="license-field">{t.license}<input value={selected.license} onChange={(event) => updateSelected({ license: event.target.value })} /></label>
-          <label className="code-label">{t.strudelCode}
-            {isPlaying && <div className="live-code" aria-live="polite"><span>{t.liveCode}</span><pre><code>{renderHighlightedCode(executingCode, activeLocations)}</code></pre></div>}
-            <textarea spellCheck="false" value={selected.strudel} onChange={(event) => updateSelected({ strudel: event.target.value })} />
-          </label>
+          <label className="code-label">{t.strudelCode}<textarea spellCheck="false" value={selected.strudel} onChange={(event) => updateSelected({ strudel: event.target.value })} /></label>
           <div className="editor-actions">
             <button onClick={() => downloadSong(selected)}>{t.download}</button>
             {hasOriginal && <button onClick={restoreOriginal}>{t.restore}</button>}

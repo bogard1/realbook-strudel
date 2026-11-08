@@ -39,14 +39,14 @@ Every selected song has a direct hash link, for example `#/song/autumn-leaves`. 
 npm run tui
 ```
 
-The TUI is a full terminal application and does not require the web interface. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth. It supports search, playback, pause, JSON import/export, English/Spanish switching, and catalog reload from the main screen.
+The TUI is a full terminal application and does not require the web interface. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth. Its live playback panel shows the current song and event notes while it plays; the selected result remains visible while navigating the catalog.
 
 | Key | Action |
 | --- | --- |
 | `↑` / `↓`, `j` / `k` | Select a song |
 | `/` | Search |
 | `p`, `Enter` | Play selected song |
-| `Space` | Pause playback |
+| `Space` / `s` | Stop playback |
 | `g` | Choose a random song from the current search results |
 | `e` / `n` | Edit selected song / create a song in `$EDITOR` |
 | `i` / `x` | Import / export a JSON song file |

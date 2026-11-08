@@ -5,7 +5,7 @@ import { join, resolve } from 'node:path';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Text, render, useApp, useInput } from 'ink';
 import TextInput from 'ink-text-input';
-import { TerminalStrudelPlayer } from './audio-player.ts';
+import { TerminalStrudelPlayer, type PlaybackEvent } from './audio-player.ts';
 import { isSong, loadSongs, makeSong, saveSong, type Song } from './song-library.ts';
 
 type Language = 'en' | 'es';
@@ -14,10 +14,10 @@ type Action = { type: 'quit' } | { type: 'edit'; song?: Song };
 
 const messages = {
   en: {
-    title: 'REALBOOK STRUDEL', search: 'Search', nowPlaying: 'NOW PLAYING', stopped: 'STOPPED', source: 'Source', noSource: 'No source metadata', chords: 'Chords', arpeggios: 'Arpeggios', code: 'Strudel code', noSongs: 'No songs found', controls: '↑↓ select  / search  g random  p play  space pause  e edit  n new  i import  x export  l language  r reload  q quit', importPath: 'JSON file to import:', exportPath: 'Destination path:', imported: (title: string) => `Imported ${title}.`, exported: (path: string) => `Exported to ${path}.`, loaded: (count: number) => `Loaded ${count} songs.`, picked: (title: string) => `Practice pick: ${title}.`, playing: (title: string) => `Playing ${title}.`, paused: 'Playback paused.', editing: 'Opening your editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `Saved ${title}.`, language: 'Language', noSelection: 'No song selected.',
+    title: 'REALBOOK STRUDEL', search: 'Search', livePlayback: 'LIVE PLAYBACK', stopped: 'STOPPED', event: 'Now sounding', source: 'Source', noSource: 'No source metadata', chords: 'Chords', arpeggios: 'Arpeggios', code: 'Strudel code', noSongs: 'No songs found', controls: '↑↓/j k select  / search  g random  p/enter play  space/s stop  e edit  n new  i import  x export  l language  r reload  q quit', importPath: 'JSON file to import:', exportPath: 'Destination path:', imported: (title: string) => `Imported ${title}.`, exported: (path: string) => `Exported to ${path}.`, loaded: (count: number) => `Loaded ${count} songs.`, picked: (title: string) => `Practice pick: ${title}.`, playing: (title: string) => `Playing ${title}.`, stoppedMessage: 'Playback stopped.', editing: 'Opening your editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `Saved ${title}.`, language: 'Language', noSelection: 'No song selected.',
   },
   es: {
-    title: 'REALBOOK STRUDEL', search: 'Buscar', nowPlaying: 'REPRODUCIENDO', stopped: 'DETENIDO', source: 'Fuente', noSource: 'Sin metadatos de fuente', chords: 'Acordes', arpeggios: 'Arpegios', code: 'Código Strudel', noSongs: 'No se encontraron canciones', controls: '↑↓ seleccionar  / buscar  g aleatoria  p reproducir  espacio pausar  e editar  n nueva  i importar  x exportar  l idioma  r recargar  q salir', importPath: 'Archivo JSON para importar:', exportPath: 'Ruta de destino:', imported: (title: string) => `${title} se importó.`, exported: (path: string) => `Exportado en ${path}.`, loaded: (count: number) => `${count} canciones cargadas.`, picked: (title: string) => `Selección para practicar: ${title}.`, playing: (title: string) => `Reproduciendo ${title}.`, paused: 'Reproducción pausada.', editing: 'Abriendo el editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `${title} se guardó.`, language: 'Idioma', noSelection: 'No hay canción seleccionada.',
+    title: 'REALBOOK STRUDEL', search: 'Buscar', livePlayback: 'REPRODUCCIÓN EN VIVO', stopped: 'DETENIDO', event: 'Sonando ahora', source: 'Fuente', noSource: 'Sin metadatos de fuente', chords: 'Acordes', arpeggios: 'Arpegios', code: 'Código Strudel', noSongs: 'No se encontraron canciones', controls: '↑↓/j k seleccionar  / buscar  g aleatoria  p/enter reproducir  espacio/s detener  e editar  n nueva  i importar  x exportar  l idioma  r recargar  q salir', importPath: 'Archivo JSON para importar:', exportPath: 'Ruta de destino:', imported: (title: string) => `${title} se importó.`, exported: (path: string) => `Exportado en ${path}.`, loaded: (count: number) => `${count} canciones cargadas.`, picked: (title: string) => `Selección para practicar: ${title}.`, playing: (title: string) => `Reproduciendo ${title}.`, stoppedMessage: 'Reproducción detenida.', editing: 'Abriendo el editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `${title} se guardó.`, language: 'Idioma', noSelection: 'No hay canción seleccionada.',
   },
 } as const;
 
@@ -35,14 +35,20 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
   const [draft, setDraft] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [status, setStatus] = useState(initialStatus);
-  const [player] = useState(() => new TerminalStrudelPlayer());
+  const [liveEvent, setLiveEvent] = useState<PlaybackEvent>();
+  const [playingTitle, setPlayingTitle] = useState('');
+  const [player] = useState(() => new TerminalStrudelPlayer(setLiveEvent));
   const t = messages[language];
 
   const filtered = useMemo(() => songs.filter((song) => {
     const terms = `${song.title} ${song.composer} ${song.key} ${song.form} ${song.tags.join(' ')} ${song.backing.feel} ${song.backing.progression.join(' ')}`.toLowerCase();
     return terms.includes(query.toLowerCase().trim());
   }), [query, songs]);
-  const selected = filtered[Math.min(selectedIndex, Math.max(0, filtered.length - 1))];
+  const activeIndex = Math.min(selectedIndex, Math.max(0, filtered.length - 1));
+  const selected = filtered[activeIndex];
+  const pageSize = 12;
+  const listStart = Math.max(0, Math.min(activeIndex - Math.floor(pageSize / 2), Math.max(0, filtered.length - pageSize)));
+  const visibleSongs = filtered.slice(listStart, listStart + pageSize);
 
   const refresh = async () => {
     const next = await loadSongs();
@@ -62,15 +68,20 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
     if (!selected) return setStatus(t.noSelection);
     try {
       await player.play(selected.strudel);
+      setPlayingTitle(selected.title);
       setStatus(t.playing(selected.title));
     } catch (error) {
+      setLiveEvent(undefined);
+      setPlayingTitle('');
       setStatus(t.error(error instanceof Error ? error.message : String(error)));
     }
   }
 
-  function pause() {
+  function stop() {
     player.pause();
-    setStatus(t.paused);
+    setLiveEvent(undefined);
+    setPlayingTitle('');
+    setStatus(t.stoppedMessage);
   }
 
   function pickRandom() {
@@ -113,7 +124,7 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
     else if (key.downArrow || input === 'j') setSelectedIndex((current) => Math.min(Math.max(0, filtered.length - 1), current + 1));
     else if (input === '/') { setMode('search'); setDraft(query); }
     else if (input === 'p' || key.return) void playSelected();
-    else if (input === ' ') pause();
+    else if (input === ' ' || input === 's') stop();
     else if (input === 'g') pickRandom();
     else if (input === 'e' && selected) { setStatus(t.editing); onAction({ type: 'edit', song: selected }); exit(); }
     else if (input === 'n') { setStatus(t.editing); onAction({ type: 'edit' }); exit(); }
@@ -127,12 +138,23 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
   const prompt = mode === 'search' ? t.search : mode === 'import' ? t.importPath : t.exportPath;
   return (
     <Box flexDirection="column" paddingX={1}>
-      <Box justifyContent="space-between"><Text bold color="cyan">{t.title}</Text><Text color="gray">{t.language}: {language === 'en' ? 'English' : 'Español'} · {player.playing ? t.nowPlaying : t.stopped}</Text></Box>
+      <Box justifyContent="space-between"><Text bold color="cyan">{t.title}</Text><Text color="gray">{t.language}: {language === 'en' ? 'English' : 'Español'}</Text></Box>
+      <Box marginTop={1} flexDirection="column" borderStyle="round" borderColor={player.playing ? 'green' : 'gray'} paddingX={1}>
+        <Text bold color={player.playing ? 'green' : 'gray'}>{player.playing ? `● ${t.livePlayback}` : `○ ${t.stopped}`}</Text>
+        {player.playing ? <>
+          <Text bold color="white">{playingTitle}</Text>
+          <Text>{t.event}: <Text color="cyan">{liveEvent ? `${liveEvent.notes.join(' · ') || '—'}  [${liveEvent.sound}]` : '…'}</Text></Text>
+          <Text color="green">▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮</Text>
+        </> : <Text color="gray">{t.event}: —</Text>}
+      </Box>
       <Box marginTop={1} gap={2}>
         <Box flexDirection="column" width="42%" borderStyle="round" borderColor="cyan" paddingX={1}>
-          <Text bold>{t.search}: {query || '—'}</Text>
+          <Text bold>{t.search}: {query || '—'} <Text color="gray">({filtered.length ? `${activeIndex + 1}/${filtered.length}` : '0/0'})</Text></Text>
           {filtered.length === 0 && <Text color="yellow">{t.noSongs}</Text>}
-          {filtered.slice(0, 14).map((song, index) => <Text key={song.id} color={song.id === selected?.id ? 'cyan' : undefined}>{song.id === selected?.id ? '› ' : '  '}{song.title} <Text color="gray">— {song.composer}</Text></Text>)}
+          {visibleSongs.map((song, index) => {
+            const isSelected = listStart + index === activeIndex;
+            return <Text key={song.id} bold={isSelected} color={isSelected ? 'cyan' : undefined}>{isSelected ? '› ' : '  '}{song.title} <Text color="gray">— {song.composer}</Text></Text>;
+          })}
         </Box>
         <Box flexDirection="column" width="58%" borderStyle="round" borderColor="gray" paddingX={1}>
           {selected ? <>
@@ -144,7 +166,7 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
             <Text>{t.source}: {selected.source ? selected.source.title : t.noSource}</Text>
             {selected.source && <Text color="gray">{selected.source.url}</Text>}
             <Text bold>{t.code}</Text>
-            {preview(selected.strudel).map((line, index) => <Text key={index} color="gray">{line}</Text>)}
+            {preview(selected.strudel).slice(0, 5).map((line, index) => <Text key={index} color="gray">{line}</Text>)}
           </> : <Text color="yellow">{t.noSelection}</Text>}
         </Box>
       </Box>

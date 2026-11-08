@@ -6,6 +6,12 @@ type Repl = {
   state: { evalError?: Error };
 };
 
+export type PlaybackEvent = {
+  notes: string[];
+  sound: string;
+  gain: number;
+};
+
 const waveforms = new Set(['sine', 'square', 'sawtooth', 'triangle']);
 const pitchClasses: Record<string, number> = {
   c: 0, 'c#': 1, db: 1, d: 2, 'd#': 3, eb: 3, e: 4, f: 5,
@@ -36,6 +42,8 @@ export class TerminalStrudelPlayer {
   private controller?: Repl;
   private isPlaying = false;
   private originalLog?: typeof console.log;
+
+  constructor(private readonly onEvent?: (event: PlaybackEvent) => void) {}
 
   get playing() {
     return this.isPlaying;
@@ -113,6 +121,7 @@ export class TerminalStrudelPlayer {
     const length = Math.max(0.025, Math.min(4, numeric(duration, 0.25) / Math.max(0.01, numeric(cps, 1))));
     const gain = Math.max(0.001, Math.min(0.28, numeric(value.gain, 0.16)));
     const sound = String(value.s ?? 'sine').toLowerCase();
+    this.onEvent?.({ notes: notes.filter((note) => note !== undefined && note !== null).map(String), sound, gain });
     const type = waveforms.has(sound) ? sound as OscillatorType : 'sine';
     const frequencies = notes.map(noteToFrequency).filter((frequency): frequency is number => frequency !== undefined);
     if (!frequencies.length && percussionFrequencies[sound]) frequencies.push(percussionFrequencies[sound]);

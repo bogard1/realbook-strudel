@@ -378,21 +378,23 @@ export function App() {
   return (
     <main className="app-shell">
       <aside className="library" aria-label={t.library}>
-        <div className="brand">
-          <span className="brand-mark">♩</span>
-          <div><strong>Realbook</strong><span>{t.brandSuffix}</span></div>
-         </div>
-         <label className="language-picker">{t.language}<select value={language} onChange={(event) => setLanguage(event.target.value as Language)}><option value="en">{t.english}</option><option value="es">{t.spanish}</option></select></label>
-         <label className="language-picker">{t.theme}<select value={theme} onChange={(event) => setTheme(event.target.value as Theme)}><option value="dark">{t.dark}</option><option value="light">{t.light}</option></select></label>
-         <label className="search-label" htmlFor="search">{t.search}</label>
-        <input id="search" className="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.searchPlaceholder} />
-         <fieldset className="filters">
-          <legend>{t.filters}</legend>
-          <label>{t.composer}<select value={filters.composer} onChange={(event) => setFilters((current) => ({ ...current, composer: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.composers.map((value) => <option key={value}>{value}</option>)}</select></label>
-          <label>{t.key}<select value={filters.key} onChange={(event) => setFilters((current) => ({ ...current, key: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.keys.map((value) => <option key={value}>{value}</option>)}</select></label>
-          <label>{t.feel}<select value={filters.feel} onChange={(event) => setFilters((current) => ({ ...current, feel: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.feels.map((value) => <option key={value}>{value}</option>)}</select></label>
+         <div className="brand">
+           <span className="brand-mark">♩</span>
+           <div className="brand-name"><strong>Realbook</strong><span>{t.brandSuffix}</span></div>
+           <div className="library-preferences">
+             <select aria-label={t.language} title={t.language} value={language} onChange={(event) => setLanguage(event.target.value as Language)}><option value="en">EN</option><option value="es">ES</option></select>
+             <select aria-label={t.theme} title={t.theme} value={theme} onChange={(event) => setTheme(event.target.value as Theme)}><option value="dark">☾</option><option value="light">☀</option></select>
+           </div>
+          </div>
+          <label className="search-label" htmlFor="search">{t.search}</label>
+         <input id="search" className="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.searchPlaceholder} />
+         <details className="filters">
+           <summary>{t.filters}</summary>
+           <label>{t.composer}<select value={filters.composer} onChange={(event) => setFilters((current) => ({ ...current, composer: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.composers.map((value) => <option key={value}>{value}</option>)}</select></label>
+           <label>{t.key}<select value={filters.key} onChange={(event) => setFilters((current) => ({ ...current, key: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.keys.map((value) => <option key={value}>{value}</option>)}</select></label>
+           <label>{t.feel}<select value={filters.feel} onChange={(event) => setFilters((current) => ({ ...current, feel: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.feels.map((value) => <option key={value}>{value}</option>)}</select></label>
            <button type="button" className="text-button" onClick={() => setFilters({ composer: noFilter, key: noFilter, feel: noFilter })}>{t.clearFilters}</button>
-         </fieldset>
+         </details>
          <div className="library-toolbar">
            <button className="random-song" onClick={choosePracticeSong} disabled={filtered.length === 0}>{t.randomSong}</button>
            <button onClick={createSong}>{t.newSong}</button>

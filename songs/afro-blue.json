@@ -2,14 +2,15 @@
   "schemaVersion": 1,
   "id": "afro-blue",
   "title": "Afro Blue",
-  "composer": "Mongo Santamaría",
+  "composer": "Mongo Santamar\u00eda",
   "key": "C minor",
   "tempo": 120,
   "form": "Practice changes",
   "tags": [
     "real-book-volume-1",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
   "backing": {
@@ -19,7 +20,31 @@
       "Cm7",
       "Db7"
     ],
-    "feel": "Afro-Cuban modal comping"
+    "feel": "Afro-Cuban modal arpeggio comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(120 / 240)\nstack(\n  note(\"<[c3,eb3,g3,bb3] [c#3,f3,ab3,b3] [c3,eb3,g3,bb3] [c#3,f3,ab3,b3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<c2 ~ c#2 ~ c2 ~ c#2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(120 / 240)\nstack(\n  note(\"<[c3 eb3 g3 bb3] [c#3 f3 ab3 b3] [c3 eb3 g3 bb3] [c#3 f3 ab3 b3]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[c3,eb3,g3,bb3] [c#3,f3,ab3,b3] [c3,eb3,g3,bb3] [c#3,f3,ab3,b3]>\").s(\"triangle\").gain(.09),\n  note(\"<c2 ~ c#2 ~ c2 ~ c#2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "Cm7",
+        "notes": [
+          "C",
+          "Eb",
+          "G",
+          "Bb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Db7",
+        "notes": [
+          "C#",
+          "F",
+          "Ab",
+          "B"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      }
+    ]
+  }
 }

@@ -9,7 +9,8 @@
   "tags": [
     "real-book-volume-1",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
   "backing": {
@@ -23,7 +24,51 @@
       "Dbsus4",
       "Ebsus4"
     ],
-    "feel": "Modal floating comping"
+    "feel": "Modal floating arpeggio comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(108 / 240)\nstack(\n  note(\"<[d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4] [d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<d2 ~ f2 ~ c#2 ~ eb2 ~ d2 ~ f2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(108 / 240)\nstack(\n  note(\"<[d3 g3 a3 c4] [f3 bb3 c4 eb4] [c#3 f#3 ab3 b3] [eb3 ab3 bb3 c#4] [d3 g3 a3 c4] [f3 bb3 c4 eb4] [c#3 f#3 ab3 b3] [eb3 ab3 bb3 c#4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4] [d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4]>\").s(\"triangle\").gain(.09),\n  note(\"<d2 ~ f2 ~ c#2 ~ eb2 ~ d2 ~ f2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "Dsus4",
+        "notes": [
+          "D",
+          "G",
+          "A",
+          "C"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "F7sus4",
+        "notes": [
+          "F",
+          "Bb",
+          "C",
+          "Eb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Dbsus4",
+        "notes": [
+          "C#",
+          "F#",
+          "Ab",
+          "B"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Ebsus4",
+        "notes": [
+          "Eb",
+          "Ab",
+          "Bb",
+          "C#"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      }
+    ]
+  }
 }

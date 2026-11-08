@@ -9,7 +9,8 @@
   "tags": [
     "real-book-volume-1",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
   "backing": {
@@ -22,7 +23,51 @@
       "Db7",
       "Ebm7"
     ],
-    "feel": "5/4 modal comping"
+    "feel": "5/4 modal arpeggio comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(120 / 240)\nstack(\n  note(\"<[eb3,f#3,bb3,c#4] [bb3,c#4,f4,ab4] [eb3,f#3,bb3,c#4] [bb3,c#4,f4,ab4] [f#3,a3,c#4,e4] [c#3,f3,ab3,b3] [eb3,f#3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<eb2 ~ bb2 ~ eb2 ~ bb2 ~ f#2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(120 / 240)\nstack(\n  note(\"<[eb3 f#3 bb3 c#4] [bb3 c#4 f4 ab4] [eb3 f#3 bb3 c#4] [bb3 c#4 f4 ab4] [f#3 a3 c#4 e4] [c#3 f3 ab3 b3] [eb3 f#3 bb3 c#4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[eb3,f#3,bb3,c#4] [bb3,c#4,f4,ab4] [eb3,f#3,bb3,c#4] [bb3,c#4,f4,ab4] [f#3,a3,c#4,e4] [c#3,f3,ab3,b3] [eb3,f#3,bb3,c#4]>\").s(\"triangle\").gain(.09),\n  note(\"<eb2 ~ bb2 ~ eb2 ~ bb2 ~ f#2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "Ebm7",
+        "notes": [
+          "Eb",
+          "F#",
+          "Bb",
+          "C#"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Bbm7",
+        "notes": [
+          "Bb",
+          "C#",
+          "F",
+          "Ab"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Gbmaj7",
+        "notes": [
+          "F#",
+          "A",
+          "C#",
+          "E"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Db7",
+        "notes": [
+          "C#",
+          "F",
+          "Ab",
+          "B"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      }
+    ]
+  }
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "groovin-high",
-  "title": "Groovin’ High",
+  "title": "Groovin\u2019 High",
   "composer": "Dizzy Gillespie",
   "key": "Eb major",
   "tempo": 190,
@@ -9,7 +9,8 @@
   "tags": [
     "real-book-volume-1",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
   "backing": {
@@ -30,7 +31,101 @@
       "Bb7",
       "Ebmaj7"
     ],
-    "feel": "Fast swing comping"
+    "feel": "Fast swing arpeggio comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(190 / 240)\nstack(\n  note(\"<[eb3,f#3,bb3,c#4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [eb3,f#3,bb3,c#4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [ab3,b3,eb4,f#4] [ab3,b3,eb4,f#4] [eb3,f#3,bb3,c#4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [bb3,d4,f4,ab4] [eb3,f#3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<eb2 ~ g2 ~ c2 ~ f2 ~ eb2 ~ g2 ~ c2 ~ f2 ~ ab2 ~ ab2 ~ eb2 ~ c2 ~ f2 ~ bb2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(190 / 240)\nstack(\n  note(\"<[eb3 f#3 bb3 c#4] [g3 b3 d4 f4] [c3 eb3 g3 bb3] [f3 a3 c4 eb4] [eb3 f#3 bb3 c#4] [g3 b3 d4 f4] [c3 eb3 g3 bb3] [f3 a3 c4 eb4] [ab3 b3 eb4 f#4] [ab3 b3 eb4 f#4] [eb3 f#3 bb3 c#4] [c3 e3 g3 bb3] [f3 ab3 c4 eb4] [bb3 d4 f4 ab4] [eb3 f#3 bb3 c#4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[eb3,f#3,bb3,c#4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [eb3,f#3,bb3,c#4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [ab3,b3,eb4,f#4] [ab3,b3,eb4,f#4] [eb3,f#3,bb3,c#4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [bb3,d4,f4,ab4] [eb3,f#3,bb3,c#4]>\").s(\"triangle\").gain(.09),\n  note(\"<eb2 ~ g2 ~ c2 ~ f2 ~ eb2 ~ g2 ~ c2 ~ f2 ~ ab2 ~ ab2 ~ eb2 ~ c2 ~ f2 ~ bb2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "Ebmaj7",
+        "notes": [
+          "Eb",
+          "F#",
+          "Bb",
+          "C#"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "G7",
+        "notes": [
+          "G",
+          "B",
+          "D",
+          "F"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Cm7",
+        "notes": [
+          "C",
+          "Eb",
+          "G",
+          "Bb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "F7",
+        "notes": [
+          "F",
+          "A",
+          "C",
+          "Eb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Abmaj7",
+        "notes": [
+          "Ab",
+          "B",
+          "Eb",
+          "F#"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Abm7",
+        "notes": [
+          "Ab",
+          "B",
+          "Eb",
+          "F#"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "C7",
+        "notes": [
+          "C",
+          "E",
+          "G",
+          "Bb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Fm7",
+        "notes": [
+          "F",
+          "Ab",
+          "C",
+          "Eb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Bb7",
+        "notes": [
+          "Bb",
+          "D",
+          "F",
+          "Ab"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      }
+    ]
+  }
 }

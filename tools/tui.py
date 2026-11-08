@@ -74,28 +74,28 @@ def run_check() -> int:
 
 MESSAGES = {
     "en": {
-        "library": "LIBRARY", "details": "SONG DETAILS", "search": "Search title, composer, key, chord…",
+        "library": "LIBRARY", "details": "STRUDEL WORKBENCH", "search": "Search title, composer, key, chord…",
         "live": "LIVE PLAYBACK", "stopped": "STOPPED", "now": "Now sounding", "play": "▶ Play",
-        "stop": "■ Stop", "random": "♢ Random", "edit": "✎ Edit", "new": "+ New", "import": "Import",
+        "stop": "■ Stop", "save_code": "Save code", "random": "♢ Random", "edit": "✎ JSON", "new": "+ New", "import": "Import",
         "export": "Export", "loaded": lambda count: f"Loaded {count} songs. Click a row or use ↑ ↓ to select.",
         "playing": lambda title: f"Playing {title}.", "stopped_message": "Playback stopped.",
         "picked": lambda title: f"Practice pick: {title}.", "saved": lambda title: f"Saved {title}.",
         "imported": lambda title: f"Imported {title}.", "exported": lambda path: f"Exported to {path}.",
         "path_import": "Path to a JSON song file", "path_export": "Destination JSON path", "save": "Save",
         "cancel": "Cancel", "editor": "Edit song JSON", "invalid": "The JSON does not conform to the song schema.",
-        "error": lambda message: f"Error: {message}", "controls": "Mouse: click a song or action. Keys: / search · p play · space/s stop · g random · e edit · n new · i import · x export · l language · r reload · q quit",
+        "error": lambda message: f"Error: {message}", "controls": "Mouse: click a song or action. Keys: / search · p play · space/s stop · Ctrl+S save code · g random · e JSON · n new · i import · x export · l language · r reload · q quit",
     },
     "es": {
-        "library": "BIBLIOTECA", "details": "DETALLES DE LA CANCIÓN", "search": "Buscar título, compositor, tonalidad, acorde…",
+        "library": "BIBLIOTECA", "details": "ESPACIO STRUDEL", "search": "Buscar título, compositor, tonalidad, acorde…",
         "live": "REPRODUCCIÓN EN VIVO", "stopped": "DETENIDO", "now": "Sonando ahora", "play": "▶ Reproducir",
-        "stop": "■ Detener", "random": "♢ Aleatoria", "edit": "✎ Editar", "new": "+ Nueva", "import": "Importar",
+        "stop": "■ Detener", "save_code": "Guardar código", "random": "♢ Aleatoria", "edit": "✎ JSON", "new": "+ Nueva", "import": "Importar",
         "export": "Exportar", "loaded": lambda count: f"{count} canciones cargadas. Haz clic o usa ↑ ↓ para seleccionar.",
         "playing": lambda title: f"Reproduciendo {title}.", "stopped_message": "Reproducción detenida.",
         "picked": lambda title: f"Selección para practicar: {title}.", "saved": lambda title: f"{title} se guardó.",
         "imported": lambda title: f"{title} se importó.", "exported": lambda path: f"Exportado en {path}.",
         "path_import": "Ruta del archivo JSON para importar", "path_export": "Ruta de destino JSON", "save": "Guardar",
         "cancel": "Cancelar", "editor": "Editar JSON de la canción", "invalid": "El JSON no cumple el esquema de canción.",
-        "error": lambda message: f"Error: {message}", "controls": "Ratón: haz clic en una canción o acción. Teclas: / buscar · p reproducir · espacio/s detener · g aleatoria · e editar · n nueva · i importar · x exportar · l idioma · r recargar · q salir",
+        "error": lambda message: f"Error: {message}", "controls": "Ratón: haz clic en una canción o acción. Teclas: / buscar · p reproducir · espacio/s detener · Ctrl+S guardar código · g aleatoria · e JSON · n nueva · i importar · x exportar · l idioma · r recargar · q salir",
     },
 }
 
@@ -113,9 +113,11 @@ def main() -> int:
 
     try:
         from rich.markup import escape
+        from textual import on
         from textual.app import App, ComposeResult
         from textual.binding import Binding
         from textual.containers import Horizontal, Vertical
+        from textual.document._document import Selection
         from textual.screen import ModalScreen
         from textual.widgets import Button, DataTable, Footer, Header, Input, Label, Static, TextArea
     except ModuleNotFoundError:
@@ -202,13 +204,21 @@ def main() -> int:
                     return
 
         def send(self, message: dict[str, Any]) -> None:
-            if self.process.poll() is not None or self.process.stdin is None:
-                return
-            self.process.stdin.write(json.dumps(message) + "\n")
-            self.process.stdin.flush()
+            if self.process.poll() is not None:
+                raise RuntimeError(f"Audio player exited with code {self.process.returncode}.")
+            if self.process.stdin is None:
+                raise RuntimeError("Audio player input is unavailable.")
+            try:
+                self.process.stdin.write(json.dumps(message) + "\n")
+                self.process.stdin.flush()
+            except OSError as error:
+                raise RuntimeError(f"Could not contact audio player: {error}") from error
 
         def close(self) -> None:
-            self.send({"type": "quit"})
+            try:
+                self.send({"type": "quit"})
+            except RuntimeError:
+                return
             try:
                 self.process.wait(timeout=0.5)
             except subprocess.TimeoutExpired:
@@ -223,18 +233,19 @@ def main() -> int:
         #body { padding: 1 2; height: 1fr; }
         #search { margin-bottom: 1; }
         #panels { height: 1fr; }
-        #library-panel { width: 40%; border: round #315a5d; padding: 0 1; margin-right: 1; }
-        #detail-panel { width: 1fr; border: round #34404c; padding: 0 1; }
+        #library-panel { width: 34%; border: round #315a5d; padding: 0 1; margin-right: 1; }
+        #detail-panel { width: 1fr; border: heavy #3b716e; padding: 0 1; }
         .panel-title { color: #78dfd4; text-style: bold; height: 2; content-align: left middle; }
         #song-table { height: 1fr; }
         #song-table > .datatable--cursor { background: #284d50; color: #ffffff; }
-        #live { border: heavy #4aa99f; padding: 0 1; margin-bottom: 1; color: #b8e9df; }
-        #song-details { height: auto; color: #d6e2e5; }
-        #arpeggios { height: auto; color: #b8e9df; }
-        #code { height: 1fr; border: solid #303945; padding: 0 1; color: #aab6c1; overflow: auto; }
-        #actions { height: 3; margin-top: 1; }
-        #actions Button { margin-right: 1; min-width: 10; }
-        #play { background: #55c6b9; color: #071012; }
+        #live { border: heavy #4aa99f; padding: 0 1; margin-bottom: 1; color: #b8e9df; height: 5; }
+        #song-details { height: 3; color: #d6e2e5; }
+        #code-editor { height: 1fr; min-height: 12; border: solid #3b5861; margin: 1 0; background: #0b1118; }
+        #code-editor:focus { border: heavy #55c6b9; }
+        #arpeggios { height: auto; max-height: 5; color: #b8e9df; overflow: auto; }
+        #actions { height: 7; margin-top: 1; layout: grid; grid-size: 4; grid-columns: 1fr 1fr 1fr 1fr; grid-gutter: 1; }
+        #actions Button { width: 1fr; }
+        #play, #save-code { background: #55c6b9; color: #071012; }
         #stop { background: #5e3138; }
         #status { height: 1; color: #aab6c1; margin-top: 1; }
         PathPrompt, SongEditor { align: center middle; background: #00000088; }
@@ -251,6 +262,7 @@ def main() -> int:
             Binding("space", "stop", "Stop"), Binding("s", "stop", "Stop"), Binding("g", "random", "Random"),
             Binding("e", "edit", "Edit"), Binding("n", "new", "New"), Binding("i", "import_song", "Import"),
             Binding("x", "export_song", "Export"), Binding("l", "language", "Language"), Binding("r", "reload", "Reload"),
+            Binding("ctrl+s", "save_code", "Save code"),
             Binding("j", "next_song", "Next", show=False), Binding("k", "previous_song", "Previous", show=False),
             Binding("escape", "focus_table", "Browse", show=False),
         ]
@@ -263,6 +275,8 @@ def main() -> int:
             self.selected_id = ""
             self.playing_title = ""
             self.live_event: dict[str, Any] | None = None
+            self.code_drafts: dict[str, str] = {}
+            self.loading_code = False
             self.player: PlayerService | None = None
 
         @property
@@ -285,11 +299,12 @@ def main() -> int:
                         yield Label(self.t["details"], classes="panel-title", id="details-title")
                         yield Static("", id="live")
                         yield Static("", id="song-details")
+                        yield TextArea("", language="javascript", theme="monokai", soft_wrap=False, tab_behavior="indent", show_line_numbers=True, id="code-editor")
                         yield Static("", id="arpeggios")
-                        yield Static("", id="code")
                 with Horizontal(id="actions"):
                     yield Button(self.t["play"], id="play", variant="primary")
                     yield Button(self.t["stop"], id="stop")
+                    yield Button(self.t["save_code"], id="save-code", variant="primary")
                     yield Button(self.t["random"], id="random")
                     yield Button(self.t["edit"], id="edit")
                     yield Button(self.t["new"], id="new")
@@ -350,8 +365,37 @@ def main() -> int:
             arpeggios = song.get("improvisation", {}).get("arpeggios", [])
             arpeggio_text = "\n".join(f"[cyan]{escape(item['chord'])}[/]  {escape(' · '.join(item['notes']))}" for item in arpeggios)
             self.query_one("#arpeggios", Static).update(f"[bold]Arpeggios[/bold]\n{arpeggio_text}" if arpeggio_text else "")
-            self.query_one("#code", Static).update(f"[bold]Strudel code[/bold]\n{escape(song['strudel'])}")
+            self._load_code_editor(song)
             self._update_live_panel()
+
+        def _current_code(self) -> str:
+            song = self.selected
+            if not song:
+                return ""
+            return self.code_drafts.get(song["id"], song["strudel"])
+
+        def _load_code_editor(self, song: dict[str, Any]) -> None:
+            editor = self.query_one("#code-editor", TextArea)
+            code = self.code_drafts.get(song["id"], song["strudel"])
+            if editor.text == code:
+                return
+            self.loading_code = True
+            editor.load_text(code)
+            self.loading_code = False
+
+        def _highlight_live_code(self, locations: list[dict[str, Any]]) -> None:
+            if not locations:
+                return
+            editor = self.query_one("#code-editor", TextArea)
+            code = self._current_code()
+            start = max(0, min(int(location.get("start", 0)) for location in locations))
+            end = min(len(code), max(int(location.get("end", 0)) for location in locations))
+            if end <= start:
+                return
+            editor.selection = Selection(
+                editor.document.get_location_from_index(start),
+                editor.document.get_location_from_index(end),
+            )
 
         def _update_live_panel(self) -> None:
             live = self.query_one("#live", Static)
@@ -367,6 +411,7 @@ def main() -> int:
             kind = message.get("type")
             if kind == "event":
                 self.live_event = message.get("event")
+                self._highlight_live_code(self.live_event.get("locations", []) if self.live_event else [])
             elif kind == "stopped":
                 self.playing_title = ""
                 self.live_event = None
@@ -388,17 +433,29 @@ def main() -> int:
             song = self.selected
             if not song or not self.player:
                 return
-            self.playing_title = song["title"]
-            self.live_event = None
-            self._update_live_panel()
-            self.player.send({"type": "play", "code": song["strudel"]})
-            self._set_status(self.t["playing"](song["title"]))
+            try:
+                self.player.send({"type": "play", "code": self._current_code()})
+                self.playing_title = song["title"]
+                self.live_event = None
+                self._update_live_panel()
+                self._set_status(self.t["playing"](song["title"]))
+            except RuntimeError as error:
+                self.playing_title = ""
+                self.live_event = None
+                self._update_live_panel()
+                self._set_status(self.t["error"](str(error)))
 
         def _stop(self) -> None:
-            if self.player:
-                self.player.send({"type": "stop"})
+            try:
+                if self.player:
+                    self.player.send({"type": "stop"})
+            except RuntimeError as error:
+                self._set_status(self.t["error"](str(error)))
+                return
             self.playing_title = ""
             self.live_event = None
+            editor = self.query_one("#code-editor", TextArea)
+            editor.selection = Selection.cursor(editor.selection.end)
             self._update_live_panel()
             self._set_status(self.t["stopped_message"])
 
@@ -407,6 +464,7 @@ def main() -> int:
                 self._set_status(self.t["error"](self.t["invalid"]))
                 return
             (SONGS_DIRECTORY / f"{song['id']}.json").write_text(json.dumps(song, indent=2) + "\n", encoding="utf-8")
+            self.code_drafts.pop(song["id"], None)
             self.selected_id = song["id"]
             self._reload_library()
             self._set_status(self.t["imported"](song["title"]) if imported else self.t["saved"](song["title"]))
@@ -414,6 +472,12 @@ def main() -> int:
         def on_input_changed(self, event: Input.Changed) -> None:
             if event.input.id == "search":
                 self._filter_songs(event.value)
+
+        def on_text_area_changed(self, event: TextArea.Changed) -> None:
+            if event.text_area.id != "code-editor" or self.loading_code or not self.selected:
+                return
+            self.code_drafts[self.selected["id"]] = event.text_area.text
+            self._set_status("Code changed — Ctrl+S or Save code to write it." if self.language == "en" else "Código modificado — Ctrl+S o Guardar código para escribirlo.")
 
         def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
             if event.data_table.id == "song-table" and event.cursor_row < len(self.visible_songs):
@@ -425,13 +489,15 @@ def main() -> int:
                 self.selected_id = self.visible_songs[event.cursor_row]["id"]
                 self._play()
 
-        def on_button_pressed(self, event: Button.Pressed) -> None:
+        @on(Button.Pressed)
+        def handle_button_pressed(self, event: Button.Pressed) -> None:
             actions = {
-                "play": self._play, "stop": self._stop, "random": self.action_random, "edit": self.action_edit,
+                "play": self._play, "stop": self._stop, "save-code": self.action_save_code, "random": self.action_random, "edit": self.action_edit,
                 "new": self.action_new, "import": self.action_import_song, "export": self.action_export_song,
             }
             action = actions.get(event.button.id)
             if action:
+                event.stop()
                 action()
 
         def action_focus_search(self) -> None:
@@ -458,6 +524,12 @@ def main() -> int:
 
         def action_play(self) -> None:
             self._play()
+
+        def action_save_code(self) -> None:
+            song = self.selected
+            if not song:
+                return
+            self._save_song({**song, "strudel": self._current_code()})
 
         def action_stop(self) -> None:
             self._stop()
@@ -512,7 +584,7 @@ def main() -> int:
             self.query_one("#search", Input).placeholder = self.t["search"]
             self.query_one("#library-title", Label).update(self.t["library"])
             self.query_one("#details-title", Label).update(self.t["details"])
-            for button_id, label in (("play", "play"), ("stop", "stop"), ("random", "random"), ("edit", "edit"), ("new", "new"), ("import", "import"), ("export", "export")):
+            for button_id, label in (("play", "play"), ("stop", "stop"), ("save-code", "save_code"), ("random", "random"), ("edit", "edit"), ("new", "new"), ("import", "import"), ("export", "export")):
                 self.query_one(f"#{button_id}", Button).label = self.t[label]
             self._update_details()
 

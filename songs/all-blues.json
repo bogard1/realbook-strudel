@@ -9,7 +9,8 @@
   "tags": [
     "real-book-volume-1",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
   "backing": {
@@ -21,7 +22,41 @@
       "C7",
       "G7"
     ],
-    "feel": "Jazz waltz comping"
+    "feel": "Jazz waltz arpeggio comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(138 / 240)\nstack(\n  note(\"<[g3,b3,d4,f4] [c3,e3,g3,bb3] [g3,b3,d4,f4] [d3,f#3,a3,c4] [c3,e3,g3,bb3] [g3,b3,d4,f4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<g2 ~ c2 ~ g2 ~ d2 ~ c2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(138 / 240)\nstack(\n  note(\"<[g3 b3 d4 f4] [c3 e3 g3 bb3] [g3 b3 d4 f4] [d3 f#3 a3 c4] [c3 e3 g3 bb3] [g3 b3 d4 f4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[g3,b3,d4,f4] [c3,e3,g3,bb3] [g3,b3,d4,f4] [d3,f#3,a3,c4] [c3,e3,g3,bb3] [g3,b3,d4,f4]>\").s(\"triangle\").gain(.09),\n  note(\"<g2 ~ c2 ~ g2 ~ d2 ~ c2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "G7",
+        "notes": [
+          "G",
+          "B",
+          "D",
+          "F"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "C7",
+        "notes": [
+          "C",
+          "E",
+          "G",
+          "Bb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "D7",
+        "notes": [
+          "D",
+          "F#",
+          "A",
+          "C"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      }
+    ]
+  }
 }

@@ -10,7 +10,8 @@
     "public-domain",
     "openbook-source",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "Public-domain composition; original chord-only Strudel backing CC0-1.0.",
   "source": {
@@ -28,7 +29,39 @@
       "D7",
       "G"
     ],
-    "feel": "Gentle swing comping"
+    "feel": "Gentle swing arpeggio comping"
   },
-  "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\nsetcps(110 / 240)\nstack(\n  note(\"<[g3,b3,d4] [d3,f#3,a3,c4] [g3,b3,d4] [c3,e3,g3] [g3,b3,d4] [d3,f#3,a3,c4] [g3,b3,d4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<g2 ~ d2 ~ g2 ~ c2 ~ g2 ~ d2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(110 / 240)\nstack(\n  note(\"<[g3 b3 d4] [d3 f#3 a3 c4] [g3 b3 d4] [c3 e3 g3] [g3 b3 d4] [d3 f#3 a3 c4] [g3 b3 d4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[g3,b3,d4] [d3,f#3,a3,c4] [g3,b3,d4] [c3,e3,g3] [g3,b3,d4] [d3,f#3,a3,c4] [g3,b3,d4]>\").s(\"triangle\").gain(.09),\n  note(\"<g2 ~ d2 ~ g2 ~ c2 ~ g2 ~ d2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "G",
+        "notes": [
+          "G",
+          "B",
+          "D"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "D7",
+        "notes": [
+          "D",
+          "F#",
+          "A",
+          "C"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "C",
+        "notes": [
+          "C",
+          "E",
+          "G"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      }
+    ]
+  }
 }

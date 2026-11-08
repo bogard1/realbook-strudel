@@ -10,7 +10,8 @@
     "public-domain",
     "openbook-source",
     "backing-track",
-    "no-melody"
+    "no-melody",
+    "arpeggio-practice"
   ],
   "license": "Public-domain composition; original chord-only Strudel backing CC0-1.0.",
   "source": {
@@ -31,7 +32,49 @@
       "C7",
       "F"
     ],
-    "feel": "Slow waltz comping"
+    "feel": "Slow waltz arpeggio comping"
   },
-  "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\nsetcps(88 / 180)\nstack(\n  note(\"<[f3,a3,c4] [c3,e3,g3,bb3] [f3,a3,c4] [bb3,d4,f4] [f3,a3,c4] [c3,e3,g3,bb3] [a3,c#4,e4,g4] [bb3,d4,f4] [c3,e3,g3,bb3] [f3,a3,c4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<f2 ~ c2 ~ f2 ~ bb2 ~ f2 ~ c2 ~ a2 ~ bb2 ~ c2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(88 / 180)\nstack(\n  note(\"<[f3 a3 c4] [c3 e3 g3 bb3] [f3 a3 c4] [bb3 d4 f4] [f3 a3 c4] [c3 e3 g3 bb3] [a3 c#4 e4 g4] [bb3 d4 f4] [c3 e3 g3 bb3] [f3 a3 c4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[f3,a3,c4] [c3,e3,g3,bb3] [f3,a3,c4] [bb3,d4,f4] [f3,a3,c4] [c3,e3,g3,bb3] [a3,c#4,e4,g4] [bb3,d4,f4] [c3,e3,g3,bb3] [f3,a3,c4]>\").s(\"triangle\").gain(.09),\n  note(\"<f2 ~ c2 ~ f2 ~ bb2 ~ f2 ~ c2 ~ a2 ~ bb2 ~ c2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)",
+  "improvisation": {
+    "arpeggios": [
+      {
+        "chord": "F",
+        "notes": [
+          "F",
+          "A",
+          "C"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "C7",
+        "notes": [
+          "C",
+          "E",
+          "G",
+          "Bb"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "Bb",
+        "notes": [
+          "Bb",
+          "D",
+          "F"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      },
+      {
+        "chord": "A7",
+        "notes": [
+          "A",
+          "C#",
+          "E",
+          "G"
+        ],
+        "tip": "Outline these chord tones, then connect by the shortest step into the next change."
+      }
+    ]
+  }
 }

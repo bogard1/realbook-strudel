@@ -10,6 +10,7 @@ export type PlaybackEvent = {
   notes: string[];
   sound: string;
   gain: number;
+  locations: Array<{ start: number; end: number }>;
 };
 
 const waveforms = new Set(['sine', 'square', 'sawtooth', 'triangle']);
@@ -99,8 +100,8 @@ export class TerminalStrudelPlayer {
       this.controller = core.repl({
         getTime: () => this.context!.currentTime,
         transpiler: transpiler.transpiler,
-        defaultOutput: (hap: { value: Record<string, unknown> }, deadline: number, duration: number, cps: number) => {
-          this.trigger(hap.value, deadline, duration, cps);
+        defaultOutput: (hap: { value: Record<string, unknown>; context?: { locations?: Array<{ start: number; end: number }> } }, deadline: number, duration: number, cps: number) => {
+          this.trigger(hap.value, deadline, duration, cps, hap.context?.locations ?? []);
         },
       }) as Repl;
     } finally {
@@ -112,7 +113,7 @@ export class TerminalStrudelPlayer {
     }
   }
 
-  private trigger(value: Record<string, unknown>, deadline: number, duration: number, cps: number) {
+  private trigger(value: Record<string, unknown>, deadline: number, duration: number, cps: number, locations: Array<{ start: number; end: number }>) {
     const context = this.context;
     if (!context) return;
     const rawNotes = value.note ?? value.n;
@@ -121,7 +122,7 @@ export class TerminalStrudelPlayer {
     const length = Math.max(0.025, Math.min(4, numeric(duration, 0.25) / Math.max(0.01, numeric(cps, 1))));
     const gain = Math.max(0.001, Math.min(0.28, numeric(value.gain, 0.16)));
     const sound = String(value.s ?? 'sine').toLowerCase();
-    this.onEvent?.({ notes: notes.filter((note) => note !== undefined && note !== null).map(String), sound, gain });
+    this.onEvent?.({ notes: notes.filter((note) => note !== undefined && note !== null).map(String), sound, gain, locations });
     const type = waveforms.has(sound) ? sound as OscillatorType : 'sine';
     const frequencies = notes.map(noteToFrequency).filter((frequency): frequency is number => frequency !== undefined);
     if (!frequencies.length && percussionFrequencies[sound]) frequencies.push(percussionFrequencies[sound]);

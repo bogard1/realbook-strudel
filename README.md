@@ -9,6 +9,8 @@ An individual-file song library for performing and editing material with [Strude
 
 The catalog contains 60 chord-only practice backings for the Real Book Volume 1 title list supplied by the maintainer. Each is an independent JSON file tagged `real-book-volume-1`, with comping and bass only—no melody or lyrics.
 
+Every catalog backing has an arpeggiated upper voice, supporting chord voicing, bass, and a chord-tone improvisation guide. These are original practice arrangements, not transcriptions of a melody or lead sheet.
+
 It also contains eight public-domain practice backings sourced from OpenBook entries that explicitly identify the composition as public domain. They are tagged `openbook-source` and retain a link to the exact source file.
 
 ## Copyright notice
@@ -41,7 +43,7 @@ make tui
 
 `make tui` creates `.venv`, installs Textual, installs Node dependencies when needed, and starts the application. Use `make setup` to install dependencies only, or `make tui-check` to validate the catalog without starting the interface.
 
-The TUI is a full terminal application and does not require the web interface. It uses Textual, the same Python TUI framework as the maintainer's other TUI projects, so the catalog table, action buttons, dialogs, and scrolling all support the mouse. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth. Its live playback panel shows the current song and event notes while it plays.
+The TUI is a full terminal application and does not require the web interface. It uses Textual, the same Python TUI framework as the maintainer's other TUI projects, so the catalog table, action buttons, dialogs, and scrolling all support the mouse. The central view is a line-numbered Strudel editor: edit it directly, use **Save code** or `Ctrl+S`, and it highlights the source fragment currently being played. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth.
 
 | Key | Action |
 | --- | --- |
@@ -50,6 +52,7 @@ The TUI is a full terminal application and does not require the web interface. I
 | `/` | Search |
 | `p`, `Enter` | Play selected song |
 | `Space` / `s` | Stop playback |
+| `Ctrl` + `s` | Save the Strudel code currently in the editor |
 | `g` | Choose a random song from the current search results |
 | `e` / `n` | Edit selected song / create a song in the built-in JSON dialog |
 | `i` / `x` | Import / export a JSON song file |

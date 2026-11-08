@@ -61,10 +61,10 @@ function renderHighlightedCode(code: string, locations: StrudelLocation[]) {
 
 const copy = {
   en: {
-    ready: 'Ready to play.', saved: 'Changes are saved in this browser. Export the JSON to add it to the repository.', initializing: 'Initializing audio…', playing: (title: string) => `Playing: ${title}`, stopped: 'Playback stopped.', nothingToStop: 'Nothing is playing.', created: 'New song created locally.', restored: 'The bundled catalog version was restored.', imported: (title: string) => `${title} was imported locally.`, practicePick: (title: string) => `Practice pick: ${title}`, linkCopied: 'Song link copied.', copyLinkError: 'Could not copy the song link.', noSongs: 'There are no songs. Import or create one.', library: 'Library', brandSuffix: 'for Strudel', search: 'Search', searchPlaceholder: 'Title, composer, key, chord…', filters: 'Filters', all: 'All', clearFilters: 'Clear filters', randomSong: '♢ Random practice song', songCount: (visible: number, total: number) => `${visible} of ${total} songs`, newSong: '+ New', importJson: 'Import JSON', restart: '↻ Restart', play: '▶ Play', stop: '■ Stop', copyLink: '⌁ Copy link', editSong: 'Edit song', localSave: 'Saved locally', title: 'Title', composer: 'Composer', key: 'Key', tempo: 'Tempo (BPM)', form: 'Form', chordProgression: 'Chord progression', arpeggios: 'Arpeggios for improvisation', feel: 'Feel', source: 'Source', sourceLicense: 'Source license', tags: 'Tags', license: 'License or permission', strudelCode: 'Strudel code', liveCode: 'Live execution', download: 'Download JSON', restore: 'Restore bundled version', footer: 'GitHub Pages edits stay in this browser. Download the JSON and add it to ', footerEnd: ' to publish it.', language: 'Language', english: 'English', spanish: 'Español', invalidSong: 'The file does not conform to the song schema.', audioError: (message: string) => `Strudel error: ${message}`, importError: (message: string) => `Could not import: ${message}`,
+    ready: 'Ready to play.', saved: 'Changes are saved in this browser. Export the JSON to add it to the repository.', initializing: 'Initializing audio…', playing: (title: string) => `Playing: ${title}`, stopped: 'Playback stopped.', nothingToStop: 'Nothing is playing.', created: 'New song created locally.', restored: 'The bundled catalog version was restored.', imported: (title: string) => `${title} was imported locally.`, practicePick: (title: string) => `Practice pick: ${title}`, linkCopied: 'Song link copied.', copyLinkError: 'Could not copy the song link.', noSongs: 'There are no songs. Import or create one.', library: 'Library', brandSuffix: 'for Strudel', search: 'Search', searchPlaceholder: 'Title, composer, key, chord…', filters: 'Filters', all: 'All', clearFilters: 'Clear filters', randomSong: '♢ Random practice song', songCount: (visible: number, total: number) => `${visible} of ${total} songs`, newSong: '+ New', importJson: 'Import JSON', restart: '↻ Restart', play: '▶ Play', stop: '■ Stop', copyLink: '⌁ Copy link', editSong: 'Song details', localSave: 'Saved locally', title: 'Title', composer: 'Composer', key: 'Key', tempo: 'Tempo (BPM)', form: 'Form', chordProgression: 'Chord progression', arpeggios: 'Arpeggios for improvisation', feel: 'Feel', source: 'Source', sourceLicense: 'Source license', tags: 'Tags', license: 'License or permission', strudelCode: 'Strudel code', liveCode: 'Live execution', liveIdle: 'Press Play to trace the running pattern.', download: 'Download JSON', restore: 'Restore bundled version', footer: 'GitHub Pages edits stay in this browser. Download the JSON and add it to ', footerEnd: ' to publish it.', language: 'Language', english: 'English', spanish: 'Español', invalidSong: 'The file does not conform to the song schema.', audioError: (message: string) => `Strudel error: ${message}`, importError: (message: string) => `Could not import: ${message}`,
   },
   es: {
-    ready: 'Listo para tocar.', saved: 'Los cambios se guardaron en este navegador. Exporta el JSON para añadirlo al repositorio.', initializing: 'Inicializando audio…', playing: (title: string) => `Reproduciendo: ${title}`, stopped: 'Reproducción detenida.', nothingToStop: 'No hay reproducción activa.', created: 'Nueva canción creada localmente.', restored: 'Se restauró la versión incluida del catálogo.', imported: (title: string) => `${title} se importó localmente.`, practicePick: (title: string) => `Selección para practicar: ${title}`, linkCopied: 'Enlace de la canción copiado.', copyLinkError: 'No se pudo copiar el enlace de la canción.', noSongs: 'No hay canciones. Importa o crea una.', library: 'Biblioteca', brandSuffix: 'para Strudel', search: 'Buscar', searchPlaceholder: 'Título, compositor, tonalidad, acorde…', filters: 'Filtros', all: 'Todos', clearFilters: 'Limpiar filtros', randomSong: '♢ Canción aleatoria', songCount: (visible: number, total: number) => `${visible} de ${total} canciones`, newSong: '+ Nueva', importJson: 'Importar JSON', restart: '↻ Reiniciar', play: '▶ Reproducir', stop: '■ Detener', copyLink: '⌁ Copiar enlace', editSong: 'Editar canción', localSave: 'Guardado local', title: 'Título', composer: 'Compositor/a', key: 'Tonalidad', tempo: 'Tempo (BPM)', form: 'Forma', chordProgression: 'Progresión de acordes', arpeggios: 'Arpegios para improvisar', feel: 'Aire', source: 'Fuente', sourceLicense: 'Licencia de la fuente', tags: 'Etiquetas', license: 'Licencia o permiso', strudelCode: 'Código Strudel', liveCode: 'Ejecución en vivo', download: 'Descargar JSON', restore: 'Restaurar versión incluida', footer: 'Las ediciones de GitHub Pages permanecen en este navegador. Descarga el JSON y añádelo a ', footerEnd: ' para publicarlo.', language: 'Idioma', english: 'English', spanish: 'Español', invalidSong: 'El archivo no cumple el esquema de canción.', audioError: (message: string) => `Error de Strudel: ${message}`, importError: (message: string) => `No se pudo importar: ${message}`,
+    ready: 'Listo para tocar.', saved: 'Los cambios se guardaron en este navegador. Exporta el JSON para añadirlo al repositorio.', initializing: 'Inicializando audio…', playing: (title: string) => `Reproduciendo: ${title}`, stopped: 'Reproducción detenida.', nothingToStop: 'No hay reproducción activa.', created: 'Nueva canción creada localmente.', restored: 'Se restauró la versión incluida del catálogo.', imported: (title: string) => `${title} se importó localmente.`, practicePick: (title: string) => `Selección para practicar: ${title}`, linkCopied: 'Enlace de la canción copiado.', copyLinkError: 'No se pudo copiar el enlace de la canción.', noSongs: 'No hay canciones. Importa o crea una.', library: 'Biblioteca', brandSuffix: 'para Strudel', search: 'Buscar', searchPlaceholder: 'Título, compositor, tonalidad, acorde…', filters: 'Filtros', all: 'Todos', clearFilters: 'Limpiar filtros', randomSong: '♢ Canción aleatoria', songCount: (visible: number, total: number) => `${visible} de ${total} canciones`, newSong: '+ Nueva', importJson: 'Importar JSON', restart: '↻ Reiniciar', play: '▶ Reproducir', stop: '■ Detener', copyLink: '⌁ Copiar enlace', editSong: 'Detalles de la canción', localSave: 'Guardado local', title: 'Título', composer: 'Compositor/a', key: 'Tonalidad', tempo: 'Tempo (BPM)', form: 'Forma', chordProgression: 'Progresión de acordes', arpeggios: 'Arpegios para improvisar', feel: 'Aire', source: 'Fuente', sourceLicense: 'Licencia de la fuente', tags: 'Etiquetas', license: 'Licencia o permiso', strudelCode: 'Código Strudel', liveCode: 'Ejecución en vivo', liveIdle: 'Pulsa Reproducir para seguir el patrón en ejecución.', download: 'Descargar JSON', restore: 'Restaurar versión incluida', footer: 'Las ediciones de GitHub Pages permanecen en este navegador. Descarga el JSON y añádelo a ', footerEnd: ' para publicarlo.', language: 'Idioma', english: 'English', spanish: 'Español', invalidSong: 'El archivo no cumple el esquema de canción.', audioError: (message: string) => `Error de Strudel: ${message}`, importError: (message: string) => `No se pudo importar: ${message}`,
   },
 } as const;
 
@@ -376,10 +376,22 @@ export function App() {
         </header>
 
         <p className="status" role="status">{statusText}</p>
-        {isPlaying && <section className="live-code live-code-prominent" aria-label={t.liveCode} aria-live="polite">
-          <div className="live-code-heading"><span><i />{t.liveCode}</span><strong>{statusText}</strong></div>
-          <pre><code>{renderHighlightedCode(executingCode, activeLocations)}</code></pre>
-        </section>}
+        <section className="code-workbench" aria-label={t.strudelCode}>
+          <div className="workbench-heading"><span>STRDL</span><strong>{t.strudelCode}</strong><em>{t.localSave}</em></div>
+          <div className={`ide-code-grid ${isPlaying ? 'is-playing' : ''}`}>
+            <section className="source-pane">
+              <div className="pane-heading"><span>EDITOR</span><small>{selected.id}.strudel</small></div>
+              <div className="source-editor">
+                <pre className="line-numbers" aria-hidden="true">{selected.strudel.split('\n').map((_, index) => `${index + 1}`).join('\n')}</pre>
+                <textarea aria-label={t.strudelCode} className="code-textarea" spellCheck="false" value={selected.strudel} onChange={(event) => updateSelected({ strudel: event.target.value })} />
+              </div>
+            </section>
+            <section className="live-code" aria-label={t.liveCode} aria-live="polite">
+              <div className="live-code-heading"><span><i className={isPlaying ? '' : 'idle'} />{t.liveCode}</span><strong>{isPlaying ? statusText : t.liveIdle}</strong></div>
+              <pre><code>{renderHighlightedCode(isPlaying ? executingCode : selected.strudel, isPlaying ? activeLocations : [])}</code></pre>
+            </section>
+          </div>
+        </section>
         {selected.improvisation && <section className="arpeggio-card" aria-label={t.arpeggios}>
           <h2>{t.arpeggios}</h2>
           <div className="arpeggio-list">
@@ -390,8 +402,8 @@ export function App() {
             </article>)}
           </div>
         </section>}
-        <section className="editor-card">
-          <div className="editor-heading"><h2>{t.editSong}</h2><span>{t.localSave}</span></div>
+        <details className="editor-card">
+          <summary><span>{t.editSong}</span><small>{t.localSave}</small></summary>
           <div className="fields">
             <label>{t.title}<input value={selected.title} onChange={(event) => updateSelected({ title: event.target.value })} /></label>
             <label>{t.composer}<input value={selected.composer} onChange={(event) => updateSelected({ composer: event.target.value })} /></label>
@@ -403,12 +415,11 @@ export function App() {
           </div>
           <label className="license-field">{t.chordProgression}<input value={selected.backing.progression.join(', ')} onChange={(event) => updateSelected({ backing: { ...selected.backing, progression: event.target.value.split(',').map((chord) => chord.trim()).filter(Boolean) } })} /></label>
           <label className="license-field">{t.license}<input value={selected.license} onChange={(event) => updateSelected({ license: event.target.value })} /></label>
-          <label className="code-label">{t.strudelCode}<textarea spellCheck="false" value={selected.strudel} onChange={(event) => updateSelected({ strudel: event.target.value })} /></label>
           <div className="editor-actions">
             <button onClick={() => downloadSong(selected)}>{t.download}</button>
             {hasOriginal && <button onClick={restoreOriginal}>{t.restore}</button>}
           </div>
-        </section>
+        </details>
         <footer>{t.footer}<code>songs/</code>{t.footerEnd}</footer>
       </section>
     </main>

@@ -1,0 +1,35 @@
+{
+  "name": "realbook-strudel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Catálogo editable de lead sheets autorizadas para Strudel.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config apps/web/vite.config.ts",
+    "build": "tsc --noEmit && vite build --config apps/web/vite.config.ts",
+    "preview": "vite preview --config apps/web/vite.config.ts",
+    "tui": "tsx tools/tui.ts",
+    "validate:songs": "tsx tools/validate-songs.ts"
+  },
+  "keywords": [
+    "strudel",
+    "jazz",
+    "live-coding",
+    "tui"
+  ],
+  "license": "AGPL-3.0-or-later",
+  "dependencies": {
+    "@strudel/web": "1.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.6"
+  }
+}

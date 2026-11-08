@@ -32,12 +32,12 @@ export const isSong = (value: unknown): value is Song => {
 export const makeSong = (id: string): Song => ({
   schemaVersion: 1,
   id,
-  title: 'Nueva canción',
-  composer: 'Autor/a',
+  title: 'New song',
+  composer: 'Composer',
   key: 'C major',
   tempo: 120,
   form: 'AABA',
   tags: [],
-  license: 'Indica la licencia o permiso de uso',
+  license: 'State the license or permission to distribute',
   strudel: 'setcps(120 / 60)\nnote("c4 e4 g4 b4").s("triangle").gain(.35)',
 });

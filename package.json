@@ -2,7 +2,7 @@
   "name": "realbook-strudel",
   "version": "0.1.0",
   "private": true,
-  "description": "Catálogo editable de lead sheets autorizadas para Strudel.",
+  "description": "Editable library of authorized lead sheets for Strudel.",
   "type": "module",
   "scripts": {
     "dev": "vite --config apps/web/vite.config.ts",

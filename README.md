@@ -1,18 +1,19 @@
 # Realbook Strudel
 
-Biblioteca de canciones en archivos individuales para interpretarlas y editarlas con [Strudel](https://strudel.cc/). Incluye:
+An individual-file song library for performing and editing material with [Strudel](https://strudel.cc/). It includes:
 
-- interfaz web estática con búsqueda, reproducción, pausa, edición local, importación y exportación;
-- TUI de Node.js para buscar, crear y editar archivos del catálogo;
-- despliegue automático a GitHub Pages al actualizar `main`.
+- a static web interface with search, playback, pause, local editing, import, and export;
+- a Node.js TUI for searching, creating, and editing catalog files;
+- automatic GitHub Pages deployment when `main` changes;
+- an English/Spanish language selector in the web interface (English is the default).
 
-## Importante: derechos de autor
+## Copyright notice
 
-El *Real Book* y muchas de sus transcripciones están protegidos por copyright. Este repositorio **no incluye canciones ni arreglos del Real Book**: solo dos demostraciones originales CC0. Añade únicamente obras de dominio público o contenido para el que tengas autorización de distribución, e indica su licencia en cada JSON.
+The *Real Book* and many of its transcriptions are protected by copyright. This repository **does not include Real Book songs or arrangements**: it contains only two original CC0 demos. Add only public-domain material or content for which you have distribution authorization, and state its license in each JSON file.
 
-Strudel usa AGPL-3.0-or-later; por ello este proyecto se distribuye bajo la misma licencia. Consulta `LICENSE`.
+Strudel uses AGPL-3.0-or-later, so this project is distributed under the same license. See `LICENSE`.
 
-## Inicio rápido
+## Quick start
 
 ```bash
 npm install
@@ -20,7 +21,7 @@ npm run validate:songs
 npm run dev
 ```
 
-Abre la URL que muestra Vite. La edición en GitHub Pages se guarda en `localStorage`; usa **Descargar JSON** y añade el archivo a `songs/` para que forme parte del catálogo publicado.
+Open the URL shown by Vite. GitHub Pages edits are stored in `localStorage`; use **Download JSON**, then add the file to `songs/` to include it in the published catalog.
 
 ### TUI
 
@@ -28,18 +29,18 @@ Abre la URL que muestra Vite. La edición en GitHub Pages se guarda en `localSto
 npm run tui
 ```
 
-La TUI gestiona los JSON locales y muestra el código Strudel. La reproducción de audio se realiza en la interfaz web, porque Strudel usa Web Audio y el navegador exige una interacción del usuario antes de reproducir sonido.
+The TUI manages local JSON files and displays Strudel code. Audio playback is performed by the web interface because Strudel uses Web Audio, and browsers require a user interaction before playing sound.
 
-## Formato de una canción
+## Song format
 
-Cada archivo `songs/<id>.json` contiene metadatos y código ejecutable de Strudel:
+Each `songs/<id>.json` file contains metadata and executable Strudel code:
 
 ```json
 {
   "schemaVersion": 1,
   "id": "mi-cancion",
-  "title": "Mi canción",
-  "composer": "Autor/a",
+  "title": "My song",
+  "composer": "Composer",
   "key": "C major",
   "tempo": 120,
   "form": "AABA",
@@ -49,12 +50,12 @@ Cada archivo `songs/<id>.json` contiene metadatos y código ejecutable de Strude
 }
 ```
 
-Valida el catálogo antes de hacer commit:
+Validate the catalog before committing:
 
 ```bash
 npm run validate:songs
 ```
 
-## Publicación en GitHub Pages
+## GitHub Pages deployment
 
-El workflow `.github/workflows/deploy-pages.yml` construye y publica el sitio. Tras el primer push, en **Settings → Pages** selecciona **GitHub Actions** como fuente de despliegue si GitHub no la activa automáticamente. El sitio quedará disponible en `https://bogard1.github.io/realbook-strudel/`.
+The `.github/workflows/deploy-pages.yml` workflow builds and publishes the site. In **Settings → Pages**, set **GitHub Actions** as the deployment source if GitHub does not enable it automatically. The site is available at `https://bogard1.github.io/realbook-strudel/`.

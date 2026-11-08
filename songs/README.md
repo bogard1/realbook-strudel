@@ -1,5 +1,5 @@
-# Canciones
+# Songs
 
-Cada canción es un archivo JSON independiente que cumple el esquema `schemaVersion: 1`.
+Every song is a standalone JSON file conforming to the `schemaVersion: 1` schema.
 
-No agregues transcripciones, letras ni arreglos de obras con copyright sin una licencia o permiso que permita su distribución. Declara siempre el campo `license` y conserva evidencia del permiso cuando corresponda.
+Do not add transcriptions, lyrics, or arrangements of copyrighted works without a license or permission allowing distribution. Always declare the `license` field and retain proof of permission when applicable.

@@ -8,5 +8,5 @@
   "form": "AABA",
   "tags": ["demo", "ballad", "original"],
   "license": "CC0-1.0",
-  "strudel": "// Demostración original; reemplázala por material autorizado.\nsetcps(84 / 60)\nstack(\n  note(\"d4 ~ f4 a4\").s(\"sine\").gain(.32).room(.25),\n  note(\"d2 ~ a2 ~\").s(\"triangle\").gain(.18)\n)"
+  "strudel": "// Original demo; replace with authorized material.\nsetcps(84 / 60)\nstack(\n  note(\"d4 ~ f4 a4\").s(\"sine\").gain(.32).room(.25),\n  note(\"d2 ~ a2 ~\").s(\"triangle\").gain(.18)\n)"
 }

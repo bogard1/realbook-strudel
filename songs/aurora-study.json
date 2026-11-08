@@ -8,5 +8,5 @@
   "form": "16 bars",
   "tags": ["demo", "swing", "original"],
   "license": "CC0-1.0",
-  "strudel": "// Demostración original; reemplázala por material autorizado.\nsetcps(112 / 60)\nstack(\n  note(\"c4 e4 g4 b4\").s(\"triangle\").gain(.35),\n  note(\"c2 ~ g2 ~\").s(\"sine\").gain(.22)\n)"
+  "strudel": "// Original demo; replace with authorized material.\nsetcps(112 / 60)\nstack(\n  note(\"c4 e4 g4 b4\").s(\"triangle\").gain(.35),\n  note(\"c2 ~ g2 ~\").s(\"sine\").gain(.22)\n)"
 }

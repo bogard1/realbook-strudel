@@ -40,7 +40,7 @@ export async function loadSongs(): Promise<Song[]> {
     files.map(async (file) => {
       const path = join(songsDirectory, file.name);
       const raw: unknown = JSON.parse(await readFile(path, 'utf8'));
-      if (!isSong(raw)) throw new Error(`${file.name} no cumple el esquema de canción.`);
+      if (!isSong(raw)) throw new Error(`${file.name} does not conform to the song schema.`);
       return raw;
     }),
   );
@@ -58,6 +58,6 @@ export function slugify(value: string): string {
 }
 
 export async function saveSong(song: Song): Promise<void> {
-  if (!isSong(song)) throw new Error('La canción no cumple el esquema.');
+  if (!isSong(song)) throw new Error('The song does not conform to the schema.');
   await writeFile(join(songsDirectory, `${basename(song.id)}.json`), `${JSON.stringify(song, null, 2)}\n`);
 }

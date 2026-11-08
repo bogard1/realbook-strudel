@@ -386,28 +386,28 @@ export function App() {
          <label className="language-picker">{t.theme}<select value={theme} onChange={(event) => setTheme(event.target.value as Theme)}><option value="dark">{t.dark}</option><option value="light">{t.light}</option></select></label>
          <label className="search-label" htmlFor="search">{t.search}</label>
         <input id="search" className="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.searchPlaceholder} />
-        <fieldset className="filters">
+         <fieldset className="filters">
           <legend>{t.filters}</legend>
           <label>{t.composer}<select value={filters.composer} onChange={(event) => setFilters((current) => ({ ...current, composer: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.composers.map((value) => <option key={value}>{value}</option>)}</select></label>
           <label>{t.key}<select value={filters.key} onChange={(event) => setFilters((current) => ({ ...current, key: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.keys.map((value) => <option key={value}>{value}</option>)}</select></label>
           <label>{t.feel}<select value={filters.feel} onChange={(event) => setFilters((current) => ({ ...current, feel: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.feels.map((value) => <option key={value}>{value}</option>)}</select></label>
-          <button type="button" className="text-button" onClick={() => setFilters({ composer: noFilter, key: noFilter, feel: noFilter })}>{t.clearFilters}</button>
-        </fieldset>
-        <div className="song-count">{t.songCount(filtered.length, songs.length)}</div>
+           <button type="button" className="text-button" onClick={() => setFilters({ composer: noFilter, key: noFilter, feel: noFilter })}>{t.clearFilters}</button>
+         </fieldset>
+         <div className="library-toolbar">
+           <button className="random-song" onClick={choosePracticeSong} disabled={filtered.length === 0}>{t.randomSong}</button>
+           <button onClick={createSong}>{t.newSong}</button>
+           <button onClick={() => importRef.current?.click()}>{t.importJson}</button>
+           <input ref={importRef} type="file" accept="application/json" hidden onChange={(event) => void importSong(event.target.files?.[0])} />
+         </div>
+         <div className="song-count">{t.songCount(filtered.length, songs.length)}</div>
         <nav className="song-list">
           {filtered.map((song) => (
             <button className={`song-row ${song.id === selected.id ? 'selected' : ''}`} key={song.id} onClick={() => selectSong(song.id)}>
               <strong>{song.title}</strong><span>{song.composer} · {song.key}</span>
             </button>
           ))}
-        </nav>
-        <button className="random-song" onClick={choosePracticeSong} disabled={filtered.length === 0}>{t.randomSong}</button>
-        <div className="library-actions">
-          <button onClick={createSong}>{t.newSong}</button>
-          <button onClick={() => importRef.current?.click()}>{t.importJson}</button>
-          <input ref={importRef} type="file" accept="application/json" hidden onChange={(event) => void importSong(event.target.files?.[0])} />
-        </div>
-      </aside>
+         </nav>
+       </aside>
 
       <section className="workspace">
         <header className="song-header">

@@ -46,7 +46,7 @@ The editor defaults to `vi` when `$VISUAL` and `$EDITOR` are not set. On Linux, 
 
 ## Song format
 
-Each `songs/<id>.json` file contains metadata and executable Strudel code:
+Each `songs/<id>.json` file contains metadata, a chord progression, and executable Strudel code. Catalog arrangements are backing tracks: comping and bass only, with no melody or lyrics.
 
 ```json
 {
@@ -59,6 +59,10 @@ Each `songs/<id>.json` file contains metadata and executable Strudel code:
   "form": "AABA",
   "tags": ["swing"],
   "license": "CC0-1.0",
+  "backing": {
+    "progression": ["Cmaj7", "Am7", "Dm7", "G7"],
+    "feel": "Medium swing comping"
+  },
   "source": {
     "title": "Source title",
     "url": "https://example.org/source",
@@ -67,6 +71,8 @@ Each `songs/<id>.json` file contains metadata and executable Strudel code:
   "strudel": "setcps(120 / 60)\\nnote(\"c4 e4 g4\").s(\"triangle\")"
 }
 ```
+
+Do not treat an unverified chord chart as permission to reproduce a copyrighted edition. Add works to the shared catalog only when their source is public domain, explicitly licensed, or otherwise authorized for distribution.
 
 Validate the catalog before committing:
 

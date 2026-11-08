@@ -8,6 +8,10 @@ export type Song = {
   form: string;
   tags: string[];
   license: string;
+  backing: {
+    progression: string[];
+    feel: string;
+  };
   source?: {
     title: string;
     url: string;
@@ -30,6 +34,10 @@ export const isSong = (value: unknown): value is Song => {
     Array.isArray(song.tags) &&
     song.tags.every((tag) => typeof tag === 'string') &&
     typeof song.license === 'string' &&
+    !!song.backing &&
+    Array.isArray(song.backing.progression) &&
+    song.backing.progression.every((chord) => typeof chord === 'string') &&
+    typeof song.backing.feel === 'string' &&
     (song.source === undefined || (
       typeof song.source.title === 'string' &&
       typeof song.source.url === 'string' &&
@@ -49,5 +57,6 @@ export const makeSong = (id: string): Song => ({
   form: 'AABA',
   tags: [],
   license: 'State the license or permission to distribute',
-  strudel: 'setcps(120 / 60)\nnote("c4 e4 g4 b4").s("triangle").gain(.35)',
+  backing: { progression: ['Cmaj7', 'Am7', 'Dm7', 'G7'], feel: 'Swing comping' },
+  strudel: 'setcps(120 / 60)\nstack(\n  note("<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>").s("triangle").gain(.22),\n  note("c2 ~ a1 ~ d2 ~ g1 ~").s("sine").gain(.16)\n)',
 });

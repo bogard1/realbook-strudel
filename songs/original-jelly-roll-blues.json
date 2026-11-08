@@ -8,10 +8,14 @@
   "form": "16-bar study",
   "tags": ["blues", "early-jazz", "public-domain"],
   "license": "Public-domain composition (1915); original Strudel arrangement CC0-1.0.",
+  "backing": {
+    "progression": ["Bb7", "Eb7", "Bb7", "F7", "Eb7", "Bb7"],
+    "feel": "Early-jazz blues comping"
+  },
   "source": {
     "title": "IMSLP: Original Jelly Roll Blues (Morton, Jelly Roll)",
     "url": "https://imslp.org/wiki/Original_Jelly_Roll_Blues_(Morton%2C_Jelly_Roll)",
     "license": "Public domain (1915 first edition)"
   },
-  "strudel": "// Original CC0 Strudel sketch, based on the public-domain 1915 composition.\nsetcps(104 / 60)\nstack(\n  note(\"bb4 d5 f5 d5 eb5 d5 c5 bb4\").s(\"triangle\").gain(.34).room(.12),\n  note(\"bb2 ~ eb3 ~ f3 ~ bb2 ~\").s(\"sine\").gain(.24),\n  note(\"bb3 ~ f3 ~\").s(\"pulse\").gain(.1)\n)"
+  "strudel": "// Original CC0 chord backing based on the public-domain 1915 composition; no melody.\nsetcps(104 / 60)\nstack(\n  note(\"<[bb2,d3,f3,ab3] [eb3,g3,bb3,db4] [bb2,d3,f3,ab3] [f3,a3,c4,eb4] [eb3,g3,bb3,db4] [bb2,d3,f3,ab3]>\").s(\"triangle\").gain(.22),\n  note(\"bb1 ~ eb2 ~ bb1 ~ f2 ~ eb2 ~ bb1 ~\").s(\"sine\").gain(.17)\n)"
 }

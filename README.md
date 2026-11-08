@@ -36,11 +36,10 @@ Every selected song has a direct hash link, for example `#/song/autumn-leaves`. 
 ### TUI
 
 ```bash
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install -r tools/requirements-tui.txt
-npm run tui
+make tui
 ```
+
+`make tui` creates `.venv`, installs Textual, installs Node dependencies when needed, and starts the application. Use `make setup` to install dependencies only, or `make tui-check` to validate the catalog without starting the interface.
 
 The TUI is a full terminal application and does not require the web interface. It uses Textual, the same Python TUI framework as the maintainer's other TUI projects, so the catalog table, action buttons, dialogs, and scrolling all support the mouse. It uses the same Strudel evaluator as the web app and plays notes through a local Node Web Audio synth. Its live playback panel shows the current song and event notes while it plays.
 

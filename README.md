@@ -2,8 +2,8 @@
 
 An individual-file song library for performing and editing material with [Strudel](https://strudel.cc/). It includes:
 
-- a static web interface with search, playback, pause, local editing, import, and export;
-- a Node.js TUI for searching, creating, and editing catalog files;
+- a static web interface with full-text search, composer/key/feel filters, random practice selection, playback, local editing, import, and export;
+- a Node.js TUI for searching—including chords and feel—random practice selection, creating, and editing catalog files;
 - automatic GitHub Pages deployment when `main` changes;
 - an English/Spanish language selector in the web interface (English is the default).
 
@@ -11,7 +11,7 @@ The catalog contains 60 chord-only practice backings for the Real Book Volume 1 
 
 ## Copyright notice
 
-The *Real Book* and many of its transcriptions are protected by copyright. This repository **does not include Real Book songs or arrangements**: it contains only two original CC0 demos. Add only public-domain material or content for which you have distribution authorization, and state its license in each JSON file.
+The *Real Book* and many of its transcriptions are protected by copyright. This repository does not include scans, melodies, lyrics, or lead-sheet engravings. Its catalog contains chord-only practice backings requested by the maintainer; add material only when you have distribution authorization, and state its license in each JSON file.
 
 Strudel uses AGPL-3.0-or-later, so this project is distributed under the same license. See `LICENSE`.
 
@@ -39,6 +39,7 @@ The TUI is a full terminal application and does not require the web interface. I
 | `/` | Search |
 | `p`, `Enter` | Play selected song |
 | `Space` | Pause playback |
+| `g` | Choose a random song from the current search results |
 | `e` / `n` | Edit selected song / create a song in `$EDITOR` |
 | `i` / `x` | Import / export a JSON song file |
 | `l` | Toggle English and Spanish |
@@ -75,6 +76,12 @@ Each `songs/<id>.json` file contains metadata, a chord progression, and executab
 ```
 
 Do not treat an unverified chord chart as permission to reproduce a copyrighted edition. Add works to the shared catalog only when their source is public domain, explicitly licensed, or otherwise authorized for distribution.
+
+## Catalog discovery
+
+The library follows the discovery model of [`real_book`](https://real-book.hexdocs.pm/readme.html): search by title, composer, key, chord, form, tag, or feel; narrow the web library by composer, key, and feel; or choose a random practice song from the current results.
+
+`real_book`'s code is MIT-licensed, but its included iRb Corpus data is documented as educational/personal-use data with potential copyright restrictions. This project does **not** copy that corpus into the public catalog. Its data model is used as product inspiration only.
 
 Validate the catalog before committing:
 

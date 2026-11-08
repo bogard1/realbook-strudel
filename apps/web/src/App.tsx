@@ -11,15 +11,23 @@ const languageStorageKey = 'realbook-strudel:language:v1';
 type Language = 'en' | 'es';
 type Status =
   | { type: 'ready' | 'saved' | 'initializing' | 'stopped' | 'created' | 'restored' }
-  | { type: 'playing' | 'imported'; title: string }
+  | { type: 'playing' | 'imported' | 'practicePick'; title: string }
   | { type: 'error'; message: string };
+
+type Filters = {
+  composer: string;
+  key: string;
+  feel: string;
+};
+
+const noFilter = '__all__';
 
 const copy = {
   en: {
-    ready: 'Ready to play.', saved: 'Changes are saved in this browser. Export the JSON to add it to the repository.', initializing: 'Initializing audio…', playing: (title: string) => `Playing: ${title}`, stopped: 'Playback stopped.', nothingToStop: 'Nothing is playing.', created: 'New song created locally.', restored: 'The bundled catalog version was restored.', imported: (title: string) => `${title} was imported locally.`, noSongs: 'There are no songs. Import or create one.', library: 'Library', brandSuffix: 'for Strudel', search: 'Search', searchPlaceholder: 'Title, composer, key…', songCount: (visible: number, total: number) => `${visible} of ${total} songs`, newSong: '+ New', importJson: 'Import JSON', restart: '↻ Restart', play: '▶ Play', stop: '■ Stop', editSong: 'Edit song', localSave: 'Saved locally', title: 'Title', composer: 'Composer', key: 'Key', tempo: 'Tempo (BPM)', form: 'Form', chordProgression: 'Chord progression', feel: 'Feel', source: 'Source', sourceLicense: 'Source license', tags: 'Tags', license: 'License or permission', strudelCode: 'Strudel code', download: 'Download JSON', restore: 'Restore bundled version', footer: 'GitHub Pages edits stay in this browser. Download the JSON and add it to ', footerEnd: ' to publish it.', language: 'Language', english: 'English', spanish: 'Español', invalidSong: 'The file does not conform to the song schema.', audioError: (message: string) => `Strudel error: ${message}`, importError: (message: string) => `Could not import: ${message}`,
+    ready: 'Ready to play.', saved: 'Changes are saved in this browser. Export the JSON to add it to the repository.', initializing: 'Initializing audio…', playing: (title: string) => `Playing: ${title}`, stopped: 'Playback stopped.', nothingToStop: 'Nothing is playing.', created: 'New song created locally.', restored: 'The bundled catalog version was restored.', imported: (title: string) => `${title} was imported locally.`, practicePick: (title: string) => `Practice pick: ${title}`, noSongs: 'There are no songs. Import or create one.', library: 'Library', brandSuffix: 'for Strudel', search: 'Search', searchPlaceholder: 'Title, composer, key, chord…', filters: 'Filters', all: 'All', clearFilters: 'Clear filters', randomSong: '♢ Random practice song', songCount: (visible: number, total: number) => `${visible} of ${total} songs`, newSong: '+ New', importJson: 'Import JSON', restart: '↻ Restart', play: '▶ Play', stop: '■ Stop', editSong: 'Edit song', localSave: 'Saved locally', title: 'Title', composer: 'Composer', key: 'Key', tempo: 'Tempo (BPM)', form: 'Form', chordProgression: 'Chord progression', feel: 'Feel', source: 'Source', sourceLicense: 'Source license', tags: 'Tags', license: 'License or permission', strudelCode: 'Strudel code', download: 'Download JSON', restore: 'Restore bundled version', footer: 'GitHub Pages edits stay in this browser. Download the JSON and add it to ', footerEnd: ' to publish it.', language: 'Language', english: 'English', spanish: 'Español', invalidSong: 'The file does not conform to the song schema.', audioError: (message: string) => `Strudel error: ${message}`, importError: (message: string) => `Could not import: ${message}`,
   },
   es: {
-    ready: 'Listo para tocar.', saved: 'Los cambios se guardaron en este navegador. Exporta el JSON para añadirlo al repositorio.', initializing: 'Inicializando audio…', playing: (title: string) => `Reproduciendo: ${title}`, stopped: 'Reproducción detenida.', nothingToStop: 'No hay reproducción activa.', created: 'Nueva canción creada localmente.', restored: 'Se restauró la versión incluida del catálogo.', imported: (title: string) => `${title} se importó localmente.`, noSongs: 'No hay canciones. Importa o crea una.', library: 'Biblioteca', brandSuffix: 'para Strudel', search: 'Buscar', searchPlaceholder: 'Título, compositor, tonalidad…', songCount: (visible: number, total: number) => `${visible} de ${total} canciones`, newSong: '+ Nueva', importJson: 'Importar JSON', restart: '↻ Reiniciar', play: '▶ Reproducir', stop: '■ Detener', editSong: 'Editar canción', localSave: 'Guardado local', title: 'Título', composer: 'Compositor/a', key: 'Tonalidad', tempo: 'Tempo (BPM)', form: 'Forma', chordProgression: 'Progresión de acordes', feel: 'Aire', source: 'Fuente', sourceLicense: 'Licencia de la fuente', tags: 'Etiquetas', license: 'Licencia o permiso', strudelCode: 'Código Strudel', download: 'Descargar JSON', restore: 'Restaurar versión incluida', footer: 'Las ediciones de GitHub Pages permanecen en este navegador. Descarga el JSON y añádelo a ', footerEnd: ' para publicarlo.', language: 'Idioma', english: 'English', spanish: 'Español', invalidSong: 'El archivo no cumple el esquema de canción.', audioError: (message: string) => `Error de Strudel: ${message}`, importError: (message: string) => `No se pudo importar: ${message}`,
+    ready: 'Listo para tocar.', saved: 'Los cambios se guardaron en este navegador. Exporta el JSON para añadirlo al repositorio.', initializing: 'Inicializando audio…', playing: (title: string) => `Reproduciendo: ${title}`, stopped: 'Reproducción detenida.', nothingToStop: 'No hay reproducción activa.', created: 'Nueva canción creada localmente.', restored: 'Se restauró la versión incluida del catálogo.', imported: (title: string) => `${title} se importó localmente.`, practicePick: (title: string) => `Selección para practicar: ${title}`, noSongs: 'No hay canciones. Importa o crea una.', library: 'Biblioteca', brandSuffix: 'para Strudel', search: 'Buscar', searchPlaceholder: 'Título, compositor, tonalidad, acorde…', filters: 'Filtros', all: 'Todos', clearFilters: 'Limpiar filtros', randomSong: '♢ Canción aleatoria', songCount: (visible: number, total: number) => `${visible} de ${total} canciones`, newSong: '+ Nueva', importJson: 'Importar JSON', restart: '↻ Reiniciar', play: '▶ Reproducir', stop: '■ Detener', editSong: 'Editar canción', localSave: 'Guardado local', title: 'Título', composer: 'Compositor/a', key: 'Tonalidad', tempo: 'Tempo (BPM)', form: 'Forma', chordProgression: 'Progresión de acordes', feel: 'Aire', source: 'Fuente', sourceLicense: 'Licencia de la fuente', tags: 'Etiquetas', license: 'Licencia o permiso', strudelCode: 'Código Strudel', download: 'Descargar JSON', restore: 'Restaurar versión incluida', footer: 'Las ediciones de GitHub Pages permanecen en este navegador. Descarga el JSON y añádelo a ', footerEnd: ' para publicarlo.', language: 'Idioma', english: 'English', spanish: 'Español', invalidSong: 'El archivo no cumple el esquema de canción.', audioError: (message: string) => `Error de Strudel: ${message}`, importError: (message: string) => `No se pudo importar: ${message}`,
   },
 } as const;
 
@@ -54,6 +62,7 @@ export function App() {
   const [language, setLanguage] = useState<Language>(getLanguage);
   const [selectedId, setSelectedId] = useState(builtInSongs[0]?.id ?? '');
   const [query, setQuery] = useState('');
+  const [filters, setFilters] = useState<Filters>({ composer: noFilter, key: noFilter, feel: noFilter });
   const [status, setStatus] = useState<Status>({ type: 'ready' });
   const [isPlaying, setIsPlaying] = useState(false);
   const importRef = useRef<HTMLInputElement>(null);
@@ -67,10 +76,18 @@ export function App() {
     return [...merged.values()].sort((a, b) => a.title.localeCompare(b.title));
   }, [localSongs]);
   const selected = songs.find((song) => song.id === selectedId) ?? songs[0];
-  const filtered = songs.filter((song) => {
-    const text = `${song.title} ${song.composer} ${song.key} ${song.tags.join(' ')}`.toLowerCase();
-    return text.includes(query.toLowerCase().trim());
-  });
+  const filterOptions = useMemo(() => ({
+    composers: [...new Set(songs.map((song) => song.composer))].sort((a, b) => a.localeCompare(b)),
+    keys: [...new Set(songs.map((song) => song.key))].sort((a, b) => a.localeCompare(b)),
+    feels: [...new Set(songs.map((song) => song.backing.feel))].sort((a, b) => a.localeCompare(b)),
+  }), [songs]);
+  const filtered = useMemo(() => songs.filter((song) => {
+    const text = `${song.title} ${song.composer} ${song.key} ${song.form} ${song.tags.join(' ')} ${song.backing.feel} ${song.backing.progression.join(' ')}`.toLowerCase();
+    return text.includes(query.toLowerCase().trim()) &&
+      (filters.composer === noFilter || song.composer === filters.composer) &&
+      (filters.key === noFilter || song.key === filters.key) &&
+      (filters.feel === noFilter || song.backing.feel === filters.feel);
+  }), [filters, query, songs]);
 
   useEffect(() => {
     if (selected && selected.id !== selectedId) setSelectedId(selected.id);
@@ -120,6 +137,14 @@ export function App() {
     setStatus({ type: 'stopped' });
   }
 
+  function choosePracticeSong() {
+    if (filtered.length === 0) return;
+    const choices = filtered.length > 1 ? filtered.filter((song) => song.id !== selected?.id) : filtered;
+    const song = choices[Math.floor(Math.random() * choices.length)];
+    setSelectedId(song.id);
+    setStatus({ type: 'practicePick', title: song.title });
+  }
+
   function createSong() {
     const id = `song-${Date.now().toString(36)}`;
     const song = makeSong(id);
@@ -159,7 +184,7 @@ export function App() {
     }
   }
 
-  const statusText = status.type === 'playing' || status.type === 'imported'
+  const statusText = status.type === 'playing' || status.type === 'imported' || status.type === 'practicePick'
     ? t[status.type](status.title)
     : status.type === 'error'
       ? status.message
@@ -178,6 +203,13 @@ export function App() {
         <label className="language-picker">{t.language}<select value={language} onChange={(event) => setLanguage(event.target.value as Language)}><option value="en">{t.english}</option><option value="es">{t.spanish}</option></select></label>
         <label className="search-label" htmlFor="search">{t.search}</label>
         <input id="search" className="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.searchPlaceholder} />
+        <fieldset className="filters">
+          <legend>{t.filters}</legend>
+          <label>{t.composer}<select value={filters.composer} onChange={(event) => setFilters((current) => ({ ...current, composer: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.composers.map((value) => <option key={value}>{value}</option>)}</select></label>
+          <label>{t.key}<select value={filters.key} onChange={(event) => setFilters((current) => ({ ...current, key: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.keys.map((value) => <option key={value}>{value}</option>)}</select></label>
+          <label>{t.feel}<select value={filters.feel} onChange={(event) => setFilters((current) => ({ ...current, feel: event.target.value }))}><option value={noFilter}>{t.all}</option>{filterOptions.feels.map((value) => <option key={value}>{value}</option>)}</select></label>
+          <button type="button" className="text-button" onClick={() => setFilters({ composer: noFilter, key: noFilter, feel: noFilter })}>{t.clearFilters}</button>
+        </fieldset>
         <div className="song-count">{t.songCount(filtered.length, songs.length)}</div>
         <nav className="song-list">
           {filtered.map((song) => (
@@ -186,6 +218,7 @@ export function App() {
             </button>
           ))}
         </nav>
+        <button className="random-song" onClick={choosePracticeSong} disabled={filtered.length === 0}>{t.randomSong}</button>
         <div className="library-actions">
           <button onClick={createSong}>{t.newSong}</button>
           <button onClick={() => importRef.current?.click()}>{t.importJson}</button>

@@ -14,10 +14,10 @@ type Action = { type: 'quit' } | { type: 'edit'; song?: Song };
 
 const messages = {
   en: {
-    title: 'REALBOOK STRUDEL', search: 'Search', nowPlaying: 'NOW PLAYING', stopped: 'STOPPED', source: 'Source', noSource: 'No source metadata', chords: 'Chords', code: 'Strudel code', noSongs: 'No songs found', controls: '↑↓ select  / search  p play  space pause  e edit  n new  i import  x export  l language  r reload  q quit', importPath: 'JSON file to import:', exportPath: 'Destination path:', imported: (title: string) => `Imported ${title}.`, exported: (path: string) => `Exported to ${path}.`, loaded: (count: number) => `Loaded ${count} songs.`, playing: (title: string) => `Playing ${title}.`, paused: 'Playback paused.', editing: 'Opening your editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `Saved ${title}.`, language: 'Language', noSelection: 'No song selected.',
+    title: 'REALBOOK STRUDEL', search: 'Search', nowPlaying: 'NOW PLAYING', stopped: 'STOPPED', source: 'Source', noSource: 'No source metadata', chords: 'Chords', code: 'Strudel code', noSongs: 'No songs found', controls: '↑↓ select  / search  g random  p play  space pause  e edit  n new  i import  x export  l language  r reload  q quit', importPath: 'JSON file to import:', exportPath: 'Destination path:', imported: (title: string) => `Imported ${title}.`, exported: (path: string) => `Exported to ${path}.`, loaded: (count: number) => `Loaded ${count} songs.`, picked: (title: string) => `Practice pick: ${title}.`, playing: (title: string) => `Playing ${title}.`, paused: 'Playback paused.', editing: 'Opening your editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `Saved ${title}.`, language: 'Language', noSelection: 'No song selected.',
   },
   es: {
-    title: 'REALBOOK STRUDEL', search: 'Buscar', nowPlaying: 'REPRODUCIENDO', stopped: 'DETENIDO', source: 'Fuente', noSource: 'Sin metadatos de fuente', chords: 'Acordes', code: 'Código Strudel', noSongs: 'No se encontraron canciones', controls: '↑↓ seleccionar  / buscar  p reproducir  espacio pausar  e editar  n nueva  i importar  x exportar  l idioma  r recargar  q salir', importPath: 'Archivo JSON para importar:', exportPath: 'Ruta de destino:', imported: (title: string) => `${title} se importó.`, exported: (path: string) => `Exportado en ${path}.`, loaded: (count: number) => `${count} canciones cargadas.`, playing: (title: string) => `Reproduciendo ${title}.`, paused: 'Reproducción pausada.', editing: 'Abriendo el editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `${title} se guardó.`, language: 'Idioma', noSelection: 'No hay canción seleccionada.',
+    title: 'REALBOOK STRUDEL', search: 'Buscar', nowPlaying: 'REPRODUCIENDO', stopped: 'DETENIDO', source: 'Fuente', noSource: 'Sin metadatos de fuente', chords: 'Acordes', code: 'Código Strudel', noSongs: 'No se encontraron canciones', controls: '↑↓ seleccionar  / buscar  g aleatoria  p reproducir  espacio pausar  e editar  n nueva  i importar  x exportar  l idioma  r recargar  q salir', importPath: 'Archivo JSON para importar:', exportPath: 'Ruta de destino:', imported: (title: string) => `${title} se importó.`, exported: (path: string) => `Exportado en ${path}.`, loaded: (count: number) => `${count} canciones cargadas.`, picked: (title: string) => `Selección para practicar: ${title}.`, playing: (title: string) => `Reproduciendo ${title}.`, paused: 'Reproducción pausada.', editing: 'Abriendo el editor…', error: (message: string) => `Error: ${message}`, editorSaved: (title: string) => `${title} se guardó.`, language: 'Idioma', noSelection: 'No hay canción seleccionada.',
   },
 } as const;
 
@@ -39,7 +39,7 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
   const t = messages[language];
 
   const filtered = useMemo(() => songs.filter((song) => {
-    const terms = `${song.title} ${song.composer} ${song.key} ${song.tags.join(' ')}`.toLowerCase();
+    const terms = `${song.title} ${song.composer} ${song.key} ${song.form} ${song.tags.join(' ')} ${song.backing.feel} ${song.backing.progression.join(' ')}`.toLowerCase();
     return terms.includes(query.toLowerCase().trim());
   }), [query, songs]);
   const selected = filtered[Math.min(selectedIndex, Math.max(0, filtered.length - 1))];
@@ -71,6 +71,15 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
   function pause() {
     player.pause();
     setStatus(t.paused);
+  }
+
+  function pickRandom() {
+    if (filtered.length === 0) return setStatus(t.noSongs);
+    const choices = filtered.length > 1 ? filtered.filter((song) => song.id !== selected?.id) : filtered;
+    const song = choices[Math.floor(Math.random() * choices.length)];
+    const index = filtered.findIndex((candidate) => candidate.id === song.id);
+    setSelectedIndex(index);
+    setStatus(t.picked(song.title));
   }
 
   async function submitPrompt(value: string) {
@@ -105,6 +114,7 @@ function Dashboard({ initialStatus, onAction }: { initialStatus: string; onActio
     else if (input === '/') { setMode('search'); setDraft(query); }
     else if (input === 'p' || key.return) void playSelected();
     else if (input === ' ') pause();
+    else if (input === 'g') pickRandom();
     else if (input === 'e' && selected) { setStatus(t.editing); onAction({ type: 'edit', song: selected }); exit(); }
     else if (input === 'n') { setStatus(t.editing); onAction({ type: 'edit' }); exit(); }
     else if (input === 'i') { setMode('import'); setDraft(''); }

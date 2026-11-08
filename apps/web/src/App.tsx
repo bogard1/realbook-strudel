@@ -10,7 +10,7 @@ const languageStorageKey = 'realbook-strudel:language:v1';
 
 type Language = 'en' | 'es';
 type Status =
-  | { type: 'ready' | 'saved' | 'initializing' | 'stopped' | 'created' | 'restored' }
+  | { type: 'ready' | 'saved' | 'initializing' | 'stopped' | 'created' | 'restored' | 'linkCopied' }
   | { type: 'playing' | 'imported' | 'practicePick'; title: string }
   | { type: 'error'; message: string };
 
@@ -21,6 +21,21 @@ type Filters = {
 };
 
 const noFilter = '__all__';
+const songHashPrefix = '#/song/';
+
+function songHash(id: string) {
+  return `${songHashPrefix}${encodeURIComponent(id)}`;
+}
+
+function songIdFromHash() {
+  const match = window.location.hash.match(/^#\/song\/([^/]+)$/);
+  if (!match) return undefined;
+  try {
+    return decodeURIComponent(match[1]);
+  } catch {
+    return undefined;
+  }
+}
 
 function renderHighlightedCode(code: string, locations: StrudelLocation[]) {
   const ranges = locations
@@ -46,10 +61,10 @@ function renderHighlightedCode(code: string, locations: StrudelLocation[]) {
 
 const copy = {
   en: {
-    ready: 'Ready to play.', saved: 'Changes are saved in this browser. Export the JSON to add it to the repository.', initializing: 'Initializing audio…', playing: (title: string) => `Playing: ${title}`, stopped: 'Playback stopped.', nothingToStop: 'Nothing is playing.', created: 'New song created locally.', restored: 'The bundled catalog version was restored.', imported: (title: string) => `${title} was imported locally.`, practicePick: (title: string) => `Practice pick: ${title}`, noSongs: 'There are no songs. Import or create one.', library: 'Library', brandSuffix: 'for Strudel', search: 'Search', searchPlaceholder: 'Title, composer, key, chord…', filters: 'Filters', all: 'All', clearFilters: 'Clear filters', randomSong: '♢ Random practice song', songCount: (visible: number, total: number) => `${visible} of ${total} songs`, newSong: '+ New', importJson: 'Import JSON', restart: '↻ Restart', play: '▶ Play', stop: '■ Stop', editSong: 'Edit song', localSave: 'Saved locally', title: 'Title', composer: 'Composer', key: 'Key', tempo: 'Tempo (BPM)', form: 'Form', chordProgression: 'Chord progression', arpeggios: 'Arpeggios for improvisation', feel: 'Feel', source: 'Source', sourceLicense: 'Source license', tags: 'Tags', license: 'License or permission', strudelCode: 'Strudel code', liveCode: 'Live execution', download: 'Download JSON', restore: 'Restore bundled version', footer: 'GitHub Pages edits stay in this browser. Download the JSON and add it to ', footerEnd: ' to publish it.', language: 'Language', english: 'English', spanish: 'Español', invalidSong: 'The file does not conform to the song schema.', audioError: (message: string) => `Strudel error: ${message}`, importError: (message: string) => `Could not import: ${message}`,
+    ready: 'Ready to play.', saved: 'Changes are saved in this browser. Export the JSON to add it to the repository.', initializing: 'Initializing audio…', playing: (title: string) => `Playing: ${title}`, stopped: 'Playback stopped.', nothingToStop: 'Nothing is playing.', created: 'New song created locally.', restored: 'The bundled catalog version was restored.', imported: (title: string) => `${title} was imported locally.`, practicePick: (title: string) => `Practice pick: ${title}`, linkCopied: 'Song link copied.', copyLinkError: 'Could not copy the song link.', noSongs: 'There are no songs. Import or create one.', library: 'Library', brandSuffix: 'for Strudel', search: 'Search', searchPlaceholder: 'Title, composer, key, chord…', filters: 'Filters', all: 'All', clearFilters: 'Clear filters', randomSong: '♢ Random practice song', songCount: (visible: number, total: number) => `${visible} of ${total} songs`, newSong: '+ New', importJson: 'Import JSON', restart: '↻ Restart', play: '▶ Play', stop: '■ Stop', copyLink: '⌁ Copy link', editSong: 'Edit song', localSave: 'Saved locally', title: 'Title', composer: 'Composer', key: 'Key', tempo: 'Tempo (BPM)', form: 'Form', chordProgression: 'Chord progression', arpeggios: 'Arpeggios for improvisation', feel: 'Feel', source: 'Source', sourceLicense: 'Source license', tags: 'Tags', license: 'License or permission', strudelCode: 'Strudel code', liveCode: 'Live execution', download: 'Download JSON', restore: 'Restore bundled version', footer: 'GitHub Pages edits stay in this browser. Download the JSON and add it to ', footerEnd: ' to publish it.', language: 'Language', english: 'English', spanish: 'Español', invalidSong: 'The file does not conform to the song schema.', audioError: (message: string) => `Strudel error: ${message}`, importError: (message: string) => `Could not import: ${message}`,
   },
   es: {
-    ready: 'Listo para tocar.', saved: 'Los cambios se guardaron en este navegador. Exporta el JSON para añadirlo al repositorio.', initializing: 'Inicializando audio…', playing: (title: string) => `Reproduciendo: ${title}`, stopped: 'Reproducción detenida.', nothingToStop: 'No hay reproducción activa.', created: 'Nueva canción creada localmente.', restored: 'Se restauró la versión incluida del catálogo.', imported: (title: string) => `${title} se importó localmente.`, practicePick: (title: string) => `Selección para practicar: ${title}`, noSongs: 'No hay canciones. Importa o crea una.', library: 'Biblioteca', brandSuffix: 'para Strudel', search: 'Buscar', searchPlaceholder: 'Título, compositor, tonalidad, acorde…', filters: 'Filtros', all: 'Todos', clearFilters: 'Limpiar filtros', randomSong: '♢ Canción aleatoria', songCount: (visible: number, total: number) => `${visible} de ${total} canciones`, newSong: '+ Nueva', importJson: 'Importar JSON', restart: '↻ Reiniciar', play: '▶ Reproducir', stop: '■ Detener', editSong: 'Editar canción', localSave: 'Guardado local', title: 'Título', composer: 'Compositor/a', key: 'Tonalidad', tempo: 'Tempo (BPM)', form: 'Forma', chordProgression: 'Progresión de acordes', arpeggios: 'Arpegios para improvisar', feel: 'Aire', source: 'Fuente', sourceLicense: 'Licencia de la fuente', tags: 'Etiquetas', license: 'Licencia o permiso', strudelCode: 'Código Strudel', liveCode: 'Ejecución en vivo', download: 'Descargar JSON', restore: 'Restaurar versión incluida', footer: 'Las ediciones de GitHub Pages permanecen en este navegador. Descarga el JSON y añádelo a ', footerEnd: ' para publicarlo.', language: 'Idioma', english: 'English', spanish: 'Español', invalidSong: 'El archivo no cumple el esquema de canción.', audioError: (message: string) => `Error de Strudel: ${message}`, importError: (message: string) => `No se pudo importar: ${message}`,
+    ready: 'Listo para tocar.', saved: 'Los cambios se guardaron en este navegador. Exporta el JSON para añadirlo al repositorio.', initializing: 'Inicializando audio…', playing: (title: string) => `Reproduciendo: ${title}`, stopped: 'Reproducción detenida.', nothingToStop: 'No hay reproducción activa.', created: 'Nueva canción creada localmente.', restored: 'Se restauró la versión incluida del catálogo.', imported: (title: string) => `${title} se importó localmente.`, practicePick: (title: string) => `Selección para practicar: ${title}`, linkCopied: 'Enlace de la canción copiado.', copyLinkError: 'No se pudo copiar el enlace de la canción.', noSongs: 'No hay canciones. Importa o crea una.', library: 'Biblioteca', brandSuffix: 'para Strudel', search: 'Buscar', searchPlaceholder: 'Título, compositor, tonalidad, acorde…', filters: 'Filtros', all: 'Todos', clearFilters: 'Limpiar filtros', randomSong: '♢ Canción aleatoria', songCount: (visible: number, total: number) => `${visible} de ${total} canciones`, newSong: '+ Nueva', importJson: 'Importar JSON', restart: '↻ Reiniciar', play: '▶ Reproducir', stop: '■ Detener', copyLink: '⌁ Copiar enlace', editSong: 'Editar canción', localSave: 'Guardado local', title: 'Título', composer: 'Compositor/a', key: 'Tonalidad', tempo: 'Tempo (BPM)', form: 'Forma', chordProgression: 'Progresión de acordes', arpeggios: 'Arpegios para improvisar', feel: 'Aire', source: 'Fuente', sourceLicense: 'Licencia de la fuente', tags: 'Etiquetas', license: 'Licencia o permiso', strudelCode: 'Código Strudel', liveCode: 'Ejecución en vivo', download: 'Descargar JSON', restore: 'Restaurar versión incluida', footer: 'Las ediciones de GitHub Pages permanecen en este navegador. Descarga el JSON y añádelo a ', footerEnd: ' para publicarlo.', language: 'Idioma', english: 'English', spanish: 'Español', invalidSong: 'El archivo no cumple el esquema de canción.', audioError: (message: string) => `Error de Strudel: ${message}`, importError: (message: string) => `No se pudo importar: ${message}`,
   },
 } as const;
 
@@ -82,7 +97,7 @@ function downloadSong(song: Song) {
 export function App() {
   const [localSongs, setLocalSongs] = useState<Song[]>(loadLocalSongs);
   const [language, setLanguage] = useState<Language>(getLanguage);
-  const [selectedId, setSelectedId] = useState(builtInSongs[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(() => songIdFromHash() ?? builtInSongs[0]?.id ?? '');
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<Filters>({ composer: noFilter, key: noFilter, feel: noFilter });
   const [status, setStatus] = useState<Status>({ type: 'ready' });
@@ -123,6 +138,30 @@ export function App() {
     localStorage.setItem(languageStorageKey, language);
     document.documentElement.lang = language;
   }, [language]);
+
+  useEffect(() => {
+    const selectFromUrl = () => {
+      const id = songIdFromHash();
+      if (id) setSelectedId(id);
+    };
+    window.addEventListener('hashchange', selectFromUrl);
+    window.addEventListener('popstate', selectFromUrl);
+    return () => {
+      window.removeEventListener('hashchange', selectFromUrl);
+      window.removeEventListener('popstate', selectFromUrl);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!selected) return;
+    const hash = songHash(selected.id);
+    if (window.location.hash !== hash) {
+      const url = new URL(window.location.href);
+      url.hash = hash;
+      window.history.replaceState(null, '', url.toString());
+    }
+    document.title = `${selected.title} · Realbook Strudel`;
+  }, [selected]);
 
   useEffect(() => () => {
     scheduledHighlights.current.forEach(({ timeout }) => window.clearTimeout(timeout));
@@ -167,6 +206,37 @@ export function App() {
     setStatus({ type: 'saved' });
   }
 
+  function selectSong(id: string) {
+    if (id === selectedId) return;
+    const url = new URL(window.location.href);
+    url.hash = songHash(id);
+    if (window.location.hash !== url.hash) window.history.pushState(null, '', url.toString());
+    setSelectedId(id);
+  }
+
+  async function copySongLink() {
+    if (!selected) return;
+    const url = new URL(window.location.href);
+    url.hash = songHash(selected.id);
+    try {
+      if (navigator.clipboard) await navigator.clipboard.writeText(url.toString());
+      else {
+        const input = document.createElement('textarea');
+        input.value = url.toString();
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.append(input);
+        input.select();
+        const copied = document.execCommand('copy');
+        input.remove();
+        if (!copied) throw new Error('Clipboard copy failed.');
+      }
+      setStatus({ type: 'linkCopied' });
+    } catch {
+      setStatus({ type: 'error', message: t.copyLinkError });
+    }
+  }
+
   async function play() {
     if (!selected) return;
     try {
@@ -204,7 +274,7 @@ export function App() {
     if (filtered.length === 0) return;
     const choices = filtered.length > 1 ? filtered.filter((song) => song.id !== selected?.id) : filtered;
     const song = choices[Math.floor(Math.random() * choices.length)];
-    setSelectedId(song.id);
+    selectSong(song.id);
     setStatus({ type: 'practicePick', title: song.title });
   }
 
@@ -276,7 +346,7 @@ export function App() {
         <div className="song-count">{t.songCount(filtered.length, songs.length)}</div>
         <nav className="song-list">
           {filtered.map((song) => (
-            <button className={`song-row ${song.id === selected.id ? 'selected' : ''}`} key={song.id} onClick={() => setSelectedId(song.id)}>
+            <button className={`song-row ${song.id === selected.id ? 'selected' : ''}`} key={song.id} onClick={() => selectSong(song.id)}>
               <strong>{song.title}</strong><span>{song.composer} · {song.key}</span>
             </button>
           ))}
@@ -301,6 +371,7 @@ export function App() {
           <div className="transport">
             <button className="play" onClick={() => void play()}>{isPlaying ? t.restart : t.play}</button>
             <button onClick={stop} disabled={!isPlaying}>{t.stop}</button>
+            <button onClick={() => void copySongLink()}>{t.copyLink}</button>
           </div>
         </header>
 

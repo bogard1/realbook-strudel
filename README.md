@@ -31,6 +31,8 @@ npm run dev
 
 Open the URL shown by Vite. GitHub Pages edits are stored in `localStorage`; use **Download JSON**, then add the file to `songs/` to include it in the published catalog.
 
+Every selected song has a direct hash link, for example `#/song/autumn-leaves`. Use **Copy link** to save it or return directly after a refresh. Links to songs created or imported locally work in the same browser; publish their JSON to `songs/` before sharing them with others.
+
 ### TUI
 
 ```bash

@@ -9,6 +9,8 @@ An individual-file song library for performing and editing material with [Strude
 
 The catalog contains 60 chord-only practice backings for the Real Book Volume 1 title list supplied by the maintainer. Each is an independent JSON file tagged `real-book-volume-1`, with comping and bass only—no melody or lyrics.
 
+It also contains eight public-domain practice backings sourced from OpenBook entries that explicitly identify the composition as public domain. They are tagged `openbook-source` and retain a link to the exact source file.
+
 ## Copyright notice
 
 The *Real Book* and many of its transcriptions are protected by copyright. This repository does not include scans, melodies, lyrics, or lead-sheet engravings. Its catalog contains chord-only practice backings requested by the maintainer; add material only when you have distribution authorization, and state its license in each JSON file.
@@ -99,6 +101,7 @@ The catalog includes original Strudel sketches for public-domain works only. Eac
 
 - [IMSLP: *Original Jelly Roll Blues*](https://imslp.org/wiki/Original_Jelly_Roll_Blues_(Morton%2C_Jelly_Roll)) identifies the 1915 first edition as public domain.
 - [UCSB Discography of American Historical Recordings: Jimmie Cox](https://adp.library.ucsb.edu/index.php/mastertalent/detail/114506/Cox_Jimmie) documents the composer and dates for *Nobody Knows You When You're Down and Out*.
+- [OpenBook](https://github.com/veltzer/book-openbook) was used only for entries whose own metadata marks the composition public domain. The imported song records link to their individual OpenBook source files; no melodies, lyrics, or protected OpenBook arrangements were copied.
 - [awesome-strudel](https://github.com/terryds/awesome-strudel) was reviewed as a Strudel discovery source. Its catalog largely links to copyrighted covers, so no third-party pattern code was copied into this repository.
 
 ## GitHub Pages deployment

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "ach-du-lieber-augustin",
+  "title": "Ach, Du Lieber Augustin",
+  "composer": "Traditional",
+  "key": "D major",
+  "tempo": 120,
+  "form": "A (3/4 practice changes)",
+  "tags": [
+    "public-domain",
+    "openbook-source",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "Public-domain composition; original chord-only Strudel backing CC0-1.0.",
+  "source": {
+    "title": "OpenBook: Ach, Du Lieber Augustin",
+    "url": "https://github.com/veltzer/book-openbook/blob/master/src/openbook/ach_du_lieber_augustin.ly.tera",
+    "license": "Public domain composition; source MusicXML marked Public Domain."
+  },
+  "backing": {
+    "progression": [
+      "D",
+      "A7",
+      "D",
+      "G",
+      "D",
+      "A7",
+      "D"
+    ],
+    "feel": "Waltz comping"
+  },
+  "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\nsetcps(120 / 180)\nstack(\n  note(\"<[d3,f#3,a3] [a3,c#4,e4,g4] [d3,f#3,a3] [g3,b3,d4] [d3,f#3,a3] [a3,c#4,e4,g4] [d3,f#3,a3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<d2 ~ a2 ~ d2 ~ g2 ~ d2 ~ a2 ~ d2 ~>\").s(\"sine\").gain(.15)\n)"
+}

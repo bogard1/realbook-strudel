@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "when-the-saints-go-marching-in",
+  "title": "When the Saints Go Marching In",
+  "composer": "Traditional",
+  "key": "Bb major",
+  "tempo": 125,
+  "form": "A (4/4 practice changes)",
+  "tags": [
+    "public-domain",
+    "openbook-source",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "Public-domain composition; original chord-only Strudel backing CC0-1.0.",
+  "source": {
+    "title": "OpenBook: When the Saints Go Marching In",
+    "url": "https://github.com/veltzer/book-openbook/blob/master/src/openbook/when_the_saints_go_marching_in.ly.tera",
+    "license": "Traditional composition; public domain in the US. Later lyrics and arrangements are excluded."
+  },
+  "backing": {
+    "progression": [
+      "Bb7",
+      "Eb7",
+      "Bb7",
+      "F7",
+      "Eb7",
+      "Bb7"
+    ],
+    "feel": "New Orleans comping"
+  },
+  "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\nsetcps(125 / 240)\nstack(\n  note(\"<[bb3,d4,f4,ab4] [eb3,g3,bb3,c#4] [bb3,d4,f4,ab4] [f3,a3,c4,eb4] [eb3,g3,bb3,c#4] [bb3,d4,f4,ab4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<bb2 ~ eb2 ~ bb2 ~ f2 ~ eb2 ~ bb2 ~>\").s(\"sine\").gain(.15)\n)"
+}

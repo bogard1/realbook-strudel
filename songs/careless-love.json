@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "careless-love",
+  "title": "Careless Love",
+  "composer": "Traditional",
+  "key": "C major",
+  "tempo": 110,
+  "form": "A (4/4 practice changes)",
+  "tags": [
+    "public-domain",
+    "openbook-source",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "Public-domain composition; original chord-only Strudel backing CC0-1.0.",
+  "source": {
+    "title": "OpenBook: Careless Love",
+    "url": "https://github.com/veltzer/book-openbook/blob/master/src/openbook/careless_love.ly.tera",
+    "license": "Traditional composition; public domain in the US. Later lyrics and arrangements are excluded."
+  },
+  "backing": {
+    "progression": [
+      "C7",
+      "F7",
+      "C7",
+      "G7",
+      "F7",
+      "C7"
+    ],
+    "feel": "Blues comping"
+  },
+  "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\nsetcps(110 / 240)\nstack(\n  note(\"<[c3,e3,g3,bb3] [f3,a3,c4,eb4] [c3,e3,g3,bb3] [g3,b3,d4,f4] [f3,a3,c4,eb4] [c3,e3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<c2 ~ f2 ~ c2 ~ g2 ~ f2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+}

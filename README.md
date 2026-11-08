@@ -11,7 +11,7 @@ The catalog contains 60 chord-only practice backings for the Real Book Volume 1 
 
 Every catalog backing has an arpeggiated upper voice, supporting chord voicing, bass, and a chord-tone improvisation guide. These are original practice arrangements, not transcriptions of a melody or lead sheet.
 
-Each song can use an ascending, descending, alternating arpeggio, or simple chord voicings. Select the backing pattern in the web code workspace or TUI; it rewrites the top chord-tone pattern and stores the choice with the song.
+Each song can use an ascending, descending, alternating arpeggio, or simple chord voicings. Select the backing pattern in the web code workspace or TUI; it rewrites the top chord-tone pattern and stores the choice with the song. Both interfaces also provide non-destructive transposition from −12 to +12 semitones for playback.
 
 It also contains eight public-domain practice backings sourced from OpenBook entries that explicitly identify the composition as public domain. They are tagged `openbook-source` and retain a link to the exact source file.
 

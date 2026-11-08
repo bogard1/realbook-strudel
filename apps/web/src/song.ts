@@ -85,6 +85,7 @@ const pitchClasses: Record<string, number> = {
   c: 0, 'c#': 1, db: 1, d: 2, 'd#': 3, eb: 3, e: 4, f: 5,
   'f#': 6, gb: 6, g: 7, 'g#': 8, ab: 8, a: 9, 'a#': 10, bb: 10, b: 11,
 };
+const pitchNames = ['c', 'c#', 'd', 'eb', 'e', 'f', 'f#', 'g', 'ab', 'a', 'bb', 'b'];
 
 function notePitch(note: string) {
   const match = note.trim().toLowerCase().match(/^([a-g](?:#|b)?)(-?\d+)$/);
@@ -119,5 +120,16 @@ export function applyBackingPattern(code: string, pattern: BackingPattern) {
       return `[${orderNotes(notes, pattern).join(' ')}]`;
     });
     return `note("<${revoiced}>")`;
+  });
+}
+
+/** Transposes explicit octave note literals while leaving Strudel structure intact. */
+export function transposeStrudelNotes(code: string, semitones: number) {
+  if (!semitones) return code;
+  return code.replace(/\b([a-g](?:#|b)?)(-?\d+)\b/gi, (_match, name: string, octave: string) => {
+    const pitch = pitchClasses[name.toLowerCase()];
+    if (pitch === undefined) return _match;
+    const midi = (Number(octave) + 1) * 12 + pitch + semitones;
+    return `${pitchNames[(midi % 12 + 12) % 12]}${Math.floor(midi / 12) - 1}`;
   });
 }

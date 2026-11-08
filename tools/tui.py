@@ -19,6 +19,7 @@ PERSONAL_SONGS_DIRECTORY = ROOT / "personal-library" / "songs"
 ID_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 BACKING_PATTERNS = {"arpeggio-up", "arpeggio-down", "arpeggio-alternating", "chords"}
 PITCH_CLASSES = {"c": 0, "c#": 1, "db": 1, "d": 2, "d#": 3, "eb": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "a": 9, "a#": 10, "bb": 10, "b": 11}
+PITCH_NAMES = ["c", "c#", "d", "eb", "e", "f", "f#", "g", "ab", "a", "bb", "b"]
 
 
 def is_song(value: Any) -> bool:
@@ -106,6 +107,21 @@ def apply_backing_pattern(code: str, pattern: str) -> str:
     return re.sub(r'note\("<((?:\[[^\]]+\]\s*)+)>"\)', revoice, code, count=1)
 
 
+def transpose_notes(code: str, semitones: int) -> str:
+    if not semitones:
+        return code
+
+    def transpose(match: re.Match[str]) -> str:
+        name, octave = match.groups()
+        pitch = PITCH_CLASSES.get(name.lower())
+        if pitch is None:
+            return match.group(0)
+        midi = (int(octave) + 1) * 12 + pitch + semitones
+        return f"{PITCH_NAMES[midi % 12]}{midi // 12 - 1}"
+
+    return re.sub(r"\b([a-g](?:#|b)?)(-?\d+)\b", transpose, code, flags=re.IGNORECASE)
+
+
 def run_check() -> int:
     try:
         songs = load_songs()
@@ -122,6 +138,7 @@ MESSAGES = {
         "live": "LIVE PLAYBACK", "stopped": "STOPPED", "now": "Now sounding", "play": "▶ Play",
         "stop": "■ Stop", "save_code": "Save code", "random": "♢ Random", "edit": "✎ JSON", "new": "+ New", "import": "Import",
         "pattern": "Backing", "arpeggio_up": "Arpeggio ↑", "arpeggio_down": "Arpeggio ↓", "arpeggio_alternating": "Alternating", "chords": "Simple chords",
+        "transpose": "Transpose",
         "export": "Export", "loaded": lambda count: f"Loaded {count} songs. Click a row or use ↑ ↓ to select.",
         "playing": lambda title: f"Playing {title}.", "stopped_message": "Playback stopped.",
         "picked": lambda title: f"Practice pick: {title}.", "saved": lambda title: f"Saved {title}.",
@@ -135,6 +152,7 @@ MESSAGES = {
         "live": "REPRODUCCIÓN EN VIVO", "stopped": "DETENIDO", "now": "Sonando ahora", "play": "▶ Reproducir",
         "stop": "■ Detener", "save_code": "Guardar código", "random": "♢ Aleatoria", "edit": "✎ JSON", "new": "+ Nueva", "import": "Importar",
         "pattern": "Acompañamiento", "arpeggio_up": "Arpegio ↑", "arpeggio_down": "Arpegio ↓", "arpeggio_alternating": "Alternado", "chords": "Acordes simples",
+        "transpose": "Transponer",
         "export": "Exportar", "loaded": lambda count: f"{count} canciones cargadas. Haz clic o usa ↑ ↓ para seleccionar.",
         "playing": lambda title: f"Reproduciendo {title}.", "stopped_message": "Reproducción detenida.",
         "picked": lambda title: f"Selección para practicar: {title}.", "saved": lambda title: f"{title} se guardó.",
@@ -273,10 +291,10 @@ def main() -> int:
     class RealbookTextualApp(App[None]):
         TITLE = "Realbook Strudel"
         CSS = """
-        Screen { background: #10131a; color: #eff3f6; }
+        Screen { background: #10131a; color: #eff3f6; layers: base controls; }
         Header { background: #151a22; color: #78dfd4; }
         Footer { background: #151a22; }
-        #body { padding: 1 2; height: 1fr; }
+        #body { padding: 1 2; height: 1fr; overflow: auto; }
         #search { margin-bottom: 1; }
         #panels { height: 1fr; }
         #library-panel { width: 34%; border: round #315a5d; padding: 0 1; margin-right: 1; }
@@ -287,16 +305,17 @@ def main() -> int:
         #live { border: heavy #4aa99f; padding: 0 1; margin-bottom: 1; color: #b8e9df; height: 5; }
         #song-details { height: 3; color: #d6e2e5; }
         #pattern-toolbar { height: 3; align: left middle; }
-        #pattern-toolbar Label { width: 18; color: #78dfd4; }
+        #pattern-toolbar Label { width: 14; color: #78dfd4; }
         #pattern-select { width: 28; }
+        #transpose-select { width: 10; }
         #code-editor { height: 1fr; min-height: 12; border: solid #3b5861; margin: 1 0; background: #0b1118; }
         #code-editor:focus { border: heavy #55c6b9; }
         #arpeggios { height: auto; max-height: 5; color: #b8e9df; overflow: auto; }
-        #actions { height: 7; margin-top: 1; grid-size: 4; grid-columns: 1fr 1fr 1fr 1fr; grid-gutter: 1; }
+        #actions { dock: bottom; layer: controls; height: 7; margin-top: 1; grid-size: 4; grid-columns: 1fr 1fr 1fr 1fr; grid-gutter: 1; background: #10131a; }
         #actions Button { width: 1fr; }
         #play, #save-code { background: #55c6b9; color: #071012; }
         #stop { background: #5e3138; }
-        #status { height: 1; color: #aab6c1; margin-top: 1; }
+        #status { dock: bottom; layer: controls; height: 1; color: #aab6c1; background: #10131a; }
         PathPrompt, SongEditor { align: center middle; background: #00000088; }
         #prompt-dialog { width: 70; height: auto; border: heavy #4aa99f; background: #171d26; padding: 1 2; }
         #editor-dialog { width: 90%; height: 88%; border: heavy #4aa99f; background: #171d26; padding: 1 2; }
@@ -327,6 +346,8 @@ def main() -> int:
             self.code_drafts: dict[str, str] = {}
             self.loading_code = False
             self.loading_pattern = False
+            self.updating_table = False
+            self.transpose_semitones = 0
             self.player: PlayerService | None = None
 
         @property
@@ -352,6 +373,8 @@ def main() -> int:
                         with Horizontal(id="pattern-toolbar"):
                             yield Label(self.t["pattern"], id="pattern-label")
                             yield Select(self._pattern_options(), value="arpeggio-up", allow_blank=False, id="pattern-select")
+                            yield Label(self.t["transpose"], id="transpose-label")
+                            yield Select(self._transpose_options(), value=0, allow_blank=False, id="transpose-select")
                         yield TextArea("", language="javascript", theme="monokai", soft_wrap=False, tab_behavior="indent", show_line_numbers=True, id="code-editor")
                         yield Static("", id="arpeggios")
                 with Grid(id="actions"):
@@ -372,13 +395,16 @@ def main() -> int:
             self.player = PlayerService(self._queue_player_message)
             self._reload_library()
             table.focus()
+            self.call_after_refresh(self._update_details)
 
         def on_unmount(self) -> None:
             if self.player:
                 self.player.close()
 
         def _set_status(self, message: str) -> None:
-            self.query_one("#status", Label).update(message)
+            status = self.query_one_optional("#status", Label)
+            if status is not None:
+                status.update(message)
 
         def _pattern_options(self) -> list[tuple[str, str]]:
             return [
@@ -387,6 +413,9 @@ def main() -> int:
                 (self.t["arpeggio_alternating"], "arpeggio-alternating"),
                 (self.t["chords"], "chords"),
             ]
+
+        def _transpose_options(self) -> list[tuple[str, int]]:
+            return [("0", 0), ("+2", 2), ("+5", 5), ("+7", 7), ("+12", 12), ("−2", -2), ("−5", -5), ("−7", -7), ("−12", -12)]
 
         def _reload_library(self) -> None:
             try:
@@ -405,6 +434,7 @@ def main() -> int:
                 song["backing"]["feel"], " ".join(song["backing"]["progression"]),
             ]).casefold()]
             table = self.query_one("#song-table", DataTable)
+            self.updating_table = True
             table.clear()
             table.add_rows([(song["title"], f"{song['composer']} · {song['key']}") for song in self.visible_songs])
             if self.visible_songs:
@@ -412,20 +442,27 @@ def main() -> int:
                 self.selected_id = self.visible_songs[index]["id"]
                 table.move_cursor(row=index, animate=False)
             self._update_details()
+            self.call_after_refresh(self._finish_table_update)
+
+        def _finish_table_update(self) -> None:
+            self.updating_table = False
 
         def _update_details(self) -> None:
             song = self.selected
+            details = self.query_one_optional("#song-details", Static)
+            if details is None:
+                return
             if not song:
-                self.query_one("#song-details", Static).update("[yellow]No song selected.[/yellow]")
+                details.update("[yellow]No song selected.[/yellow]")
                 return
             backing = song["backing"]
             pattern = backing.get("pattern", "arpeggio-up")
-            selector = self.query_one("#pattern-select", Select)
-            if selector.value != pattern:
+            selector = self.query_one_optional("#pattern-select", Select)
+            if selector is not None and selector.value != pattern:
                 self.loading_pattern = True
                 selector.value = pattern
                 self.loading_pattern = False
-            self.query_one("#song-details", Static).update(
+            details.update(
                 f"[bold]{escape(song['title'])}[/bold]\n{escape(song['composer'])} · {escape(song['key'])} · {song['tempo']} BPM · {escape(song['form'])}\n"
                 f"[dim]{escape(backing['feel'])}[/dim]\n[cyan]Chords:[/] {escape(' · '.join(backing['progression']))}"
             )
@@ -455,8 +492,18 @@ def main() -> int:
                 return
             editor = self.query_one("#code-editor", TextArea)
             code = self._current_code()
-            start = max(0, min(int(location.get("start", 0)) for location in locations))
-            end = min(len(code), max(int(location.get("end", 0)) for location in locations))
+            # Strudel supplies both enclosing expressions and leaf locations.
+            # The shortest range is the active note token; using min/max made
+            # the editor select an entire expression or line.
+            leaf = min(
+                (location for location in locations if int(location.get("end", 0)) > int(location.get("start", 0))),
+                key=lambda location: int(location["end"]) - int(location["start"]),
+                default=None,
+            )
+            if leaf is None:
+                return
+            start = max(0, int(leaf["start"]))
+            end = min(len(code), int(leaf["end"]))
             if end <= start:
                 return
             editor.selection = Selection(
@@ -501,7 +548,7 @@ def main() -> int:
             if not song or not self.player:
                 return
             try:
-                self.player.send({"type": "play", "code": self._current_code()})
+                self.player.send({"type": "play", "code": transpose_notes(self._current_code(), self.transpose_semitones)})
                 self.playing_title = song["title"]
                 self.live_event = None
                 self._update_live_panel()
@@ -549,23 +596,30 @@ def main() -> int:
             self._set_status("Code changed — Ctrl+S or Save code to write it." if self.language == "en" else "Código modificado — Ctrl+S o Guardar código para escribirlo.")
 
         def on_select_changed(self, event: Select.Changed) -> None:
+            if event.select.id == "transpose-select" and isinstance(event.value, int):
+                self.transpose_semitones = event.value
+                direction = f"{event.value:+d}" if event.value else "0"
+                self._set_status(f"Transpose: {direction} semitones" if self.language == "en" else f"Transposición: {direction} semitonos")
+                return
             if event.select.id != "pattern-select" or self.loading_pattern or not self.selected or not isinstance(event.value, str):
                 return
             pattern = event.value
             if pattern not in BACKING_PATTERNS:
                 return
             song = self.selected
+            if song["backing"].get("pattern", "arpeggio-up") == pattern:
+                return
             code = apply_backing_pattern(self._current_code(), pattern)
             self.code_drafts[song["id"]] = code
             self._save_song({**song, "strudel": code, "backing": {**song["backing"], "pattern": pattern}})
 
         def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
-            if event.data_table.id == "song-table" and event.cursor_row < len(self.visible_songs):
+            if not self.updating_table and event.data_table.id == "song-table" and event.cursor_row < len(self.visible_songs):
                 self.selected_id = self.visible_songs[event.cursor_row]["id"]
                 self._update_details()
 
         def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
-            if event.data_table.id == "song-table" and event.cursor_row < len(self.visible_songs):
+            if not self.updating_table and event.data_table.id == "song-table" and event.cursor_row < len(self.visible_songs):
                 self.selected_id = self.visible_songs[event.cursor_row]["id"]
                 self._play()
 
@@ -686,6 +740,7 @@ def main() -> int:
             self.query_one("#library-title", Label).update(self.t["library"])
             self.query_one("#details-title", Label).update(self.t["details"])
             self.query_one("#pattern-label", Label).update(self.t["pattern"])
+            self.query_one("#transpose-label", Label).update(self.t["transpose"])
             selector = self.query_one("#pattern-select", Select)
             self.loading_pattern = True
             selector.set_options(self._pattern_options())
@@ -697,7 +752,7 @@ def main() -> int:
         def action_reload(self) -> None:
             self._reload_library()
 
-    RealbookTextualApp().run()
+    RealbookTextualApp().run(mouse=True)
     return 0
 
 

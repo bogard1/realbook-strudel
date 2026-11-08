@@ -145,7 +145,7 @@ MESSAGES = {
         "imported": lambda title: f"Imported {title}.", "exported": lambda path: f"Exported to {path}.",
         "path_import": "Path to a JSON song file", "path_export": "Destination JSON path", "save": "Save",
         "cancel": "Cancel", "editor": "Edit song JSON", "invalid": "The JSON does not conform to the song schema.",
-        "error": lambda message: f"Error: {message}", "controls": "Mouse: click a song or action. Keys: / search · p play · space/s stop · Ctrl+S save code · g random · e JSON · n new · i import · x export · l language · r reload · q quit",
+        "error": lambda message: f"Error: {message}", "controls": "Mouse: click a song or action. Keys: F5/Ctrl+P play/pause · / search · p play · space/s stop · Ctrl+S save code · g random · e JSON · n new · i import · x export · l language · r reload · q quit",
     },
     "es": {
         "library": "BIBLIOTECA", "details": "ESPACIO STRUDEL", "search": "Buscar título, compositor, tonalidad, acorde…",
@@ -159,7 +159,7 @@ MESSAGES = {
         "imported": lambda title: f"{title} se importó.", "exported": lambda path: f"Exportado en {path}.",
         "path_import": "Ruta del archivo JSON para importar", "path_export": "Ruta de destino JSON", "save": "Guardar",
         "cancel": "Cancelar", "editor": "Editar JSON de la canción", "invalid": "El JSON no cumple el esquema de canción.",
-        "error": lambda message: f"Error: {message}", "controls": "Ratón: haz clic en una canción o acción. Teclas: / buscar · p reproducir · espacio/s detener · Ctrl+S guardar código · g aleatoria · e JSON · n nueva · i importar · x exportar · l idioma · r recargar · q salir",
+        "error": lambda message: f"Error: {message}", "controls": "Ratón: haz clic en una canción o acción. Teclas: F5/Ctrl+P reproducir/pausar · / buscar · p reproducir · espacio/s detener · Ctrl+S guardar código · g aleatoria · e JSON · n nueva · i importar · x exportar · l idioma · r recargar · q salir",
     },
 }
 
@@ -177,7 +177,6 @@ def main() -> int:
 
     try:
         from rich.markup import escape
-        from textual import on
         from textual.app import App, ComposeResult
         from textual.binding import Binding
         from textual.containers import Grid, Horizontal, Vertical
@@ -291,12 +290,12 @@ def main() -> int:
     class RealbookTextualApp(App[None]):
         TITLE = "Realbook Strudel"
         CSS = """
-        Screen { background: #10131a; color: #eff3f6; layers: base controls; }
+        Screen { background: #10131a; color: #eff3f6; }
         Header { background: #151a22; color: #78dfd4; }
         Footer { background: #151a22; }
-        #body { padding: 1 2; height: 1fr; overflow: auto; }
+        #body { padding: 1 2; height: 1fr; min-height: 0; }
         #search { margin-bottom: 1; }
-        #panels { height: 1fr; }
+        #panels { height: 1fr; min-height: 0; }
         #library-panel { width: 34%; border: round #315a5d; padding: 0 1; margin-right: 1; }
         #detail-panel { width: 1fr; border: heavy #3b716e; padding: 0 1; }
         .panel-title { color: #78dfd4; text-style: bold; height: 2; content-align: left middle; }
@@ -311,11 +310,11 @@ def main() -> int:
         #code-editor { height: 1fr; min-height: 12; border: solid #3b5861; margin: 1 0; background: #0b1118; }
         #code-editor:focus { border: heavy #55c6b9; }
         #arpeggios { height: auto; max-height: 5; color: #b8e9df; overflow: auto; }
-        #actions { dock: bottom; layer: controls; height: 7; margin-top: 1; grid-size: 4; grid-columns: 1fr 1fr 1fr 1fr; grid-gutter: 1; background: #10131a; }
+        #actions { height: 7; margin: 0 2 1 2; grid-size: 4; grid-columns: 1fr 1fr 1fr 1fr; grid-gutter: 1; background: #10131a; }
         #actions Button { width: 1fr; }
         #play, #save-code { background: #55c6b9; color: #071012; }
         #stop { background: #5e3138; }
-        #status { dock: bottom; layer: controls; height: 1; color: #aab6c1; background: #10131a; }
+        #status { height: 1; margin: 0 2; color: #aab6c1; background: #10131a; }
         PathPrompt, SongEditor { align: center middle; background: #00000088; }
         #prompt-dialog { width: 70; height: auto; border: heavy #4aa99f; background: #171d26; padding: 1 2; }
         #editor-dialog { width: 90%; height: 88%; border: heavy #4aa99f; background: #171d26; padding: 1 2; }
@@ -333,6 +332,10 @@ def main() -> int:
             Binding("ctrl+s", "save_code", "Save code"),
             Binding("j", "next_song", "Next", show=False), Binding("k", "previous_song", "Previous", show=False),
             Binding("escape", "focus_table", "Browse", show=False),
+            # These remain available when the code editor has focus, unlike
+            # plain p / space which are valid characters in Strudel code.
+            Binding("f5", "toggle_playback", "Play/Pause", priority=True),
+            Binding("ctrl+p", "toggle_playback", "Play/Pause", priority=True),
         ]
 
         def __init__(self) -> None:
@@ -378,16 +381,16 @@ def main() -> int:
                             yield Select(self._transpose_options(), value=0, allow_blank=False, id="transpose-select")
                         yield TextArea("", language="javascript", theme="monokai", soft_wrap=False, tab_behavior="indent", show_line_numbers=True, id="code-editor")
                         yield Static("", id="arpeggios")
-                with Grid(id="actions"):
-                    yield Button(self.t["play"], id="play", variant="primary")
-                    yield Button(self.t["stop"], id="stop")
-                    yield Button(self.t["save_code"], id="save-code", variant="primary")
-                    yield Button(self.t["random"], id="random")
-                    yield Button(self.t["edit"], id="edit")
-                    yield Button(self.t["new"], id="new")
-                    yield Button(self.t["import"], id="import")
-                    yield Button(self.t["export"], id="export")
-                yield Label("", id="status")
+            with Grid(id="actions"):
+                yield Button(self.t["play"], id="play", variant="primary")
+                yield Button(self.t["stop"], id="stop")
+                yield Button(self.t["save_code"], id="save-code", variant="primary")
+                yield Button(self.t["random"], id="random")
+                yield Button(self.t["edit"], id="edit")
+                yield Button(self.t["new"], id="new")
+                yield Button(self.t["import"], id="import")
+                yield Button(self.t["export"], id="export")
+            yield Label("", id="status")
             yield Footer()
 
         def on_mount(self) -> None:
@@ -656,37 +659,25 @@ def main() -> int:
                 self.selected_id = self.visible_songs[event.cursor_row]["id"]
                 self._play()
 
-        @on(Button.Pressed, "#play")
-        def press_play(self) -> None:
-            self._play()
+        def on_button_pressed(self, event: Button.Pressed) -> None:
+            """Dispatch every action button through Textual's standard handler.
 
-        @on(Button.Pressed, "#stop")
-        def press_stop(self) -> None:
-            self._stop()
-
-        @on(Button.Pressed, "#save-code")
-        def press_save_code(self) -> None:
-            self.action_save_code()
-
-        @on(Button.Pressed, "#random")
-        def press_random(self) -> None:
-            self.action_random()
-
-        @on(Button.Pressed, "#edit")
-        def press_edit(self) -> None:
-            self.action_edit()
-
-        @on(Button.Pressed, "#new")
-        def press_new(self) -> None:
-            self.action_new()
-
-        @on(Button.Pressed, "#import")
-        def press_import(self) -> None:
-            self.action_import_song()
-
-        @on(Button.Pressed, "#export")
-        def press_export(self) -> None:
-            self.action_export_song()
+            Keeping this in one bubbling handler also works when a button is
+            clicked after the code editor had keyboard focus.
+            """
+            actions: dict[str | None, Callable[[], None]] = {
+                "play": self._play,
+                "stop": self._stop,
+                "save-code": self.action_save_code,
+                "random": self.action_random,
+                "edit": self.action_edit,
+                "new": self.action_new,
+                "import": self.action_import_song,
+                "export": self.action_export_song,
+            }
+            action = actions.get(event.button.id)
+            if action is not None:
+                action()
 
         def action_focus_search(self) -> None:
             self.query_one("#search", Input).focus()
@@ -712,6 +703,13 @@ def main() -> int:
 
         def action_play(self) -> None:
             self._play()
+
+        def action_toggle_playback(self) -> None:
+            """Toggle playback from a keyboard shortcut, even in the editor."""
+            if self.playing_title:
+                self._stop()
+            else:
+                self._play()
 
         def action_save_code(self) -> None:
             song = self.selected

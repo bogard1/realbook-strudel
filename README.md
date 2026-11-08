@@ -13,6 +13,10 @@ The catalog contains 60 chord-only practice backings for the Real Book Volume 1 
 
 The *Real Book* and many of its transcriptions are protected by copyright. This repository does not include scans, melodies, lyrics, or lead-sheet engravings. Its catalog contains chord-only practice backings requested by the maintainer; add material only when you have distribution authorization, and state its license in each JSON file.
 
+## Intended use
+
+This project is intended for personal study and non-commercial educational practice. This declaration does not grant permission to copy, distribute, or publish third-party music data, and it does not override any copyright or source-license terms. Only add material to the public `songs/` catalog when public distribution is authorized.
+
 Strudel uses AGPL-3.0-or-later, so this project is distributed under the same license. See `LICENSE`.
 
 ## Quick start
@@ -81,7 +85,7 @@ Do not treat an unverified chord chart as permission to reproduce a copyrighted 
 
 The library follows the discovery model of [`real_book`](https://real-book.hexdocs.pm/readme.html): search by title, composer, key, chord, form, tag, or feel; narrow the web library by composer, key, and feel; or choose a random practice song from the current results.
 
-`real_book`'s code is MIT-licensed, but its included iRb Corpus data is documented as educational/personal-use data with potential copyright restrictions. This project does **not** copy that corpus into the public catalog. Its data model is used as product inspiration only.
+`real_book`'s code is MIT-licensed, but its included iRb Corpus data is documented as educational/personal-use data with potential copyright restrictions. Since this repository is public, the project's intended-use declaration is not sufficient authorization to republish that corpus. This project therefore does **not** copy it into the public catalog; its data model is used as product inspiration only.
 
 Validate the catalog before committing:
 

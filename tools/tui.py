@@ -348,6 +348,7 @@ def main() -> int:
             self.loading_pattern = False
             self.updating_table = False
             self.transpose_semitones = 0
+            self.live_update_timer: Any = None
             self.player: PlayerService | None = None
 
         @property
@@ -398,6 +399,8 @@ def main() -> int:
             self.call_after_refresh(self._update_details)
 
         def on_unmount(self) -> None:
+            if self.live_update_timer is not None:
+                self.live_update_timer.stop()
             if self.player:
                 self.player.close()
 
@@ -478,6 +481,30 @@ def main() -> int:
                 return ""
             return self.code_drafts.get(song["id"], song["strudel"])
 
+        def _current_playback_code(self) -> str:
+            return transpose_notes(self._current_code(), self.transpose_semitones)
+
+        def _schedule_live_update(self) -> None:
+            if not self.playing_title:
+                return
+            if self.live_update_timer is not None:
+                self.live_update_timer.stop()
+            self.live_update_timer = self.set_timer(0.3, self._refresh_live_playback)
+
+        def _refresh_live_playback(self) -> None:
+            self.live_update_timer = None
+            if not self.playing_title or not self.player:
+                return
+            try:
+                self.live_event = None
+                self.player.send({"type": "play", "code": self._current_playback_code()})
+                self._update_live_panel()
+                if self.selected:
+                    self._set_status(self.t["playing"](self.selected["title"]))
+            except RuntimeError as error:
+                self.playing_title = ""
+                self._set_status(self.t["error"](str(error)))
+
         def _load_code_editor(self, song: dict[str, Any]) -> None:
             editor = self.query_one("#code-editor", TextArea)
             code = self.code_drafts.get(song["id"], song["strudel"])
@@ -548,7 +575,7 @@ def main() -> int:
             if not song or not self.player:
                 return
             try:
-                self.player.send({"type": "play", "code": transpose_notes(self._current_code(), self.transpose_semitones)})
+                self.player.send({"type": "play", "code": self._current_playback_code()})
                 self.playing_title = song["title"]
                 self.live_event = None
                 self._update_live_panel()
@@ -560,6 +587,9 @@ def main() -> int:
                 self._set_status(self.t["error"](str(error)))
 
         def _stop(self) -> None:
+            if self.live_update_timer is not None:
+                self.live_update_timer.stop()
+                self.live_update_timer = None
             try:
                 if self.player:
                     self.player.send({"type": "stop"})
@@ -594,12 +624,14 @@ def main() -> int:
                 return
             self.code_drafts[self.selected["id"]] = event.text_area.text
             self._set_status("Code changed — Ctrl+S or Save code to write it." if self.language == "en" else "Código modificado — Ctrl+S o Guardar código para escribirlo.")
+            self._schedule_live_update()
 
         def on_select_changed(self, event: Select.Changed) -> None:
             if event.select.id == "transpose-select" and isinstance(event.value, int):
                 self.transpose_semitones = event.value
                 direction = f"{event.value:+d}" if event.value else "0"
                 self._set_status(f"Transpose: {direction} semitones" if self.language == "en" else f"Transposición: {direction} semitonos")
+                self._schedule_live_update()
                 return
             if event.select.id != "pattern-select" or self.loading_pattern or not self.selected or not isinstance(event.value, str):
                 return
@@ -612,6 +644,7 @@ def main() -> int:
             code = apply_backing_pattern(self._current_code(), pattern)
             self.code_drafts[song["id"]] = code
             self._save_song({**song, "strudel": code, "backing": {**song["backing"], "pattern": pattern}})
+            self._schedule_live_update()
 
         def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
             if not self.updating_table and event.data_table.id == "song-table" and event.cursor_row < len(self.visible_songs):

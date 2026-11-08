@@ -116,6 +116,7 @@ export function App() {
   const strudelInitialized = useRef(false);
   const strudelEngine = useRef<StrudelEngine | undefined>(undefined);
   const playbackRevision = useRef(0);
+  const lastEvaluatedCode = useRef('');
   const scheduledHighlights = useRef(new Map<number, { locations: StrudelLocation[]; timeout: number; revision: number }>());
   const t = copy[language];
 
@@ -179,6 +180,30 @@ export function App() {
   useEffect(() => () => {
     scheduledHighlights.current.forEach(({ timeout }) => window.clearTimeout(timeout));
   }, []);
+
+  useEffect(() => {
+    if (!isPlaying || !selected) return;
+    const code = transposeStrudelNotes(selected.strudel, transpose);
+    if (code === lastEvaluatedCode.current) return;
+    const timeout = window.setTimeout(() => {
+      void (async () => {
+        try {
+          clearLiveHighlights();
+          const revision = playbackRevision.current;
+          setExecutingCode(code);
+          await evaluate(code);
+          if (revision !== playbackRevision.current) return;
+          lastEvaluatedCode.current = code;
+          setStatus({ type: 'playing', title: selected.title });
+        } catch (error) {
+          clearLiveHighlights();
+          setIsPlaying(false);
+          setStatus({ type: 'error', message: t.audioError(error instanceof Error ? error.message : String(error)) });
+        }
+      })();
+    }, 300);
+    return () => window.clearTimeout(timeout);
+  }, [isPlaying, selected, t, transpose]);
 
   function clearLiveHighlights() {
     playbackRevision.current += 1;
@@ -272,6 +297,7 @@ export function App() {
         strudelInitialized.current = true;
       }
       await evaluate(code);
+      lastEvaluatedCode.current = code;
       setIsPlaying(true);
       setStatus({ type: 'playing', title: selected.title });
     } catch (error) {
@@ -288,6 +314,7 @@ export function App() {
     }
     strudelEngine.current?.scheduler.stop();
     clearLiveHighlights();
+    lastEvaluatedCode.current = '';
     setIsPlaying(false);
     setStatus({ type: 'stopped' });
   }

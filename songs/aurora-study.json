@@ -12,5 +12,5 @@
     "progression": ["Cmaj7", "Am7", "Dm7", "G7"],
     "feel": "Medium swing comping"
   },
-  "strudel": "// Original CC0 chord backing; no melody.\nsetcps(112 / 60)\nstack(\n  note(\"<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>\").s(\"triangle\").gain(.23),\n  note(\"c2 ~ a1 ~ d2 ~ g1 ~\").s(\"sine\").gain(.17)\n)"
+  "strudel": "// Original CC0 chord backing; no melody.\nsetcps(112 / 240)\nstack(\n  note(\"<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>\").s(\"triangle\").gain(.23),\n  note(\"c2 ~ a1 ~ d2 ~ g1 ~\").s(\"sine\").gain(.17)\n)"
 }

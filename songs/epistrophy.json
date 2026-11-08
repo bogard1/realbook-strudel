@@ -25,5 +25,5 @@
     ],
     "feel": "Angular swing comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(150 / 60)\nstack(\n  note(\"<[bb3,d4,f4,ab4] [b3,eb4,f#4,a4] [bb3,d4,f4,ab4] [b3,eb4,f#4,a4] [f3,a3,c4,eb4] [e3,ab3,b3,d4] [bb3,d4,f4,ab4] [b3,eb4,f#4,a4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<bb2 ~ b2 ~ bb2 ~ b2 ~ f2 ~ e2 ~ bb2 ~ b2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(150 / 240)\nstack(\n  note(\"<[bb3,d4,f4,ab4] [b3,eb4,f#4,a4] [bb3,d4,f4,ab4] [b3,eb4,f#4,a4] [f3,a3,c4,eb4] [e3,ab3,b3,d4] [bb3,d4,f4,ab4] [b3,eb4,f#4,a4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<bb2 ~ b2 ~ bb2 ~ b2 ~ f2 ~ e2 ~ bb2 ~ b2 ~>\").s(\"sine\").gain(.15)\n)"
 }

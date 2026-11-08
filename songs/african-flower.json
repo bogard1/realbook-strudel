@@ -21,5 +21,5 @@
     ],
     "feel": "Slow 6/8 modal comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(92 / 60)\nstack(\n  note(\"<[eb3,f#3,bb3,c#4] [b3,d4,f#4,a4] [f3,ab3,b3,eb4] [bb3,d4,f4,ab4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<eb2 ~ b2 ~ f2 ~ bb2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(92 / 240)\nstack(\n  note(\"<[eb3,f#3,bb3,c#4] [b3,d4,f#4,a4] [f3,ab3,b3,eb4] [bb3,d4,f4,ab4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<eb2 ~ b2 ~ f2 ~ bb2 ~>\").s(\"sine\").gain(.15)\n)"
 }

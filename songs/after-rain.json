@@ -12,5 +12,5 @@
     "progression": ["Dm7", "Gm7", "C7", "A7"],
     "feel": "Slow ballad comping"
   },
-  "strudel": "// Original CC0 chord backing; no melody.\nsetcps(84 / 60)\nstack(\n  note(\"<[d3,f3,a3,c4] [g2,bb2,d3,f3] [c3,e3,g3,bb3] [a2,c#3,e3,g3]>\").s(\"triangle\").gain(.2).room(.2),\n  note(\"d2 ~ g1 ~ c2 ~ a1 ~\").s(\"sine\").gain(.16)\n)"
+  "strudel": "// Original CC0 chord backing; no melody.\nsetcps(84 / 240)\nstack(\n  note(\"<[d3,f3,a3,c4] [g2,bb2,d3,f3] [c3,e3,g3,bb3] [a2,c#3,e3,g3]>\").s(\"triangle\").gain(.2).room(.2),\n  note(\"d2 ~ g1 ~ c2 ~ a1 ~\").s(\"sine\").gain(.16)\n)"
 }

@@ -58,5 +58,5 @@ export const makeSong = (id: string): Song => ({
   tags: [],
   license: 'State the license or permission to distribute',
   backing: { progression: ['Cmaj7', 'Am7', 'Dm7', 'G7'], feel: 'Swing comping' },
-  strudel: 'setcps(120 / 60)\nstack(\n  note("<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>").s("triangle").gain(.22),\n  note("c2 ~ a1 ~ d2 ~ g1 ~").s("sine").gain(.16)\n)',
+  strudel: 'setcps(120 / 240)\nstack(\n  note("<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>").s("triangle").gain(.22),\n  note("c2 ~ a1 ~ d2 ~ g1 ~").s("sine").gain(.16)\n)',
 });

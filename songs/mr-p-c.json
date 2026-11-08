@@ -23,5 +23,5 @@
     ],
     "feel": "Minor blues comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(160 / 60)\nstack(\n  note(\"<[c3,eb3,g3,bb3] [f3,ab3,c4,eb4] [c3,eb3,g3,bb3] [ab3,c4,eb4,f#4] [g3,b3,d4,f4] [c3,eb3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<c2 ~ f2 ~ c2 ~ ab2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(160 / 240)\nstack(\n  note(\"<[c3,eb3,g3,bb3] [f3,ab3,c4,eb4] [c3,eb3,g3,bb3] [ab3,c4,eb4,f#4] [g3,b3,d4,f4] [c3,eb3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<c2 ~ f2 ~ c2 ~ ab2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
 }

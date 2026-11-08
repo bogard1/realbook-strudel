@@ -32,5 +32,5 @@
     ],
     "feel": "Jazz waltz comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(130 / 60)\nstack(\n  note(\"<[g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [bb3,c#4,f4,ab4] [e3,g3,bb3,d4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [d3,f#3,a3,c4] [g3,bb3,d4,f4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<g2 ~ c2 ~ f2 ~ bb2 ~ e2 ~ a2 ~ d2 ~ g2 ~ c2 ~ f2 ~ bb2 ~ a2 ~ d2 ~ d2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(130 / 240)\nstack(\n  note(\"<[g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [bb3,c#4,f4,ab4] [e3,g3,bb3,d4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [d3,f#3,a3,c4] [g3,bb3,d4,f4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<g2 ~ c2 ~ f2 ~ bb2 ~ e2 ~ a2 ~ d2 ~ g2 ~ c2 ~ f2 ~ bb2 ~ a2 ~ d2 ~ d2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)"
 }

@@ -17,5 +17,5 @@
     "url": "https://imslp.org/wiki/Original_Jelly_Roll_Blues_(Morton%2C_Jelly_Roll)",
     "license": "Public domain (1915 first edition)"
   },
-  "strudel": "// Original CC0 chord backing based on the public-domain 1915 composition; no melody.\nsetcps(104 / 60)\nstack(\n  note(\"<[bb2,d3,f3,ab3] [eb3,g3,bb3,db4] [bb2,d3,f3,ab3] [f3,a3,c4,eb4] [eb3,g3,bb3,db4] [bb2,d3,f3,ab3]>\").s(\"triangle\").gain(.22),\n  note(\"bb1 ~ eb2 ~ bb1 ~ f2 ~ eb2 ~ bb1 ~\").s(\"sine\").gain(.17)\n)"
+  "strudel": "// Original CC0 chord backing based on the public-domain 1915 composition; no melody.\nsetcps(104 / 240)\nstack(\n  note(\"<[bb2,d3,f3,ab3] [eb3,g3,bb3,db4] [bb2,d3,f3,ab3] [f3,a3,c4,eb4] [eb3,g3,bb3,db4] [bb2,d3,f3,ab3]>\").s(\"triangle\").gain(.22),\n  note(\"bb1 ~ eb2 ~ bb1 ~ f2 ~ eb2 ~ bb1 ~\").s(\"sine\").gain(.17)\n)"
 }

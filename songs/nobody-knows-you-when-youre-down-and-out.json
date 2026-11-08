@@ -17,5 +17,5 @@
     "url": "https://adp.library.ucsb.edu/index.php/mastertalent/detail/114506/Cox_Jimmie",
     "license": "Public-domain composition; no recording or third-party arrangement used"
   },
-  "strudel": "// Original CC0 chord backing using a public-domain 12-bar blues framework; no melody or lyrics.\nsetcps(92 / 60)\nstack(\n  note(\"<[c3,e3,g3,bb3] [f3,a3,c4,eb4] [c3,e3,g3,bb3] [a2,c#3,e3,g3] [d3,f#3,a3,c4] [g2,b2,d3,f3]>\").s(\"triangle\").gain(.21),\n  note(\"c2 ~ f2 ~ c2 ~ a1 ~ d2 ~ g1 ~\").s(\"sine\").gain(.16)\n)"
+  "strudel": "// Original CC0 chord backing using a public-domain 12-bar blues framework; no melody or lyrics.\nsetcps(92 / 240)\nstack(\n  note(\"<[c3,e3,g3,bb3] [f3,a3,c4,eb4] [c3,e3,g3,bb3] [a2,c#3,e3,g3] [d3,f#3,a3,c4] [g2,b2,d3,f3]>\").s(\"triangle\").gain(.21),\n  note(\"c2 ~ f2 ~ c2 ~ a1 ~ d2 ~ g1 ~\").s(\"sine\").gain(.16)\n)"
 }

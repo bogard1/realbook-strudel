@@ -70,7 +70,7 @@ Each `songs/<id>.json` file contains metadata, a chord progression, and executab
     "url": "https://example.org/source",
     "license": "Public domain or compatible license"
   },
-  "strudel": "setcps(120 / 60)\\nnote(\"c4 e4 g4\").s(\"triangle\")"
+  "strudel": "setcps(120 / 240)\\nnote(\"<c3,e3,g3,b3>\").s(\"triangle\")"
 }
 ```
 

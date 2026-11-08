@@ -29,5 +29,5 @@
     ],
     "feel": "Bird blues comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(160 / 60)\nstack(\n  note(\"<[f3,a3,c4,eb4] [bb3,d4,f4,ab4] [f3,a3,c4,eb4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,d4,f4,ab4] [b3,d4,f4,ab4] [f3,a3,c4,eb4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,a3,c4,eb4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<f2 ~ bb2 ~ f2 ~ c2 ~ f2 ~ bb2 ~ b2 ~ f2 ~ d2 ~ g2 ~ c2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(160 / 240)\nstack(\n  note(\"<[f3,a3,c4,eb4] [bb3,d4,f4,ab4] [f3,a3,c4,eb4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,d4,f4,ab4] [b3,d4,f4,ab4] [f3,a3,c4,eb4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,a3,c4,eb4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<f2 ~ bb2 ~ f2 ~ c2 ~ f2 ~ bb2 ~ b2 ~ f2 ~ d2 ~ g2 ~ c2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)"
 }

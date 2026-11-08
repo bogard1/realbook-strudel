@@ -25,5 +25,5 @@
     ],
     "feel": "Modal floating comping"
   },
-  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(108 / 60)\nstack(\n  note(\"<[d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4] [d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<d2 ~ f2 ~ c#2 ~ eb2 ~ d2 ~ f2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(108 / 240)\nstack(\n  note(\"<[d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4] [d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<d2 ~ f2 ~ c#2 ~ eb2 ~ d2 ~ f2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
 }

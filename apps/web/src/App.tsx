@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { evaluate, initStrudel } from '@strudel/web';
+import { evaluate, initStrudel, type StrudelEngine } from '@strudel/web';
 import { isSong, makeSong, type Song } from './song';
 
 const builtInSongs = Object.values(
@@ -58,6 +58,7 @@ export function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const importRef = useRef<HTMLInputElement>(null);
   const strudelInitialized = useRef(false);
+  const strudelEngine = useRef<StrudelEngine | undefined>(undefined);
   const t = copy[language];
 
   const songs = useMemo(() => {
@@ -97,7 +98,7 @@ export function App() {
     try {
       setStatus({ type: 'initializing' });
       if (!strudelInitialized.current) {
-        await initStrudel();
+        strudelEngine.current = await initStrudel();
         strudelInitialized.current = true;
       }
       await evaluate(selected.strudel);
@@ -114,8 +115,7 @@ export function App() {
       setStatus({ type: 'error', message: t.nothingToStop });
       return;
     }
-    if (typeof window.hush === 'function') window.hush();
-    else void evaluate('hush()');
+    strudelEngine.current?.scheduler.stop();
     setIsPlaying(false);
     setStatus({ type: 'stopped' });
   }
@@ -232,10 +232,4 @@ export function App() {
       </section>
     </main>
   );
-}
-
-declare global {
-  interface Window {
-    hush?: () => void;
-  }
 }

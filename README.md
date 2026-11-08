@@ -7,6 +7,8 @@ An individual-file song library for performing and editing material with [Strude
 - automatic GitHub Pages deployment when `main` changes;
 - an English/Spanish language selector in the web interface (English is the default).
 
+The catalog contains 60 chord-only practice backings for the Real Book Volume 1 title list supplied by the maintainer. Each is an independent JSON file tagged `real-book-volume-1`, with comping and bass only—no melody or lyrics.
+
 ## Copyright notice
 
 The *Real Book* and many of its transcriptions are protected by copyright. This repository **does not include Real Book songs or arrangements**: it contains only two original CC0 demos. Add only public-domain material or content for which you have distribution authorization, and state its license in each JSON file.

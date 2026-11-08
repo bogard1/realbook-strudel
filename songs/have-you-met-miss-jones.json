@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "have-you-met-miss-jones",
+  "title": "Have You Met Miss Jones?",
+  "composer": "Richard Rodgers",
+  "key": "F major",
+  "tempo": 170,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Fmaj7",
+      "D7",
+      "Gm7",
+      "C7",
+      "Fmaj7",
+      "Ab7",
+      "Dbmaj7",
+      "B7",
+      "Emaj7",
+      "G7",
+      "Cmaj7",
+      "A7",
+      "Dm7",
+      "G7",
+      "Cmaj7"
+    ],
+    "feel": "Medium swing comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(170 / 60)\nstack(\n  note(\"<[f3,ab3,c4,eb4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [ab3,c4,eb4,f#4] [c#3,e3,ab3,b3] [b3,eb4,f#4,a4] [e3,g3,b3,d4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<f2 ~ d2 ~ g2 ~ c2 ~ f2 ~ ab2 ~ c#2 ~ b2 ~ e2 ~ g2 ~ c2 ~ a2 ~ d2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+}

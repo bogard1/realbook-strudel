@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "joy-spring",
+  "title": "Joy Spring",
+  "composer": "Clifford Brown",
+  "key": "F major",
+  "tempo": 180,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Fmaj7",
+      "A7",
+      "Dm7",
+      "G7",
+      "Cm7",
+      "F7",
+      "Bbmaj7",
+      "Bbm7",
+      "Fmaj7",
+      "D7",
+      "Gm7",
+      "C7",
+      "Fmaj7"
+    ],
+    "feel": "Fast swing comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(180 / 60)\nstack(\n  note(\"<[f3,ab3,c4,eb4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [bb3,c#4,f4,ab4] [f3,ab3,c4,eb4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<f2 ~ a2 ~ d2 ~ g2 ~ c2 ~ f2 ~ bb2 ~ bb2 ~ f2 ~ d2 ~ g2 ~ c2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)"
+}

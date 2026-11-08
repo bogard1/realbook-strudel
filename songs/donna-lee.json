@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "donna-lee",
+  "title": "Donna Lee",
+  "composer": "Charlie Parker",
+  "key": "Ab major",
+  "tempo": 210,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Abmaj7",
+      "F7",
+      "Bbm7",
+      "Eb7",
+      "Abmaj7",
+      "F7",
+      "Bbm7",
+      "Eb7",
+      "Dbmaj7",
+      "Ddim7",
+      "Abmaj7",
+      "F7",
+      "Bbm7",
+      "Eb7",
+      "Abmaj7"
+    ],
+    "feel": "Fast bebop comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(210 / 60)\nstack(\n  note(\"<[ab3,b3,eb4,f#4] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [eb3,g3,bb3,c#4] [ab3,b3,eb4,f#4] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [eb3,g3,bb3,c#4] [c#3,e3,ab3,b3] [d3,f3,ab3,b3] [ab3,b3,eb4,f#4] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [eb3,g3,bb3,c#4] [ab3,b3,eb4,f#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<ab2 ~ f2 ~ bb2 ~ eb2 ~ ab2 ~ f2 ~ bb2 ~ eb2 ~ c#2 ~ d2 ~ ab2 ~ f2 ~ bb2 ~ eb2 ~ ab2 ~>\").s(\"sine\").gain(.15)\n)"
+}

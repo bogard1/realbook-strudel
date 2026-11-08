@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "maiden-voyage",
+  "title": "Maiden Voyage",
+  "composer": "Herbie Hancock",
+  "key": "D minor",
+  "tempo": 108,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Dsus4",
+      "F7sus4",
+      "Dbsus4",
+      "Ebsus4",
+      "Dsus4",
+      "F7sus4",
+      "Dbsus4",
+      "Ebsus4"
+    ],
+    "feel": "Modal floating comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(108 / 60)\nstack(\n  note(\"<[d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4] [d3,g3,a3,c4] [f3,bb3,c4,eb4] [c#3,f#3,ab3,b3] [eb3,ab3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<d2 ~ f2 ~ c#2 ~ eb2 ~ d2 ~ f2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
+}

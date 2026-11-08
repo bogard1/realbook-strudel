@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "round-midnight",
+  "title": "’Round Midnight",
+  "composer": "Thelonious Monk",
+  "key": "E minor",
+  "tempo": 64,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Em7",
+      "A7",
+      "Dmaj7",
+      "G7",
+      "Cmaj7",
+      "F#7",
+      "Bm7",
+      "E7",
+      "Am7",
+      "D7",
+      "Gmaj7",
+      "B7",
+      "Em7"
+    ],
+    "feel": "Ballad comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(64 / 60)\nstack(\n  note(\"<[e3,g3,b3,d4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f#3,bb3,c#4,e4] [b3,d4,f#4,a4] [e3,ab3,b3,d4] [a3,c4,e4,g4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [b3,eb4,f#4,a4] [e3,g3,b3,d4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<e2 ~ a2 ~ d2 ~ g2 ~ c2 ~ f#2 ~ b2 ~ e2 ~ a2 ~ d2 ~ g2 ~ b2 ~ e2 ~>\").s(\"sine\").gain(.15)\n)"
+}

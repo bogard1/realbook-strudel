@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "con-alma",
+  "title": "Con Alma",
+  "composer": "Dizzy Gillespie",
+  "key": "Bb major",
+  "tempo": 138,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Bbmaj7",
+      "Cm7",
+      "F7",
+      "Bbmaj7",
+      "G7",
+      "Cm7",
+      "F7",
+      "Dm7",
+      "G7",
+      "Cm7",
+      "F7",
+      "Bbmaj7"
+    ],
+    "feel": "Latin comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(138 / 60)\nstack(\n  note(\"<[bb3,c#4,f4,ab4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<bb2 ~ c2 ~ f2 ~ bb2 ~ g2 ~ c2 ~ f2 ~ d2 ~ g2 ~ c2 ~ f2 ~ bb2 ~>\").s(\"sine\").gain(.15)\n)"
+}

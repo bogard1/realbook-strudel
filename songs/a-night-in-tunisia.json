@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "a-night-in-tunisia",
+  "title": "A Night in Tunisia",
+  "composer": "Dizzy Gillespie and Frank Paparelli",
+  "key": "D minor",
+  "tempo": 150,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Dm7",
+      "Eb7",
+      "Dm7",
+      "Eb7",
+      "Dm7",
+      "A7",
+      "Dm7",
+      "Eb7"
+    ],
+    "feel": "Afro-Cuban comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(150 / 60)\nstack(\n  note(\"<[d3,f3,a3,c4] [eb3,g3,bb3,c#4] [d3,f3,a3,c4] [eb3,g3,bb3,c#4] [d3,f3,a3,c4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [eb3,g3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<d2 ~ eb2 ~ d2 ~ eb2 ~ d2 ~ a2 ~ d2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
+}

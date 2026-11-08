@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "stella-by-starlight",
+  "title": "Stella by Starlight",
+  "composer": "Victor Young",
+  "key": "Bb major",
+  "tempo": 132,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Bbmaj7",
+      "Gm7",
+      "Cm7",
+      "F7",
+      "Bbmaj7",
+      "Eb7",
+      "Abmaj7",
+      "Db7",
+      "Gm7",
+      "C7",
+      "Fmaj7",
+      "B7",
+      "Em7",
+      "A7",
+      "Dm7",
+      "G7",
+      "Cmaj7"
+    ],
+    "feel": "Medium swing comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(132 / 60)\nstack(\n  note(\"<[bb3,c#4,f4,ab4] [g3,bb3,d4,f4] [c3,eb3,g3,bb3] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [eb3,g3,bb3,c#4] [ab3,b3,eb4,f#4] [c#3,f3,ab3,b3] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [b3,eb4,f#4,a4] [e3,g3,b3,d4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<bb2 ~ g2 ~ c2 ~ f2 ~ bb2 ~ eb2 ~ ab2 ~ c#2 ~ g2 ~ c2 ~ f2 ~ b2 ~ e2 ~ a2 ~ d2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+}

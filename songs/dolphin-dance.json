@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "dolphin-dance",
+  "title": "Dolphin Dance",
+  "composer": "Herbie Hancock",
+  "key": "Eb major",
+  "tempo": 110,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Ebmaj7",
+      "F#m7b5",
+      "B7",
+      "Emaj7",
+      "Gm7",
+      "C7",
+      "Fmaj7",
+      "A7",
+      "Dm7",
+      "G7",
+      "Cmaj7"
+    ],
+    "feel": "Floating modern-jazz comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(110 / 60)\nstack(\n  note(\"<[eb3,f#3,bb3,c#4] [f#3,a3,c4,e4] [b3,eb4,f#4,a4] [e3,g3,b3,d4] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<eb2 ~ f#2 ~ b2 ~ e2 ~ g2 ~ c2 ~ f2 ~ a2 ~ d2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+}

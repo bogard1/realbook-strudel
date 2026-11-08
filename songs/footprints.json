@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "footprints",
+  "title": "Footprints",
+  "composer": "Wayne Shorter",
+  "key": "C minor",
+  "tempo": 132,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Cm7",
+      "Fm7",
+      "Cm7",
+      "Ab7",
+      "G7",
+      "Cm7"
+    ],
+    "feel": "Jazz waltz comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(132 / 60)\nstack(\n  note(\"<[c3,eb3,g3,bb3] [f3,ab3,c4,eb4] [c3,eb3,g3,bb3] [ab3,c4,eb4,f#4] [g3,b3,d4,f4] [c3,eb3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<c2 ~ f2 ~ c2 ~ ab2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+}

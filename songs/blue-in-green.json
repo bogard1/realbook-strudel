@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "blue-in-green",
+  "title": "Blue in Green",
+  "composer": "Miles Davis",
+  "key": "D minor",
+  "tempo": 72,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Dm7",
+      "G7",
+      "Cmaj7",
+      "Fmaj7",
+      "Bm7b5",
+      "E7",
+      "Am7",
+      "D7",
+      "Gm7",
+      "C7",
+      "Fmaj7"
+    ],
+    "feel": "Rubato ballad comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(72 / 60)\nstack(\n  note(\"<[d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3] [f3,ab3,c4,eb4] [b3,d4,f4,a4] [e3,ab3,b3,d4] [a3,c4,e4,g4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f3,ab3,c4,eb4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<d2 ~ g2 ~ c2 ~ f2 ~ b2 ~ e2 ~ a2 ~ d2 ~ g2 ~ c2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)"
+}

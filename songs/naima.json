@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "naima",
+  "title": "Naima",
+  "composer": "John Coltrane",
+  "key": "Ab major",
+  "tempo": 68,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Abmaj7",
+      "Bmaj7",
+      "Emaj7",
+      "Fmaj7",
+      "Abmaj7",
+      "Bmaj7",
+      "Emaj7",
+      "Fmaj7"
+    ],
+    "feel": "Ballad pedal comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(68 / 60)\nstack(\n  note(\"<[ab3,b3,eb4,f#4] [b3,d4,f#4,a4] [e3,g3,b3,d4] [f3,ab3,c4,eb4] [ab3,b3,eb4,f#4] [b3,d4,f#4,a4] [e3,g3,b3,d4] [f3,ab3,c4,eb4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<ab2 ~ b2 ~ e2 ~ f2 ~ ab2 ~ b2 ~ e2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)"
+}

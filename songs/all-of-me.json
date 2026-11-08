@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "all-of-me",
+  "title": "All of Me",
+  "composer": "Gerald Marks and Seymour Simons",
+  "key": "C major",
+  "tempo": 150,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "C6",
+      "E7",
+      "A7",
+      "D7",
+      "Dm7",
+      "G7",
+      "C6",
+      "E7",
+      "A7",
+      "D7",
+      "Dm7",
+      "G7",
+      "C6"
+    ],
+    "feel": "Medium swing comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(150 / 60)\nstack(\n  note(\"<[c3,e3,g3,a3] [e3,ab3,b3,d4] [a3,c#4,e4,g4] [d3,f#3,a3,c4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,e3,g3,a3] [e3,ab3,b3,d4] [a3,c#4,e4,g4] [d3,f#3,a3,c4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,e3,g3,a3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<c2 ~ e2 ~ a2 ~ d2 ~ d2 ~ g2 ~ c2 ~ e2 ~ a2 ~ d2 ~ d2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+}

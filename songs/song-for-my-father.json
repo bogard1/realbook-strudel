@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "song-for-my-father",
+  "title": "Song for My Father",
+  "composer": "Horace Silver",
+  "key": "F minor",
+  "tempo": 122,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Fm7",
+      "Eb7",
+      "Dbmaj7",
+      "C7",
+      "Fm7",
+      "Eb7",
+      "Dbmaj7",
+      "C7"
+    ],
+    "feel": "Latin comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(122 / 60)\nstack(\n  note(\"<[f3,ab3,c4,eb4] [eb3,g3,bb3,c#4] [c#3,e3,ab3,b3] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [eb3,g3,bb3,c#4] [c#3,e3,ab3,b3] [c3,e3,g3,bb3]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<f2 ~ eb2 ~ c#2 ~ c2 ~ f2 ~ eb2 ~ c#2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)"
+}

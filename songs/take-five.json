@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "take-five",
+  "title": "Take Five",
+  "composer": "Paul Desmond",
+  "key": "Eb minor",
+  "tempo": 120,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "Ebm7",
+      "Bbm7",
+      "Ebm7",
+      "Bbm7",
+      "Gbmaj7",
+      "Db7",
+      "Ebm7"
+    ],
+    "feel": "5/4 modal comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(120 / 60)\nstack(\n  note(\"<[eb3,f#3,bb3,c#4] [bb3,c#4,f4,ab4] [eb3,f#3,bb3,c#4] [bb3,c#4,f4,ab4] [f#3,a3,c#4,e4] [c#3,f3,ab3,b3] [eb3,f#3,bb3,c#4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<eb2 ~ bb2 ~ eb2 ~ bb2 ~ f#2 ~ c#2 ~ eb2 ~>\").s(\"sine\").gain(.15)\n)"
+}

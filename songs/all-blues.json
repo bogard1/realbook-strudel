@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "all-blues",
+  "title": "All Blues",
+  "composer": "Miles Davis",
+  "key": "G major",
+  "tempo": 138,
+  "form": "Practice changes",
+  "tags": [
+    "real-book-volume-1",
+    "backing-track",
+    "no-melody"
+  ],
+  "license": "User-requested chord-only practice backing; original Strudel arrangement CC0-1.0. Verify harmony against an authorized chart before performance.",
+  "backing": {
+    "progression": [
+      "G7",
+      "C7",
+      "G7",
+      "D7",
+      "C7",
+      "G7"
+    ],
+    "feel": "Jazz waltz comping"
+  },
+  "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\nsetcps(138 / 60)\nstack(\n  note(\"<[g3,b3,d4,f4] [c3,e3,g3,bb3] [g3,b3,d4,f4] [d3,f#3,a3,c4] [c3,e3,g3,bb3] [g3,b3,d4,f4]>\").s(\"triangle\").gain(.2).room(.14),\n  note(\"<g2 ~ c2 ~ g2 ~ d2 ~ c2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)"
+}

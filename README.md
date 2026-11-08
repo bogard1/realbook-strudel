@@ -46,6 +46,11 @@ Each `songs/<id>.json` file contains metadata and executable Strudel code:
   "form": "AABA",
   "tags": ["swing"],
   "license": "CC0-1.0",
+  "source": {
+    "title": "Source title",
+    "url": "https://example.org/source",
+    "license": "Public domain or compatible license"
+  },
   "strudel": "setcps(120 / 60)\\nnote(\"c4 e4 g4\").s(\"triangle\")"
 }
 ```
@@ -55,6 +60,14 @@ Validate the catalog before committing:
 ```bash
 npm run validate:songs
 ```
+
+## Public-domain research sources
+
+The catalog includes original Strudel sketches for public-domain works only. Each relevant song JSON links to its source and identifies the provenance.
+
+- [IMSLP: *Original Jelly Roll Blues*](https://imslp.org/wiki/Original_Jelly_Roll_Blues_(Morton%2C_Jelly_Roll)) identifies the 1915 first edition as public domain.
+- [UCSB Discography of American Historical Recordings: Jimmie Cox](https://adp.library.ucsb.edu/index.php/mastertalent/detail/114506/Cox_Jimmie) documents the composer and dates for *Nobody Knows You When You're Down and Out*.
+- [awesome-strudel](https://github.com/terryds/awesome-strudel) was reviewed as a Strudel discovery source. Its catalog largely links to copyrighted covers, so no third-party pattern code was copied into this repository.
 
 ## GitHub Pages deployment
 

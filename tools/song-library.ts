@@ -11,6 +11,11 @@ export type Song = {
   form: string;
   tags: string[];
   license: string;
+  source?: {
+    title: string;
+    url: string;
+    license: string;
+  };
   strudel: string;
 };
 
@@ -29,6 +34,11 @@ export function isSong(value: unknown): value is Song {
     typeof song.form === 'string' &&
     Array.isArray(song.tags) && song.tags.every((tag) => typeof tag === 'string') &&
     typeof song.license === 'string' && song.license.length > 0 &&
+    (song.source === undefined || (
+      typeof song.source.title === 'string' &&
+      typeof song.source.url === 'string' &&
+      typeof song.source.license === 'string'
+    )) &&
     typeof song.strudel === 'string' && song.strudel.length > 0
   );
 }

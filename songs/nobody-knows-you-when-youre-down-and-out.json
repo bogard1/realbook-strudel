@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "nobody-knows-you-when-youre-down-and-out",
+  "title": "Nobody Knows You When You're Down and Out",
+  "composer": "Jimmie Cox",
+  "key": "C major",
+  "tempo": 92,
+  "form": "12-bar blues study",
+  "tags": ["blues", "jazz-standard", "public-domain"],
+  "license": "Public-domain composition (1923; composer died 1925); original Strudel arrangement CC0-1.0.",
+  "source": {
+    "title": "UCSB Discography of American Historical Recordings: Jimmie Cox",
+    "url": "https://adp.library.ucsb.edu/index.php/mastertalent/detail/114506/Cox_Jimmie",
+    "license": "Public-domain composition; no recording or third-party arrangement used"
+  },
+  "strudel": "// Original CC0 Strudel sketch using a public-domain 12-bar blues framework; no lyrics.\nsetcps(92 / 60)\nstack(\n  note(\"c4 eb4 g4 bb4 f4 eb4 d4 c4\").s(\"sine\").gain(.32).room(.2),\n  note(\"c2 c2 c2 c2 f2 f2 c2 c2 g2 f2 c2 g2\").s(\"triangle\").gain(.2),\n  note(\"c3 ~ g2 ~\").s(\"pulse\").gain(.1)\n)"
+}

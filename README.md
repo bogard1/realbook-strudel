@@ -11,6 +11,8 @@ The catalog contains 60 chord-only practice backings for the Real Book Volume 1 
 
 Every catalog backing has an arpeggiated upper voice, supporting chord voicing, bass, and a chord-tone improvisation guide. These are original practice arrangements, not transcriptions of a melody or lead sheet.
 
+Each song can use an ascending, descending, alternating arpeggio, or simple chord voicings. Select the backing pattern in the web code workspace or TUI; it rewrites the top chord-tone pattern and stores the choice with the song.
+
 It also contains eight public-domain practice backings sourced from OpenBook entries that explicitly identify the composition as public domain. They are tagged `openbook-source` and retain a link to the exact source file.
 
 ## Copyright notice
@@ -60,6 +62,16 @@ The TUI is a full terminal application and does not require the web interface. I
 | `r` / `q` | Reload catalog / quit |
 
 Press `Esc` to leave search mode and return to catalog navigation. On Linux, install and configure PipeWire-JACK or JACK if the local Node Web Audio backend cannot find an audio device. The original Ink implementation remains available as `npm run tui:legacy`.
+
+### Personal OpenBook library
+
+The OpenBook project states that its own project material is GPL while the individual tunes have their own copyright holders. To keep copyrighted source material out of this public repository, use the local-only importer:
+
+```bash
+make personal-openbook
+```
+
+It shallow-clones [OpenBook](https://github.com/veltzer/book-openbook) into `personal-library/openbook-source/` and converts usable chord sections into melody-free Strudel backings in `personal-library/songs/`. The Textual TUI automatically includes that folder; in the web app, import a selected JSON file to keep it in the browser only. The entire `personal-library/` directory is ignored by Git. These imports are for your private study; do not add or publish them in `songs/` unless the composition's distribution rights are explicitly verified.
 
 ## Song format
 

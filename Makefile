@@ -4,7 +4,7 @@ VENV_PYTHON := $(VENV)/bin/python
 TUI_DEPS := $(VENV)/.tui-deps
 NODE_DEPS := node_modules/.realbook-deps
 
-.PHONY: help setup tui tui-check legacy-tui validate build web clean
+.PHONY: help setup tui tui-check legacy-tui personal-openbook validate build web clean
 
 help:
 	@echo "Realbook Strudel commands:"
@@ -12,6 +12,7 @@ help:
 	@echo "  make tui         Run the mouse-enabled Textual TUI"
 	@echo "  make tui-check   Validate the Textual TUI song catalog"
 	@echo "  make legacy-tui  Run the previous Ink TUI"
+	@echo "  make personal-openbook  Download and convert OpenBook into ignored local files"
 	@echo "  make validate    Validate all song JSON files"
 	@echo "  make build       Type-check and build the web application"
 	@echo "  make web         Start the web development server"
@@ -35,6 +36,9 @@ tui-check: $(TUI_DEPS)
 
 legacy-tui: $(NODE_DEPS)
 	npm run tui:legacy
+
+personal-openbook:
+	$(PYTHON) tools/import_openbook_personal.py
 
 validate: $(NODE_DEPS)
 	npm run validate:songs

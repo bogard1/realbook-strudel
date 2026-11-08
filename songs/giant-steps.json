@@ -33,7 +33,8 @@
       "Db7",
       "Gbmaj7"
     ],
-    "feel": "Fast cycle arpeggio comping"
+    "feel": "Fast cycle arpeggio comping",
+    "pattern": "arpeggio-up"
   },
   "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(180 / 240)\nstack(\n  note(\"<[b3 d4 f#4 a4] [d3 f#3 a3 c4] [g3 bb3 d4 f4] [bb3 d4 f4 ab4] [eb3 f#3 bb3 c#4] [f#3 bb3 c#4 e4] [b3 d4 f#4 a4] [f3 a3 c4 eb4] [bb3 c#4 f4 ab4] [c#3 f3 ab3 b3] [f#3 a3 c#4 e4] [a3 c#4 e4 g4] [d3 f3 a3 c4] [f3 a3 c4 eb4] [bb3 c#4 f4 ab4] [c#3 f3 ab3 b3] [f#3 a3 c#4 e4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[b3,d4,f#4,a4] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [bb3,d4,f4,ab4] [eb3,f#3,bb3,c#4] [f#3,bb3,c#4,e4] [b3,d4,f#4,a4] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [c#3,f3,ab3,b3] [f#3,a3,c#4,e4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [f3,a3,c4,eb4] [bb3,c#4,f4,ab4] [c#3,f3,ab3,b3] [f#3,a3,c#4,e4]>\").s(\"triangle\").gain(.09),\n  note(\"<b2 ~ d2 ~ g2 ~ bb2 ~ eb2 ~ f#2 ~ b2 ~ f2 ~ bb2 ~ c#2 ~ f#2 ~ a2 ~ d2 ~ f2 ~ bb2 ~ c#2 ~ f#2 ~>\").s(\"sine\").gain(.15)\n)",
   "improvisation": {

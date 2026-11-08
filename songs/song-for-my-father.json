@@ -24,7 +24,8 @@
       "Dbmaj7",
       "C7"
     ],
-    "feel": "Latin arpeggio comping"
+    "feel": "Latin arpeggio comping",
+    "pattern": "arpeggio-up"
   },
   "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(122 / 240)\nstack(\n  note(\"<[f3 ab3 c4 eb4] [eb3 g3 bb3 c#4] [c#3 e3 ab3 b3] [c3 e3 g3 bb3] [f3 ab3 c4 eb4] [eb3 g3 bb3 c#4] [c#3 e3 ab3 b3] [c3 e3 g3 bb3]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[f3,ab3,c4,eb4] [eb3,g3,bb3,c#4] [c#3,e3,ab3,b3] [c3,e3,g3,bb3] [f3,ab3,c4,eb4] [eb3,g3,bb3,c#4] [c#3,e3,ab3,b3] [c3,e3,g3,bb3]>\").s(\"triangle\").gain(.09),\n  note(\"<f2 ~ eb2 ~ c#2 ~ c2 ~ f2 ~ eb2 ~ c#2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)",
   "improvisation": {

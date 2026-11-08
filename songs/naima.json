@@ -24,7 +24,8 @@
       "Emaj7",
       "Fmaj7"
     ],
-    "feel": "Ballad pedal arpeggio comping"
+    "feel": "Ballad pedal arpeggio comping",
+    "pattern": "arpeggio-up"
   },
   "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(68 / 240)\nstack(\n  note(\"<[ab3 b3 eb4 f#4] [b3 d4 f#4 a4] [e3 g3 b3 d4] [f3 ab3 c4 eb4] [ab3 b3 eb4 f#4] [b3 d4 f#4 a4] [e3 g3 b3 d4] [f3 ab3 c4 eb4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[ab3,b3,eb4,f#4] [b3,d4,f#4,a4] [e3,g3,b3,d4] [f3,ab3,c4,eb4] [ab3,b3,eb4,f#4] [b3,d4,f#4,a4] [e3,g3,b3,d4] [f3,ab3,c4,eb4]>\").s(\"triangle\").gain(.09),\n  note(\"<ab2 ~ b2 ~ e2 ~ f2 ~ ab2 ~ b2 ~ e2 ~ f2 ~>\").s(\"sine\").gain(.15)\n)",
   "improvisation": {

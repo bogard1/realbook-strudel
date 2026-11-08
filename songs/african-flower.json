@@ -20,7 +20,8 @@
       "Fm7b5",
       "Bb7"
     ],
-    "feel": "Slow 6/8 modal arpeggio comping"
+    "feel": "Slow 6/8 modal arpeggio comping",
+    "pattern": "arpeggio-up"
   },
   "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(92 / 240)\nstack(\n  note(\"<[eb3 f#3 bb3 c#4] [b3 d4 f#4 a4] [f3 ab3 b3 eb4] [bb3 d4 f4 ab4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[eb3,f#3,bb3,c#4] [b3,d4,f#4,a4] [f3,ab3,b3,eb4] [bb3,d4,f4,ab4]>\").s(\"triangle\").gain(.09),\n  note(\"<eb2 ~ b2 ~ f2 ~ bb2 ~>\").s(\"sine\").gain(.15)\n)",
   "improvisation": {

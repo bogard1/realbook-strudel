@@ -31,7 +31,8 @@
       "G7",
       "Cmaj7"
     ],
-    "feel": "Medium swing arpeggio comping"
+    "feel": "Medium swing arpeggio comping",
+    "pattern": "arpeggio-up"
   },
   "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(138 / 240)\nstack(\n  note(\"<[f3 ab3 c4 eb4] [bb3 d4 f4 ab4] [eb3 f#3 bb3 c#4] [ab3 b3 eb4 f#4] [c#3 e3 ab3 b3] [d3 f#3 a3 c4] [g3 bb3 d4 f4] [c3 e3 g3 bb3] [f#3 a3 c#4 e4] [b3 eb4 f#4 a4] [e3 g3 b3 d4] [a3 c#4 e4 g4] [d3 f3 a3 c4] [g3 b3 d4 f4] [c3 eb3 g3 bb3]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[f3,ab3,c4,eb4] [bb3,d4,f4,ab4] [eb3,f#3,bb3,c#4] [ab3,b3,eb4,f#4] [c#3,e3,ab3,b3] [d3,f#3,a3,c4] [g3,bb3,d4,f4] [c3,e3,g3,bb3] [f#3,a3,c#4,e4] [b3,eb4,f#4,a4] [e3,g3,b3,d4] [a3,c#4,e4,g4] [d3,f3,a3,c4] [g3,b3,d4,f4] [c3,eb3,g3,bb3]>\").s(\"triangle\").gain(.09),\n  note(\"<f2 ~ bb2 ~ eb2 ~ ab2 ~ c#2 ~ d2 ~ g2 ~ c2 ~ f#2 ~ b2 ~ e2 ~ a2 ~ d2 ~ g2 ~ c2 ~>\").s(\"sine\").gain(.15)\n)",
   "improvisation": {

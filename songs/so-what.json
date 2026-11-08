@@ -23,7 +23,8 @@
       "Dm7",
       "Dm7"
     ],
-    "feel": "Modal arpeggio comping"
+    "feel": "Modal arpeggio comping",
+    "pattern": "arpeggio-up"
   },
   "strudel": "// Chord-only practice backing: comping and bass, no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(138 / 240)\nstack(\n  note(\"<[d3 f3 a3 c4] [d3 f3 a3 c4] [d3 f3 a3 c4] [eb3 f#3 bb3 c#4] [eb3 f#3 bb3 c#4] [d3 f3 a3 c4] [d3 f3 a3 c4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[d3,f3,a3,c4] [d3,f3,a3,c4] [d3,f3,a3,c4] [eb3,f#3,bb3,c#4] [eb3,f#3,bb3,c#4] [d3,f3,a3,c4] [d3,f3,a3,c4]>\").s(\"triangle\").gain(.09),\n  note(\"<d2 ~ d2 ~ d2 ~ eb2 ~ eb2 ~ d2 ~ d2 ~>\").s(\"sine\").gain(.15)\n)",
   "improvisation": {

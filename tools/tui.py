@@ -15,7 +15,10 @@ from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parent.parent
 SONGS_DIRECTORY = ROOT / "songs"
+PERSONAL_SONGS_DIRECTORY = ROOT / "personal-library" / "songs"
 ID_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+BACKING_PATTERNS = {"arpeggio-up", "arpeggio-down", "arpeggio-alternating", "chords"}
+PITCH_CLASSES = {"c": 0, "c#": 1, "db": 1, "d": 2, "d#": 3, "eb": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "a": 9, "a#": 10, "bb": 10, "b": 11}
 
 
 def is_song(value: Any) -> bool:
@@ -33,16 +36,20 @@ def is_song(value: Any) -> bool:
         and isinstance(backing.get("progression"), list)
         and all(isinstance(chord, str) for chord in backing["progression"])
         and isinstance(backing.get("feel"), str) and bool(backing["feel"])
+        and (backing.get("pattern") is None or backing.get("pattern") in BACKING_PATTERNS)
     )
 
 
 def load_songs() -> list[dict[str, Any]]:
     songs: list[dict[str, Any]] = []
-    for path in SONGS_DIRECTORY.glob("*.json"):
-        value = json.loads(path.read_text(encoding="utf-8"))
-        if not is_song(value):
-            raise ValueError(f"{path.name} does not conform to the song schema.")
-        songs.append(value)
+    for directory in (SONGS_DIRECTORY, PERSONAL_SONGS_DIRECTORY):
+        if not directory.exists():
+            continue
+        for path in directory.glob("*.json"):
+            value = json.loads(path.read_text(encoding="utf-8"))
+            if not is_song(value):
+                raise ValueError(f"{path.name} does not conform to the song schema.")
+            songs.append(value)
     return sorted(songs, key=lambda song: song["title"].casefold())
 
 
@@ -57,9 +64,46 @@ def new_song(song_id: str) -> dict[str, Any]:
         "form": "AABA",
         "tags": [],
         "license": "State the license or permission to distribute",
-        "backing": {"progression": ["Cmaj7", "Am7", "Dm7", "G7"], "feel": "Swing comping"},
+        "backing": {"progression": ["Cmaj7", "Am7", "Dm7", "G7"], "feel": "Swing comping", "pattern": "arpeggio-up"},
         "strudel": "setcps(120 / 240)\nstack(\n  note(\"<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>\").s(\"triangle\").gain(.22),\n  note(\"c2 ~ a1 ~ d2 ~ g1 ~\").s(\"sine\").gain(.16)\n)",
     }
+
+
+def note_pitch(note: str) -> int:
+    match = re.match(r"^([a-g](?:#|b)?)(-?\d+)$", note.strip().lower())
+    if not match or match.group(1) not in PITCH_CLASSES:
+        return 0
+    return (int(match.group(2)) + 1) * 12 + PITCH_CLASSES[match.group(1)]
+
+
+def apply_backing_pattern(code: str, pattern: str) -> str:
+    """Revoice the top chord-tone part while keeping the backing melody-free."""
+    if pattern not in BACKING_PATTERNS:
+        return code
+
+    def revoice(match: re.Match[str]) -> str:
+        def revoice_chord(chord: re.Match[str]) -> str:
+            notes = [note for note in re.split(r"[\s,]+", chord.group(1)) if note]
+            ordered = sorted(notes, key=note_pitch)
+            if pattern == "arpeggio-down":
+                ordered.reverse()
+            elif pattern == "arpeggio-alternating":
+                alternating: list[str] = []
+                low, high = 0, len(ordered) - 1
+                while low <= high:
+                    alternating.append(ordered[low])
+                    if low != high:
+                        alternating.append(ordered[high])
+                    low += 1
+                    high -= 1
+                ordered = alternating
+            separator = "," if pattern == "chords" else " "
+            return f"[{separator.join(ordered)}]"
+
+        revoiced = re.sub(r"\[([^\]]+)\]", revoice_chord, match.group(1))
+        return f'note("<{revoiced}>")'
+
+    return re.sub(r'note\("<((?:\[[^\]]+\]\s*)+)>"\)', revoice, code, count=1)
 
 
 def run_check() -> int:
@@ -77,6 +121,7 @@ MESSAGES = {
         "library": "LIBRARY", "details": "STRUDEL WORKBENCH", "search": "Search title, composer, key, chord…",
         "live": "LIVE PLAYBACK", "stopped": "STOPPED", "now": "Now sounding", "play": "▶ Play",
         "stop": "■ Stop", "save_code": "Save code", "random": "♢ Random", "edit": "✎ JSON", "new": "+ New", "import": "Import",
+        "pattern": "Backing", "arpeggio_up": "Arpeggio ↑", "arpeggio_down": "Arpeggio ↓", "arpeggio_alternating": "Alternating", "chords": "Simple chords",
         "export": "Export", "loaded": lambda count: f"Loaded {count} songs. Click a row or use ↑ ↓ to select.",
         "playing": lambda title: f"Playing {title}.", "stopped_message": "Playback stopped.",
         "picked": lambda title: f"Practice pick: {title}.", "saved": lambda title: f"Saved {title}.",
@@ -89,6 +134,7 @@ MESSAGES = {
         "library": "BIBLIOTECA", "details": "ESPACIO STRUDEL", "search": "Buscar título, compositor, tonalidad, acorde…",
         "live": "REPRODUCCIÓN EN VIVO", "stopped": "DETENIDO", "now": "Sonando ahora", "play": "▶ Reproducir",
         "stop": "■ Detener", "save_code": "Guardar código", "random": "♢ Aleatoria", "edit": "✎ JSON", "new": "+ Nueva", "import": "Importar",
+        "pattern": "Acompañamiento", "arpeggio_up": "Arpegio ↑", "arpeggio_down": "Arpegio ↓", "arpeggio_alternating": "Alternado", "chords": "Acordes simples",
         "export": "Exportar", "loaded": lambda count: f"{count} canciones cargadas. Haz clic o usa ↑ ↓ para seleccionar.",
         "playing": lambda title: f"Reproduciendo {title}.", "stopped_message": "Reproducción detenida.",
         "picked": lambda title: f"Selección para practicar: {title}.", "saved": lambda title: f"{title} se guardó.",
@@ -116,10 +162,10 @@ def main() -> int:
         from textual import on
         from textual.app import App, ComposeResult
         from textual.binding import Binding
-        from textual.containers import Horizontal, Vertical
+        from textual.containers import Grid, Horizontal, Vertical
         from textual.document._document import Selection
         from textual.screen import ModalScreen
-        from textual.widgets import Button, DataTable, Footer, Header, Input, Label, Static, TextArea
+        from textual.widgets import Button, DataTable, Footer, Header, Input, Label, Select, Static, TextArea
     except ModuleNotFoundError:
         print("Textual is required for the mouse-enabled TUI. Install it with `python3 -m pip install -r tools/requirements-tui.txt`.", file=sys.stderr)
         return 1
@@ -240,10 +286,13 @@ def main() -> int:
         #song-table > .datatable--cursor { background: #284d50; color: #ffffff; }
         #live { border: heavy #4aa99f; padding: 0 1; margin-bottom: 1; color: #b8e9df; height: 5; }
         #song-details { height: 3; color: #d6e2e5; }
+        #pattern-toolbar { height: 3; align: left middle; }
+        #pattern-toolbar Label { width: 18; color: #78dfd4; }
+        #pattern-select { width: 28; }
         #code-editor { height: 1fr; min-height: 12; border: solid #3b5861; margin: 1 0; background: #0b1118; }
         #code-editor:focus { border: heavy #55c6b9; }
         #arpeggios { height: auto; max-height: 5; color: #b8e9df; overflow: auto; }
-        #actions { height: 7; margin-top: 1; layout: grid; grid-size: 4; grid-columns: 1fr 1fr 1fr 1fr; grid-gutter: 1; }
+        #actions { height: 7; margin-top: 1; grid-size: 4; grid-columns: 1fr 1fr 1fr 1fr; grid-gutter: 1; }
         #actions Button { width: 1fr; }
         #play, #save-code { background: #55c6b9; color: #071012; }
         #stop { background: #5e3138; }
@@ -277,6 +326,7 @@ def main() -> int:
             self.live_event: dict[str, Any] | None = None
             self.code_drafts: dict[str, str] = {}
             self.loading_code = False
+            self.loading_pattern = False
             self.player: PlayerService | None = None
 
         @property
@@ -299,9 +349,12 @@ def main() -> int:
                         yield Label(self.t["details"], classes="panel-title", id="details-title")
                         yield Static("", id="live")
                         yield Static("", id="song-details")
+                        with Horizontal(id="pattern-toolbar"):
+                            yield Label(self.t["pattern"], id="pattern-label")
+                            yield Select(self._pattern_options(), value="arpeggio-up", allow_blank=False, id="pattern-select")
                         yield TextArea("", language="javascript", theme="monokai", soft_wrap=False, tab_behavior="indent", show_line_numbers=True, id="code-editor")
                         yield Static("", id="arpeggios")
-                with Horizontal(id="actions"):
+                with Grid(id="actions"):
                     yield Button(self.t["play"], id="play", variant="primary")
                     yield Button(self.t["stop"], id="stop")
                     yield Button(self.t["save_code"], id="save-code", variant="primary")
@@ -326,6 +379,14 @@ def main() -> int:
 
         def _set_status(self, message: str) -> None:
             self.query_one("#status", Label).update(message)
+
+        def _pattern_options(self) -> list[tuple[str, str]]:
+            return [
+                (self.t["arpeggio_up"], "arpeggio-up"),
+                (self.t["arpeggio_down"], "arpeggio-down"),
+                (self.t["arpeggio_alternating"], "arpeggio-alternating"),
+                (self.t["chords"], "chords"),
+            ]
 
         def _reload_library(self) -> None:
             try:
@@ -358,6 +419,12 @@ def main() -> int:
                 self.query_one("#song-details", Static).update("[yellow]No song selected.[/yellow]")
                 return
             backing = song["backing"]
+            pattern = backing.get("pattern", "arpeggio-up")
+            selector = self.query_one("#pattern-select", Select)
+            if selector.value != pattern:
+                self.loading_pattern = True
+                selector.value = pattern
+                self.loading_pattern = False
             self.query_one("#song-details", Static).update(
                 f"[bold]{escape(song['title'])}[/bold]\n{escape(song['composer'])} · {escape(song['key'])} · {song['tempo']} BPM · {escape(song['form'])}\n"
                 f"[dim]{escape(backing['feel'])}[/dim]\n[cyan]Chords:[/] {escape(' · '.join(backing['progression']))}"
@@ -463,7 +530,9 @@ def main() -> int:
             if not is_song(song):
                 self._set_status(self.t["error"](self.t["invalid"]))
                 return
-            (SONGS_DIRECTORY / f"{song['id']}.json").write_text(json.dumps(song, indent=2) + "\n", encoding="utf-8")
+            directory = PERSONAL_SONGS_DIRECTORY if (PERSONAL_SONGS_DIRECTORY / f"{song['id']}.json").exists() else SONGS_DIRECTORY
+            directory.mkdir(parents=True, exist_ok=True)
+            (directory / f"{song['id']}.json").write_text(json.dumps(song, indent=2) + "\n", encoding="utf-8")
             self.code_drafts.pop(song["id"], None)
             self.selected_id = song["id"]
             self._reload_library()
@@ -479,6 +548,17 @@ def main() -> int:
             self.code_drafts[self.selected["id"]] = event.text_area.text
             self._set_status("Code changed — Ctrl+S or Save code to write it." if self.language == "en" else "Código modificado — Ctrl+S o Guardar código para escribirlo.")
 
+        def on_select_changed(self, event: Select.Changed) -> None:
+            if event.select.id != "pattern-select" or self.loading_pattern or not self.selected or not isinstance(event.value, str):
+                return
+            pattern = event.value
+            if pattern not in BACKING_PATTERNS:
+                return
+            song = self.selected
+            code = apply_backing_pattern(self._current_code(), pattern)
+            self.code_drafts[song["id"]] = code
+            self._save_song({**song, "strudel": code, "backing": {**song["backing"], "pattern": pattern}})
+
         def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
             if event.data_table.id == "song-table" and event.cursor_row < len(self.visible_songs):
                 self.selected_id = self.visible_songs[event.cursor_row]["id"]
@@ -489,16 +569,37 @@ def main() -> int:
                 self.selected_id = self.visible_songs[event.cursor_row]["id"]
                 self._play()
 
-        @on(Button.Pressed)
-        def handle_button_pressed(self, event: Button.Pressed) -> None:
-            actions = {
-                "play": self._play, "stop": self._stop, "save-code": self.action_save_code, "random": self.action_random, "edit": self.action_edit,
-                "new": self.action_new, "import": self.action_import_song, "export": self.action_export_song,
-            }
-            action = actions.get(event.button.id)
-            if action:
-                event.stop()
-                action()
+        @on(Button.Pressed, "#play")
+        def press_play(self) -> None:
+            self._play()
+
+        @on(Button.Pressed, "#stop")
+        def press_stop(self) -> None:
+            self._stop()
+
+        @on(Button.Pressed, "#save-code")
+        def press_save_code(self) -> None:
+            self.action_save_code()
+
+        @on(Button.Pressed, "#random")
+        def press_random(self) -> None:
+            self.action_random()
+
+        @on(Button.Pressed, "#edit")
+        def press_edit(self) -> None:
+            self.action_edit()
+
+        @on(Button.Pressed, "#new")
+        def press_new(self) -> None:
+            self.action_new()
+
+        @on(Button.Pressed, "#import")
+        def press_import(self) -> None:
+            self.action_import_song()
+
+        @on(Button.Pressed, "#export")
+        def press_export(self) -> None:
+            self.action_export_song()
 
         def action_focus_search(self) -> None:
             self.query_one("#search", Input).focus()
@@ -584,6 +685,11 @@ def main() -> int:
             self.query_one("#search", Input).placeholder = self.t["search"]
             self.query_one("#library-title", Label).update(self.t["library"])
             self.query_one("#details-title", Label).update(self.t["details"])
+            self.query_one("#pattern-label", Label).update(self.t["pattern"])
+            selector = self.query_one("#pattern-select", Select)
+            self.loading_pattern = True
+            selector.set_options(self._pattern_options())
+            self.loading_pattern = False
             for button_id, label in (("play", "play"), ("stop", "stop"), ("save-code", "save_code"), ("random", "random"), ("edit", "edit"), ("new", "new"), ("import", "import"), ("export", "export")):
                 self.query_one(f"#{button_id}", Button).label = self.t[label]
             self._update_details()

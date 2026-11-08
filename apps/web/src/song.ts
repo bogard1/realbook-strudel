@@ -1,3 +1,5 @@
+export type BackingPattern = 'arpeggio-up' | 'arpeggio-down' | 'arpeggio-alternating' | 'chords';
+
 export type Song = {
   schemaVersion: 1;
   id: string;
@@ -11,6 +13,7 @@ export type Song = {
   backing: {
     progression: string[];
     feel: string;
+    pattern?: BackingPattern;
   };
   improvisation?: {
     arpeggios: Array<{
@@ -44,7 +47,8 @@ export const isSong = (value: unknown): value is Song => {
     !!song.backing &&
     Array.isArray(song.backing.progression) &&
     song.backing.progression.every((chord) => typeof chord === 'string') &&
-    typeof song.backing.feel === 'string' &&
+      typeof song.backing.feel === 'string' &&
+      (song.backing.pattern === undefined || ['arpeggio-up', 'arpeggio-down', 'arpeggio-alternating', 'chords'].includes(song.backing.pattern)) &&
     (song.improvisation === undefined || (
       Array.isArray(song.improvisation.arpeggios) &&
       song.improvisation.arpeggios.every((arpeggio) =>
@@ -73,6 +77,47 @@ export const makeSong = (id: string): Song => ({
   form: 'AABA',
   tags: [],
   license: 'State the license or permission to distribute',
-  backing: { progression: ['Cmaj7', 'Am7', 'Dm7', 'G7'], feel: 'Swing comping' },
+  backing: { progression: ['Cmaj7', 'Am7', 'Dm7', 'G7'], feel: 'Swing comping', pattern: 'arpeggio-up' },
   strudel: 'setcps(120 / 240)\nstack(\n  note("<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>").s("triangle").gain(.22),\n  note("c2 ~ a1 ~ d2 ~ g1 ~").s("sine").gain(.16)\n)',
 });
+
+const pitchClasses: Record<string, number> = {
+  c: 0, 'c#': 1, db: 1, d: 2, 'd#': 3, eb: 3, e: 4, f: 5,
+  'f#': 6, gb: 6, g: 7, 'g#': 8, ab: 8, a: 9, 'a#': 10, bb: 10, b: 11,
+};
+
+function notePitch(note: string) {
+  const match = note.trim().toLowerCase().match(/^([a-g](?:#|b)?)(-?\d+)$/);
+  if (!match || pitchClasses[match[1]] === undefined) return 0;
+  return (Number(match[2]) + 1) * 12 + pitchClasses[match[1]];
+}
+
+function orderNotes(notes: string[], pattern: BackingPattern) {
+  const ascending = [...notes].sort((left, right) => notePitch(left) - notePitch(right));
+  if (pattern === 'arpeggio-down') return ascending.reverse();
+  if (pattern === 'arpeggio-alternating') {
+    const result: string[] = [];
+    let low = 0;
+    let high = ascending.length - 1;
+    while (low <= high) {
+      result.push(ascending[low]);
+      if (low !== high) result.push(ascending[high]);
+      low += 1;
+      high -= 1;
+    }
+    return result;
+  }
+  return ascending;
+}
+
+/** Revoices the first chord-tone pattern without adding melody or lyrics. */
+export function applyBackingPattern(code: string, pattern: BackingPattern) {
+  return code.replace(/note\("<((?:\[[^\]]+\]\s*)+)>"\)/, (_match, source: string) => {
+    const revoiced = source.replace(/\[([^\]]+)\]/g, (_chord, contents: string) => {
+      const notes = contents.split(/[\s,]+/).filter(Boolean);
+      if (pattern === 'chords') return `[${orderNotes(notes, 'arpeggio-up').join(',')}]`;
+      return `[${orderNotes(notes, pattern).join(' ')}]`;
+    });
+    return `note("<${revoiced}>")`;
+  });
+}

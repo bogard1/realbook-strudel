@@ -29,7 +29,8 @@
       "D7",
       "G"
     ],
-    "feel": "Folk ballad arpeggio comping"
+    "feel": "Folk ballad arpeggio comping",
+    "pattern": "arpeggio-up"
   },
   "strudel": "// Original CC0 chord backing informed by a public-domain source; no melody or lyrics.\n// Arpeggiated chord tones for practice; no melody or lyrics.\nsetcps(82 / 240)\nstack(\n  note(\"<[g3 b3 d4] [c3 e3 g3] [g3 b3 d4] [e3 g3 b3 d4] [a3 c4 e4 g4] [d3 f#3 a3 c4] [g3 b3 d4]>\").s(\"triangle\").gain(.17).room(.14),\n  note(\"<[g3,b3,d4] [c3,e3,g3] [g3,b3,d4] [e3,g3,b3,d4] [a3,c4,e4,g4] [d3,f#3,a3,c4] [g3,b3,d4]>\").s(\"triangle\").gain(.09),\n  note(\"<g2 ~ c2 ~ g2 ~ e2 ~ a2 ~ d2 ~ g2 ~>\").s(\"sine\").gain(.15)\n)",
   "improvisation": {

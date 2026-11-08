@@ -1,6 +1,8 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 
+export type BackingPattern = 'arpeggio-up' | 'arpeggio-down' | 'arpeggio-alternating' | 'chords';
+
 export type Song = {
   schemaVersion: 1;
   id: string;
@@ -14,6 +16,7 @@ export type Song = {
   backing: {
     progression: string[];
     feel: string;
+    pattern?: BackingPattern;
   };
   improvisation?: {
     arpeggios: Array<{
@@ -48,6 +51,7 @@ export function isSong(value: unknown): value is Song {
     !!song.backing &&
     Array.isArray(song.backing.progression) && song.backing.progression.every((chord) => typeof chord === 'string') &&
     typeof song.backing.feel === 'string' && song.backing.feel.length > 0 &&
+    (song.backing.pattern === undefined || ['arpeggio-up', 'arpeggio-down', 'arpeggio-alternating', 'chords'].includes(song.backing.pattern)) &&
     (song.improvisation === undefined || (
       Array.isArray(song.improvisation.arpeggios) &&
       song.improvisation.arpeggios.every((arpeggio) =>
@@ -100,7 +104,7 @@ export function makeSong(id: string): Song {
     form: 'AABA',
     tags: [],
     license: 'State the license or permission to distribute',
-    backing: { progression: ['Cmaj7', 'Am7', 'Dm7', 'G7'], feel: 'Swing comping' },
+    backing: { progression: ['Cmaj7', 'Am7', 'Dm7', 'G7'], feel: 'Swing comping', pattern: 'arpeggio-up' },
     strudel: 'setcps(120 / 240)\nstack(\n  note("<[c3,e3,g3,b3] [a2,c3,e3,g3] [d3,f3,a3,c4] [g2,b2,d3,f3]>").s("triangle").gain(.22),\n  note("c2 ~ a1 ~ d2 ~ g1 ~").s("sine").gain(.16)\n)',
   };
 }
